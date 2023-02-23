@@ -6,3 +6,14 @@
  * Nezapomente pridat strucne hromadne komentare pro pravidla jednotlivych sekci
  * a pro netrivialni useky kodu.
  */
+
+ #header-menu {
+    max-width: 1000px;
+    margin-top: 10px;
+    /* výška druhého řádku (logo, navigace): 80px */
+ }
+
+ .contacts {
+    margin: 10px;
+ }
+ 
