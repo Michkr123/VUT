@@ -7,13 +7,29 @@
  * a pro netrivialni useky kodu.
  */
 
+ #header {
+   min-height: 400px; /*asi ?, neco s viewportem*/
+ }
+
  #header-menu {
     max-width: 1000px;
     margin-top: 10px;
-    /* výška druhého řádku (logo, navigace): 80px */
  }
 
- .contacts {
-    margin: 10px;
+ #header:nth-child(2) { /*asi?*/
+    line-height: 80px;   
  }
+
+.contacts {
+   margin: 10px;
+}
+
+i[class^="fas"] {
+   margin-right: .25rem;
+}
+
+
+
+
+
  
