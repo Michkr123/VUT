@@ -7,6 +7,8 @@
  * a pro netrivialni useky kodu.
  */
 
+/*** 1. Header ***/
+
  #header {
    min-height: 400px; /*asi ?, neco s viewportem*/
  }
@@ -27,6 +29,267 @@
 i[class^="fas"] {
    margin-right: .25rem;
 }
+
+.networks {
+   margin: 10px;
+   word-spacing: 10px;
+}
+
+/*.networks * {
+   word-spacing: 10px;
+} */
+
+.logo {
+   font-size: 32px;
+   margin-left: 40px;
+}
+
+nav {
+   font-size: 13px;
+   letter-spacing: .05em;
+   margin-right: 40px;
+}
+
+nav li {
+   margin-bottom: 20px; /*asi*/
+}
+
+#header-title {
+   height: 80%;
+   min-height: 400px;
+   font-size: 32px;
+   color: red;
+   margin-bottom: 100px;
+   margin-right: 50px; /*implicitni okraje odstavce?*/
+}
+
+#header-title span:first-child {
+   font-size: 52px;
+   color: white;
+}
+
+#header-form {
+   font-size: 14px;
+   margin: 15px;
+   word-spacing: 10px;
+}
+
+/*** 2. About ***/
+
+#about {
+   width: 60%;
+}
+
+#about img {
+   width: 40%;
+   padding: 20px;
+}
+
+/*** 3. Services ***/
+
+#services div {
+   min-width: 250px;
+   display: inline-block;
+}
+
+#services img {
+   height: 300px;
+}
+
+/*** 4. Tours ***/
+
+#tours div:nth-of-type(odd) img{
+   float: right;
+}
+
+#tours .section-item {
+   margin-top: 40px;
+   margin-bottom: 20px;
+}
+
+ #tours img {
+   width: 40%;
+   margin: 20px;
+ }
+
+ #tours .tour-stars:before {
+      font-family: 'FontAwesome';
+      content: '\f005';
+      position:sticky;
+ }
+
+ #tours .tour-duration:before {
+   font-family: 'FontAwesome';
+   content: '\f073';
+   position:sticky;
+}
+
+#tours .tour-price:before {
+   font-family: 'FontAwesome';
+   content: '\f15a';
+   position:sticky;
+}
+
+/*** 5. Price ***/
+
+ #price .section-content {
+   height: 600px;
+   /*vycpavka polozky obsahu*/
+ }
+
+#price ul li {
+   padding: 10px;
+}
+
+#price ul
+{
+   /*background image, prazdny content, list style prazdny*/
+  background-image: url("../img/crystal.svg");
+  background-repeat: no-repeat;
+  position:sticky;
+  /* velikost odrazky 15px */
+}
+
+#price .section-content {
+   background-image: url(../img/huel.jpg);
+   /*transform: scaleX(-1);*/
+   /* otoceni obrazku? opacity? transform scaleX(-1) */
+}
+
+/*** 6. Clients ***/
+
+#clients  .section-item {
+   margin: 40px 0px;
+   max-width: 984px;
+}
+
+#clients img {
+   width: 200px;
+}
+
+/* bubliny */
+
+/*** 7. Footer ***/
+
+footer h2 {
+   letter-spacing: 0.2rem;
+}
+
+#summary {
+   max-width: 30%;
+}
+
+#links {
+   max-width: 20%;
+}
+
+#contacts {
+   max-width: 50%;
+}
+
+#license {
+   margin: 20px 0px;
+}
+
+/*** 8. Jesse ***/
+
+#jesse {
+   margin-right: 20px;
+   margin-bottom: 10px;
+   padding: 15px 20px;
+}
+
+/*** 9. Heisenberg ***/
+
+#heisenberg {
+   border-radius: 15px;
+   background: rgba(0,0,255,0.8);
+   border: solid  1px white;
+   height: 120px;
+   width: 300px;
+   margin-top: 40px;
+}
+
+#heisenberg span {
+   display: block;
+}
+
+#heisenberg div {
+   margin-top: 40px;
+   font-family: "Poppins";
+   color: white;
+}
+
+#heisenberg img {
+   height: 80%;
+   float: left;
+   margin: 10px;
+
+   /* zaobleni okraju */
+}
+
+/*** Vzhled stranky ***/
+
+/* crossroad motel img */
+
+#header-title {
+   background-image: url(../img/header.jpg);
+   width: 100%;
+   background-repeat: no-repeat;
+}
+
+/* crossroad motel */
+
+#header-menu .logo {
+   display: inline-block;
+}
+
+#header div {
+   display: inline-block;
+}
+
+#header-menu .logo a {
+   font-family: "Bebas Neue";
+}
+
+#header-menu .logo a:hover {
+   visibility: hidden;
+   position: relative;
+}
+
+#header-menu .logo a:hover:after {
+   visibility: visible;
+   position: relative;
+   top: 0px;
+   left: -190px;
+   content: "The Crystal Palace";
+}
+
+/*dropdown menu*/
+
+#header-menu nav{
+   display: inline-block;
+   position: absolute;
+}
+
+#header-menu ul {
+   display: inline-block;
+}
+
+#tours-button ul{
+   visibility: hidden;
+   position: absolute;
+}
+
+#header-menu ul li {
+   display: inline-block;
+   height: 80px;
+}
+
+#header-menu
+
+
+
 
 
 
