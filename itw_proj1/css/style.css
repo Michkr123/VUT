@@ -230,6 +230,26 @@ footer h2 {
 
 /*** Vzhled stranky ***/
 
+/* contacts and sites */
+
+#header-menu { 
+   display: inline-flex; 
+   /* Optional, if you want the DIVs 100% width: */ 
+   flex-direction: column;
+ }
+ #header-menu > .contacts { order: 1; }
+ #header-menu > .networks { order: 2; }
+ #header-menu > .logo { order: 3; }
+ #header-menu > nav { order: 4; }
+
+ .contacts { 
+   display: inline-flex;
+   flex-direction: column;
+ }
+ .contacts > .phone { order: 2; }
+ .contacts > .mail { order: 1; }
+
+
 /* crossroad motel img */
 
 #header-title {
@@ -240,13 +260,13 @@ footer h2 {
 
 /* crossroad motel */
 
-#header-menu .logo {
+/*#header-menu .logo {
    display: inline-block;
 }
 
 #header div {
    display: inline-block;
-}
+}*/
 
 #header-menu .logo a {
    font-family: "Bebas Neue";
@@ -267,10 +287,10 @@ footer h2 {
 
 /*dropdown menu*/
 
-#header-menu nav{
+/*#header-menu nav{
    display: inline-block;
    position: absolute;
-}
+}*/
 
 #header-menu ul {
    display: inline-block;
@@ -286,7 +306,25 @@ footer h2 {
    height: 80px;
 }
 
-#header-menu
+/* Jesse */
+#jesse {
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   margin: 15px;
+   padding: 15px 18px;
+   color: #cc3636;
+   border: solid  1px #cc3636;
+   z-index: 100;
+   /* asi, text yo bitch */
+}
+
+/* Footer */
+
+footer {
+   background-color: #363535;
+   margin: 0px -8px -20px -8px;
+}
 
 
 
