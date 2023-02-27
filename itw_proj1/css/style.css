@@ -10,17 +10,21 @@
 /*** 1. Header ***/
 
  #header {
-   min-height: 400px; /*asi ?, neco s viewportem*/
+   position: relative;
+   margin: 0 auto;
+   min-height: 400px; 
  }
 
  #header-menu {
     max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
     margin-top: 10px;
  }
 
- #header:nth-child(2) { /*asi?*/
+ /*#header:nth-child(2) { /*asi?
     line-height: 80px;   
- }
+ }*/
 
 .contacts {
    margin: 10px;
@@ -28,6 +32,11 @@
 
 i[class^="fas"] {
    margin-right: .25rem;
+   color: #cc3636;
+}
+
+#header i[class^="fab"] {
+   color: #363535;
 }
 
 .networks {
@@ -35,19 +44,24 @@ i[class^="fas"] {
    word-spacing: 10px;
 }
 
-/*.networks * {
-   word-spacing: 10px;
-} */
-
 .logo {
    font-size: 32px;
-   margin-left: 40px;
+   padding-left: 40px;
+   border-top: 1px solid #e8e7e7;
+   border-left: 1px solid #e8e7e7;
 }
 
 nav {
    font-size: 13px;
    letter-spacing: .05em;
-   margin-right: 40px;
+   padding-right: 40px;
+   font-family: "Poppins";
+   border-top: 1px solid #ffd0d0;
+   border-right: 1px solid #ffd0d0;
+}
+
+nav * {
+   margin-left : 5px;
 }
 
 nav li {
@@ -57,6 +71,8 @@ nav li {
 #header-title {
    height: 80%;
    min-height: 400px;
+   margin: 0 auto;
+   position: relative;
    font-size: 32px;
    color: red;
    margin-bottom: 100px;
@@ -72,6 +88,8 @@ nav li {
    font-size: 14px;
    margin: 15px;
    word-spacing: 10px;
+   position: relative;
+   margin: 0 auto;
 }
 
 /*** 2. About ***/
@@ -202,12 +220,14 @@ footer h2 {
 /*** 9. Heisenberg ***/
 
 #heisenberg {
+   visibility: hidden;
+   position: relative;
    border-radius: 15px;
    background: rgba(0,0,255,0.8);
    border: solid  1px white;
+   margin: 0 auto;
    height: 120px;
    width: 300px;
-   margin-top: 40px;
 }
 
 #heisenberg span {
@@ -230,58 +250,87 @@ footer h2 {
 
 /*** Vzhled stranky ***/
 
+/* Body */
+
+body {
+   margin: 0px auto;
+}
+
 /* contacts and sites */
 
-#header-menu { 
-   display: inline-flex; 
-   /* Optional, if you want the DIVs 100% width: */ 
-   flex-direction: column;
- }
- #header-menu > .contacts { order: 1; }
- #header-menu > .networks { order: 2; }
- #header-menu > .logo { order: 3; }
- #header-menu > nav { order: 4; }
 
- .contacts { 
-   display: inline-flex;
-   flex-direction: column;
- }
- .contacts > .phone { order: 2; }
- .contacts > .mail { order: 1; }
+#header-menu { 
+   display: flex;
+   flex-wrap: wrap;
+   position: relative;
+}
+#header-menu .contacts { 
+   order: 1;
+   flex: 1 1 calc(50% - 50px);
+}
+#header-menu .networks { 
+   order: 2;
+   text-align: right; 
+   flex: 1 1 calc(50% - 50px);
+}
+#header-menu .logo { 
+   order: 3; 
+   height: 60px;
+   flex: 1 1 calc(40% - 50px);
+}
+#header-menu nav { 
+   order: 4;
+   height: 60px;
+   text-align: right;
+   flex: 1 1 calc(60% - 50px); 
+}
+
+#header-menu .contacts {
+   display: flex;
+   flex-wrap: wrap;
+}
+
+#header-menu .contacts .mail {
+   order: 1;
+   margin-right: 10px;
+}
+
+#header-menu .contacts .phone {
+   order: 2;
+}
 
 
 /* crossroad motel img */
 
-#header-title {
-   background-image: url(../img/header.jpg);
-   width: 100%;
+#header-title::before {
+   content: "";
+   background: url(../img/header.jpg);
+   position: relative;
+   display:block;
+   height: 400px;
    background-repeat: no-repeat;
+   margin: 0 auto;
+   width: 100%;
 }
 
 /* crossroad motel */
-
-/*#header-menu .logo {
-   display: inline-block;
-}
-
-#header div {
-   display: inline-block;
-}*/
 
 #header-menu .logo a {
    font-family: "Bebas Neue";
 }
 
-#header-menu .logo a:hover {
-   visibility: hidden;
-   position: relative;
+#header-menu .logo:first-letter {
+   color:#cc3636;
 }
 
-#header-menu .logo a:hover:after {
+#header-menu .logo a:hover {
+   visibility: hidden;
+   color: #cc3636;
+}
+
+#header-menu .logo a:hover:before {
    visibility: visible;
    position: relative;
-   top: 0px;
-   left: -190px;
    content: "The Crystal Palace";
 }
 
@@ -316,7 +365,7 @@ footer h2 {
    color: #cc3636;
    border: solid  1px #cc3636;
    z-index: 100;
-   /* asi, text yo bitch */
+   /* objeveni az po scrollu */
 }
 
 /* Footer */
@@ -325,6 +374,27 @@ footer {
    background-color: #363535;
    margin: 0px -8px -20px -8px;
 }
+
+#summary {
+   float:left;
+}
+
+#networks {v
+   float: left;
+}
+
+#links {
+   float: left;
+}
+
+.contacts {
+   float:left;
+}
+
+.contacts {
+   font-family: "Poppins";
+}
+
 
 
 
