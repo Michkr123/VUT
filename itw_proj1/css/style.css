@@ -17,20 +17,23 @@
 
  #header-menu {
     max-width: 1000px;
+    min-width: 900px;
     margin: 0 auto;
     position: relative;
     margin-top: 10px;
+    background-color: white;
+    box-shadow: 0px 5px 10px white;
  }
 
- /*#header:nth-child(2) { /*asi?
-    line-height: 80px;   
- }*/
-
-.contacts {
+#header .contacts {
    margin: 10px;
 }
 
-i[class^="fas"] {
+#header .contacts .mail a:hover {
+   color:#cc3636;
+}
+
+#header i[class^="fas"] {
    margin-right: .25rem;
    color: #cc3636;
 }
@@ -39,58 +42,79 @@ i[class^="fas"] {
    color: #363535;
 }
 
-.networks {
+#header .networks {
    margin: 10px;
    word-spacing: 10px;
+   padding-top: 5px;
 }
 
-.logo {
+#header .networks *:hover {
+   color:#cc3636
+}
+
+#header .logo {
    font-size: 32px;
    padding-left: 40px;
+   padding-top: 20px;
    border-top: 1px solid #e8e7e7;
    border-left: 1px solid #e8e7e7;
 }
 
-nav {
-   font-size: 13px;
+#header nav {
+   font-size: 14px;
    letter-spacing: .05em;
+   word-spacing: 20px;
    padding-right: 40px;
+   padding-top: 15px;
    font-family: "Poppins";
    border-top: 1px solid #ffd0d0;
    border-right: 1px solid #ffd0d0;
 }
 
-nav * {
-   margin-left : 5px;
-}
-
-nav li {
-   margin-bottom: 20px; /*asi*/
-}
-
 #header-title {
    height: 80%;
+   background-image: url(../img/header.jpg);
+   background-repeat: no-repeat;
+   background-position: center;
+   min-width: 1000px;
+   z-index: -1;
    min-height: 400px;
    margin: 0 auto;
    position: relative;
-   font-size: 32px;
+   font-size: 24px;
    color: red;
-   margin-bottom: 100px;
-   margin-right: 50px; /*implicitni okraje odstavce?*/
+   margin: -20px 0px 100px 0px;
+   /* tady mají být okraje, ale dojebává to vše */
 }
 
 #header-title span:first-child {
    font-size: 52px;
    color: white;
+   display: block;
+}
+
+#header-title p {
+   padding-top: 250px; /* tohle nemuze byt dobre */
+   padding-left: 60%;
+}
+
+#header-tittle p span {
+   
 }
 
 #header-form {
    font-size: 14px;
-   margin: 15px;
-   word-spacing: 10px;
    position: relative;
    margin: 0 auto;
+   padding: 15px;
+   word-spacing: 10px;
+   margin: 0 auto;
 }
+
+#header-form input{
+   max-width: 150px;
+}
+
 
 /*** 2. About ***/
 
@@ -258,7 +282,6 @@ body {
 
 /* contacts and sites */
 
-
 #header-menu { 
    display: flex;
    flex-wrap: wrap;
@@ -275,14 +298,16 @@ body {
 }
 #header-menu .logo { 
    order: 3; 
-   height: 60px;
+   height: 50px;
    flex: 1 1 calc(40% - 50px);
+   box-shadow: -5px 10px 7px white;
 }
 #header-menu nav { 
    order: 4;
-   height: 60px;
+   height: 50px;
    text-align: right;
    flex: 1 1 calc(60% - 50px); 
+   box-shadow: 5px 10px 7px white;
 }
 
 #header-menu .contacts {
@@ -299,24 +324,41 @@ body {
    order: 2;
 }
 
+.contacts .mail a {
+   text-decoration: none;
+   color: black;
+}
+
+#header-menu nav * {
+   text-decoration: none;
+   color: gray;
+}
+
+#header-menu nav li *:hover {
+   color:black;
+   border-bottom: 1px solid;
+}
 
 /* crossroad motel img */
 
-#header-title::before {
+/*#header-title::before {
    content: "";
    background: url(../img/header.jpg);
    position: relative;
+   align-content: center;
    display:block;
    height: 400px;
    background-repeat: no-repeat;
    margin: 0 auto;
    width: 100%;
-}
+}*/
 
 /* crossroad motel */
 
 #header-menu .logo a {
    font-family: "Bebas Neue";
+   color: black;
+   text-decoration: none;
 }
 
 #header-menu .logo:first-letter {
@@ -379,7 +421,7 @@ footer {
    float:left;
 }
 
-#networks {v
+#networks {
    float: left;
 }
 
