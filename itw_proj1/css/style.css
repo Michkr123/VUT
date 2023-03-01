@@ -22,7 +22,7 @@
     position: relative;
     margin-top: 10px;
     background-color: white;
-    box-shadow: 0px 5px 10px white;
+    box-shadow: 0px 10px 5px 5px white;
  }
 
 #header .contacts {
@@ -76,15 +76,16 @@
    background-image: url(../img/header.jpg);
    background-repeat: no-repeat;
    background-position: center;
-   min-width: 1000px;
+   box-shadow: 0 0 10px 10px white inset;
+   min-width: 900px;
+   max-width: 1150px;
    z-index: -1;
    min-height: 400px;
-   margin: 0 auto;
    position: relative;
    font-size: 24px;
    color: red;
-   margin: -20px 0px 100px 0px;
-   /* tady mají být okraje, ale dojebává to vše */
+   padding: 100px 50px;
+   margin: -20px auto 0px auto;
 }
 
 #header-title span:first-child {
@@ -105,16 +106,30 @@
 #header-form {
    font-size: 14px;
    position: relative;
-   margin: 0 auto;
+   margin: -40px auto 0px auto;
+   background-color: white;
+   box-shadow: 0px 0px 5px 5px white;
    padding: 15px;
    word-spacing: 10px;
+   max-width: 1000px;
+   min-width: 900px;
+   border-bottom: 1px solid #ffd0d0;
+}
+
+#header-form form {
    margin: 0 auto;
+   text-align: center;
 }
 
-#header-form input{
+#header-form form * {
    max-width: 150px;
+   min-width: 150px;
+   height: 50px;
 }
 
+#header-form form input[type="date"] {
+   min-width: 150px;
+}
 
 /*** 2. About ***/
 
@@ -245,7 +260,7 @@ footer h2 {
 
 #heisenberg {
    visibility: hidden;
-   position: relative;
+   position: absolute;
    border-radius: 15px;
    background: rgba(0,0,255,0.8);
    border: solid  1px white;
@@ -300,14 +315,12 @@ body {
    order: 3; 
    height: 50px;
    flex: 1 1 calc(40% - 50px);
-   box-shadow: -5px 10px 7px white;
 }
 #header-menu nav { 
    order: 4;
    height: 50px;
    text-align: right;
    flex: 1 1 calc(60% - 50px); 
-   box-shadow: 5px 10px 7px white;
 }
 
 #header-menu .contacts {
@@ -334,9 +347,15 @@ body {
    color: gray;
 }
 
+
 #header-menu nav li *:hover {
    color:black;
    border-bottom: 1px solid;
+}
+
+
+#tours-button a:hover { /* on click*/
+
 }
 
 /* crossroad motel img */
