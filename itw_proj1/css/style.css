@@ -9,12 +9,12 @@
 
 /*** 1. Header ***/
 
- #header {
+#header {
    position: relative;
    min-height: 400px; 
- }
+}
 
- #header-menu {
+#header-menu {
     max-width: 1000px;
     min-width: 900px;
     margin: 0 auto;
@@ -22,17 +22,21 @@
     margin-top: 10px;
     background-color: white;
     box-shadow: 0px 10px 5px 5px white;
- }
+}
 
 #header .contacts {
    margin: 10px;
+}
+
+#header .contacts .mail a {
+   transition: all 0.5s;
 }
 
 #header .contacts .mail a:hover {
    color:#cc3636;
 }
 
-#header i[class^="fas"] {
+i[class^="fas"] {
    margin-right: .25rem;
    color: #cc3636;
 }
@@ -41,14 +45,13 @@
    color: #363535;
 }
 
-#header .networks {
-   margin: 10px;
-   word-spacing: 10px;
-   padding-top: 5px;
+
+#header .networks * {
+   transition: all 0.5s;
 }
 
 #header .networks *:hover {
-   color:#cc3636
+   color:#cc3636;
 }
 
 #header .logo {
@@ -92,15 +95,16 @@
    font-size: 52px;
    color: white;
    display: block;
+   text-shadow: white 1px 0 10px;
 }
 
 #header-title p {
    padding-top: 250px; /* tohle nemuze byt dobre */
-   padding-left: 60%;
-}
-
-#header-tittle p span {
-   
+   padding-right: 2%;
+   float: right;
+   font-family: "Poppins";
+   text-align: right;
+   text-transform: capitalize;
 }
 
 #header-form {
@@ -108,12 +112,11 @@
    position: relative;
    margin: -40px auto 0px auto;
    background-color: white;
-   box-shadow: 0px 0px 5px 5px white;
+   box-shadow: 0px -5px 5px 5px white, 0px 2px 5px 1px #ffd0d0; /* oddelit carkou a znovu vsechny parametry*/
    padding: 15px;
    word-spacing: 10px;
    max-width: 1000px;
    min-width: 900px;
-   border-bottom: 1px solid #ffd0d0;
 }
 
 #header-form form {
@@ -124,7 +127,7 @@
 #header-form form * {
    max-width: 150px;
    min-width: 150px;
-   height: 50px;
+   height: 40px;
 }
 
 #header-form form input[type="date"] {
@@ -135,12 +138,26 @@
    background-color: #cc3636;
    border: 1px solid #cc3636;
    color: white;
+   height: 44px;
+   border-radius: 5px;
 }
+
+/* upravy velikosti, nelibi se mi to odskoceni o pixely*/
+
+#header-form form select {
+   height: 44px;
+}
+
+#header-form form input[name^="p"] {
+   height: 38px;
+}
+
+/* aby zmodralo tlacitko */
 
 /*** 2. About ***/
 
 #about {
-   /*width: 60%;*/
+   /*width: 60%;*/ /*podle zadani, ale pak to nefunguje a vypadat to na picu*/
    max-width: 1200px;
    min-width: 1000px; 
 
@@ -167,6 +184,7 @@
    margin-top: -42%;
    border-radius: 30px;
    position: relative;
+   transition: all 0.5s;
 }
 
 #about .heading span {
@@ -194,28 +212,28 @@
 #about:hover > div{
    background-color: #ffd0d0;
    border: 2px solid #cc3636;
-   
 }
 
-#about:hover > {
+#about:hover > img {
    opacity: 1;
+   width: 41%;
 }
-/* dat to na celou sekci */
+
+/* dat to na celou sekci, nejak blbe to funguje */
 
 /*** 3. Services ***/
 
 #services {
    background-color:#e8e7e7;
    width: 100%;
+   padding: 50px 10px; /* 10px aby tam nebyl pruh na strane bily*/
 }
 
 #services .heading {
    display: inline-block;
    width: 100%;
-   padding-top: 4%;
    text-align: center;
    font-family: "Poppins";
-   opacity: 0.8;
 }
 
 #services .heading span {
@@ -229,25 +247,32 @@
 #services .heading h2 {
    font-weight: 600;
    margin: 0;
+   text-transform: capitalize;
 }
 
 #services .section-content {
    max-width: 1200px;
-   display: block;
+   display: flex;
+   /*flex-wrap: wrap;*/ /* nezalamuje se to */
    margin: 0 auto;
 }
 
 #services .section-content .section-item {
    min-width: 250px;
    max-width: 400px;
-   display: inline-block;
    font-family: "Poppins";
    margin: 10px;
    opacity: 0.8;
+   transition: all 0.5s;
 }
 
 #services .section-content .section-item:hover {
    opacity: 1;
+}
+
+#services .section-content .section-item:hover > img {
+   width: 105%;
+   height: 320px;
 }
 
 #services .section-content .section-item h3 {
@@ -257,101 +282,385 @@
 #services img {
    height: 300px;
    width: 100%;
+   transition: all 0.5s;
 }
 
 /*** 4. Tours ***/
+
+#tours {
+   padding: 50px 0px;
+   background-image: url("../img/crystal-ship.svg");
+   background-size: 40%;
+   background-repeat: no-repeat;
+   background-position: 0% 5%;
+}
+
+#tours .heading {
+   display: inline-block;
+   width: 100%;
+   text-align: center;
+   font-family: "Poppins";
+}
+
+#tours .heading span {
+   color:#cc3636;
+   font-size: 12px;
+   letter-spacing: 5px;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+
+#tours .heading h2 {
+   font-weight: 600;
+   margin: 0;
+   text-transform: capitalize;
+}
+
+#tours .section-content {
+   margin: 0 auto;
+   max-width: 1200px;
+   min-width: 1000px;
+   font-family: "Poppins";
+}
+
+#tours .section-content div p {
+   text-align: justify;
+}
+
+#tour1 {
+   border-bottom: 1px dotted #888888;
+   padding-bottom: 3%;
+}
+
+#tour1 h3 {
+   text-align: right;
+   padding-top: 3%;
+}
+
+#tour1 div {
+   text-align: right;
+}
+
+#tour2 {
+   border-bottom: 1px dotted #888888;
+   padding-bottom: 3%;
+}
+
+#tour2 h3 {
+   padding-top: 3%;
+}
+
+#tour2 img {
+   float:left;
+}
+
+#tour3 {
+   padding-bottom: 3%;
+}
+
+#tour3 h3 {
+   text-align: right;
+   padding-top: 3%;
+}
+
+#tour3 div {
+   text-align: right;
+}
 
 #tours div:nth-of-type(odd) img{
    float: right;
 }
 
-#tours .section-item {
+#tours .section-content .section-item {
    margin-top: 40px;
    margin-bottom: 20px;
 }
 
- #tours img {
+#tours img {
    width: 40%;
    margin: 20px;
- }
+   opacity: 0.8;
+   transition: all 0.5s;
+}
+
+#tours .tour-stars {
+   padding: 0px 10px;
+   border-right: 1px solid black;
+}
 
  #tours .tour-stars:before {
       font-family: 'FontAwesome';
       content: '\f005';
-      position:sticky;
+      color:#cc3636;
+      padding-right: 5px;  
  }
+
+ #tours .tour-duration {
+   padding: 0px 10px;
+   border-right: 1px solid black;
+}
 
  #tours .tour-duration:before {
    font-family: 'FontAwesome';
    content: '\f073';
-   position:sticky;
+   color:#cc3636;
+   padding-right: 5px;
+}
+
+#tours .tour-price {
+   padding: 0px 10px;
 }
 
 #tours .tour-price:before {
    font-family: 'FontAwesome';
    content: '\f15a';
-   position:sticky;
+   color:#cc3636;
+   padding-right: 5px;
+}
+
+
+/* animace */
+
+#tours .section-content div:hover > img {
+   opacity: 1;
+   width: 41%;
+   height: 41%;
+}
+
+#tours .section-content div:hover > h3 {
+   border-bottom: 1px solid #cc3636;
 }
 
 /*** 5. Price ***/
 
- #price .section-content {
-   height: 600px;
-   /*vycpavka polozky obsahu*/
- }
-
-#price ul li {
-   padding: 10px;
+#price .heading {
+   display: inline-block;
+   width: 100%;
+   text-align: center;
+   font-family: "Poppins";
 }
 
-#price ul
-{
-   /*background image, prazdny content, list style prazdny*/
-  background-image: url("../img/crystal.svg");
-  background-repeat: no-repeat;
-  position:sticky;
-  /* velikost odrazky 15px */
+#price .heading span {
+   color:#cc3636;
+   font-size: 12px;
+   letter-spacing: 5px;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+
+#price .heading h2 {
+   font-weight: 600;
+   margin: 0;
+   text-transform: capitalize;
 }
 
 #price .section-content {
+   height: 600px;
+   max-width: 1200px;
+   min-width: 1000px;
+
    background-image: url(../img/huel.jpg);
-   /*transform: scaleX(-1);*/
-   /* otoceni obrazku? opacity? transform scaleX(-1) */
+   background-repeat: no-repeat;
+   background-position-x: center;
+   background-size: cover;
+   margin: 3% auto;
+   opacity: 0.8;
+   transform: scaleX(-1);
+   box-shadow: 0px 0px 30px 50px white inset;
 }
+
+#price .section-content:hover {
+   opacity: 0.75;
+}
+
+ #price .section-content div {
+   padding: 20px;
+   margin: 10px;
+   display: inline-block;
+   transform: scaleX(-1);
+   background-color: white;
+   box-shadow: 0px 0px 20px 20px white;
+   border-radius: 20px;
+   font-family: "Poppins";
+}
+
+#price .section-content div * {
+   margin: 0px;
+   padding: 0px;
+}
+
+#price .section-content .section-item:first-child{
+
+}
+
+#price .section-content .section-item:nth-child(2){
+
+}
+
+#price .section-content .section-item:last-child{
+
+}
+
+/* napozicovat bubliny*/
 
 /*** 6. Clients ***/
 
-#clients  .section-item {
+#clients .heading {
+   display: inline-block;
+   width: 100%;
+   text-align: center;
+   font-family: "Poppins";
+}
+
+#clients .heading span {
+   color:#cc3636;
+   font-size: 12px;
+   letter-spacing: 5px;
+   font-weight: bold;
+   text-transform: uppercase;
+}
+
+#clients .heading h2 {
+   font-weight: 600;
+   margin: 0;
+   text-transform: capitalize;
+}
+
+#clients .section-content {
+   max-width: 1200px;
+   min-width: 984px;
+   padding: 0 5%;
+   margin: 0 auto;
+}
+
+#clients .section-content .section-item {
    margin: 40px 0px;
    max-width: 984px;
+   text-align: center;
 }
 
-#clients img {
+#clients .section-content .section-item img {
    width: 200px;
+   height: 200px;
+   opacity: 0.8;
 }
 
-/* bubliny */
+#clients .section-content .section-item:first-child {
+   height: 200px;
+   padding-right: 10%;
+}
+
+#clients .section-content .section-item:first-child img {
+   border-radius: 50% 30%;
+   box-shadow: 0px 0px 15px 0px #363535;
+   float: right;
+} 
+
+#clients .section-content .section-item:first-child blockquote {
+   background-color: #e8e7e7;
+   padding: 2% 15%;
+   border-radius: 3% 40% / 30% 60%;
+   float: left;
+} 
+
+#clients .section-content .section-item:last-child {
+   height: 200px;
+   padding-left: 10%;
+}
+
+#clients .section-content .section-item:last-child img {
+   border-radius: 30% 50%;
+   box-shadow: 0px 0px 15px 0px #363535;
+   float: left;
+} 
+
+#clients .section-content .section-item:last-child blockquote {
+   background-color: #e8e7e7;
+   padding: 2% 15%;
+   border-radius: 40% 3% / 60% 30%;
+   float: right;
+} 
+
+#clients .section-content .section-item * {
+   display: inline-block;
+}
+
+/* pridat male bubliny */
 
 /*** 7. Footer ***/
 
+footer {
+   min-width: 1000px;
+   font-family: "Poppins";
+   color: white;
+}
+
+footer div {
+   display: flex;
+   flex-wrap: wrap;
+   position: relative;
+
+   max-width: 1200px;
+   margin: 0 auto;
+   padding-top: 1%;
+}
+
+footer a {
+   text-decoration: none;
+   color: white;
+}
+
+#contact .contacts .mail a {
+   text-decoration: none;
+   color: white;
+}
+
 footer h2 {
    letter-spacing: 0.2rem;
+   font-family: "Bebas Neue";
+   font-weight: 500;
 }
 
-#summary {
-   max-width: 30%;
-}
-
-#links {
-   max-width: 20%;
-}
-
-#contacts {
-   max-width: 50%;
+footer div:first-child {
+   border-bottom: 1px solid white;
 }
 
 #license {
-   margin: 20px 0px;
+   padding: 20px 0px;
+}
+
+#license span:last-child {
+   text-align: right;
+}
+
+#summary {
+   flex: 1 1 calc(30% - 50px);
+}
+#links {
+   flex: 1 1 calc(20% - 50px);
+}
+#contact { 
+   flex: 1 1 calc(50% - 50px);
+}
+
+#contact .contacts {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   position: relative;
+}
+
+#summary .networks {
+   margin: 10px;
+   word-spacing: 10px;
+   padding-top: 5px;
+   transition: all 0.5s;
+}
+
+#summary .networks span {
+   padding: 5px 10px;
+   margin-right: 5px;
+   border: 1px solid #cc3636;
 }
 
 /*** 8. Jesse ***/
@@ -456,7 +765,9 @@ body {
    text-decoration: none;
    color: gray;
 }
-
+#header-menu nav li * {
+   transition: all 0.5s;
+}
 
 #header-menu nav li *:hover {
    color:black;
@@ -505,19 +816,12 @@ body {
    content: "The Crystal Palace";
 }
 
-/*dropdown menu*/
-
-/*#header-menu nav{
-   display: inline-block;
-   position: absolute;
-}*/
-
 #header-menu ul {
    display: inline-block;
 }
 
 #tours-button ul{
-   visibility: hidden;
+   visibility: hidden; /* dokoncit */
    position: absolute;
 }
 
@@ -528,6 +832,7 @@ body {
 
 /* Jesse */
 #jesse {
+   visibility: hidden;
    position: fixed;
    bottom: 0;
    right: 0;
@@ -539,27 +844,14 @@ body {
    /* objeveni az po scrollu */
 }
 
+html[class="scrolled"] > body > #jesse {
+   visibility: visible;
+}
+
 /* Footer */
 
 footer {
    background-color: #363535;
-   margin: 0px -8px -20px -8px;
-}
-
-#summary {
-   float:left;
-}
-
-#networks {
-   float: left;
-}
-
-#links {
-   float: left;
-}
-
-.contacts {
-   float:left;
 }
 
 .contacts {
