@@ -50,7 +50,7 @@ i[class^="fas"] {
 }
 
 #header .networks * {
-   padding-top: 20px;
+   padding-top: 15px;
    padding-right: 2px;
    transform: scale(1.1);
    transition: all 0.5s;
@@ -91,16 +91,18 @@ i[class^="fas"] {
    padding-left: 0px;
    padding-top: 10px;
    width: 10%;
+   box-shadow: 0px 0px 5px 5px white;
 }
 
 #tours-button ul {
-   /*top: 100%;*/
-   border: 1px solid black;
+   top: 100%;
+   right: 14%;
 }
 
 #tours-button ul li {
    width: 100%;
    height: 10px;
+   line-height: 1px;
 }
 
 #tours-button:hover > ul { 
@@ -837,21 +839,50 @@ footer div:first-child {
    padding: 15px 20px;
 }
 
+#jesse {
+   visibility: hidden;
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   margin: 15px;
+   padding: 15px 18px;
+   color: #cc3636;
+   border: solid  1px #cc3636;
+   z-index: 100;
+   /* objeveni az po scrollu */
+}
+
+html[class="scrolled"] > body > #jesse {
+   visibility: visible;
+}
+
+html[class="scrolled"] > body > #jesse:hover {
+   color:white;
+   background-color: #cc3636;
+   transition: all 0.5s; 
+}
+
 /*** 9. Heisenberg ***/
 
 #heisenberg {
    visibility: hidden;
-   position: absolute;
+   position: fixed;
    border-radius: 15px;
+   top: 5%;
+   left: 43%;
+   transform: translateY(30%);
    background: rgba(0,0,255,0.8);
    border: solid  1px white;
-   margin: 0 auto;
+   box-shadow: 0px 0px 15px 5px blue;
    height: 120px;
    width: 300px;
+   z-index: 99;
 }
 
 #heisenberg.open {
    visibility: visible;
+   transform: translateY(0);
+   transition: all 0.5s;
 }
 
 #heisenberg span {
@@ -927,7 +958,7 @@ body {
    color: black;
 }
 
-#header-menu nav li *:hover {
+#header-menu nav ul li > a:hover {
    color:black;
    border-bottom: 1px solid;
 }
@@ -977,28 +1008,6 @@ body {
 #header-menu ul li {
    display: inline-block;
    height: 80px;
-}
-
-/* Jesse */
-#jesse {
-   visibility: hidden;
-   position: fixed;
-   bottom: 0;
-   right: 0;
-   margin: 15px;
-   padding: 15px 18px;
-   color: #cc3636;
-   border: solid  1px #cc3636;
-   z-index: 100;
-   /* objeveni az po scrollu */
-}
-
-html[class="scrolled"] > body > #jesse {
-   visibility: visible;
-}
-
-html[class="scrolled"] > body > #jesse:hover {
-   visibility: visible;
 }
 
 /* Footer */
