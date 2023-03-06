@@ -16,7 +16,7 @@
 
 #header-menu {
     max-width: 1000px;
-    min-width: 900px;
+    min-width: 768px;
     margin: 0 auto;
     position: relative;
     margin-top: 10px;
@@ -152,7 +152,7 @@ i[class^="fas"] {
    padding: 15px;
    word-spacing: 10px;
    max-width: 1000px;
-   min-width: 900px;
+   min-width: 768px; /* spatne se to zalmuje*/
 }
 
 #header-form form {
@@ -195,7 +195,7 @@ i[class^="fas"] {
 #about {
    /*width: 60%;*/ /*podle zadani, ale pak to nefunguje a vypadat to na picu*/
    max-width: 1200px;
-   min-width: 1000px;
+   min-width: 768px;
    padding-top: 300x; 
    margin: 0 auto;
    position: relative;
@@ -287,7 +287,7 @@ i[class^="fas"] {
 #services .heading {
    display: inline-block;
    width: 100%;
-   min-width: 1000px;
+   min-width: 768px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -309,7 +309,6 @@ i[class^="fas"] {
 #services .section-content {
    max-width: 1200px;
    display: flex;
-   /*flex-wrap: wrap;*/ /* nezalamuje se to */
    margin: 0 auto;
 }
 
@@ -350,7 +349,7 @@ i[class^="fas"] {
 
 #tours {
    padding: 50px 0px;
-   min-width: 1000px;
+   min-width: 768px;
    background-image: url("../img/crystal-ship.svg");
    background-size: 40%;
    background-repeat: no-repeat;
@@ -360,7 +359,7 @@ i[class^="fas"] {
 #tours .heading {
    display: inline-block;
    width: 100%;
-   min-width: 1000px;
+   min-width: 768px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -382,7 +381,7 @@ i[class^="fas"] {
 #tours .section-content {
    margin: 0 auto;
    max-width: 1200px;
-   min-width: 1000px;
+   min-width: 768px;
    font-family: "Poppins";
 }
 
@@ -497,7 +496,7 @@ i[class^="fas"] {
 #price .heading {
    display: inline-block;
    width: 100%;
-   min-width: 1000px;
+   min-width: 768px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -519,16 +518,8 @@ i[class^="fas"] {
 #price .section-content {
    height: 600px;
    max-width: 1200px;
-   min-width: 1000px;
-
-   /*background-image: url(../img/huel.jpg);
-   background-repeat: no-repeat;
-   background-position-x: center;
-   background-size: cover;*/
+   min-width: 768px;
    margin: 3% auto;
-   /*opacity: 0.6;*/
-   /*transform: scaleX(-1);
-   box-shadow: 0px 0px 20px 40px white inset;*/
 }
 
 #price .section-content:before {
@@ -634,7 +625,7 @@ i[class^="fas"] {
 #clients .heading {
    display: inline-block;
    width: 100%;
-   min-width: 1100px;
+   min-width: 768px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -758,7 +749,7 @@ i[class^="fas"] {
 /*** 7. Footer ***/
 
 footer {
-   min-width: 1100px;
+   min-width: 768px;
    font-family: "Poppins";
    color: white;
 }
@@ -780,7 +771,7 @@ footer a {
 
 #contact .contacts .mail a {
    text-decoration: none;
-   color: white;
+   color: #e8e7e7;
 }
 
 footer h2 {
@@ -797,8 +788,9 @@ footer div:first-child {
    padding: 20px 0px;
 }
 
-#license span:last-child {
+#license span:last-child{
    text-align: right;
+   margin-left: 40%;
 }
 
 #summary {
@@ -811,11 +803,15 @@ footer div:first-child {
    flex: 1 1 calc(50% - 50px);
 }
 
-#contact .contacts {
-   display: flex;
-   flex-wrap: wrap;
-   flex-direction: column;
-   position: relative;
+#summary .networks span {
+   padding: 5px 10px;
+   margin-right: 5px;
+   border: 1px solid #cc3636;
+   color: #e8e7e7;
+}
+
+#summary p {
+   color: #e8e7e7;
 }
 
 #summary .networks {
@@ -823,12 +819,59 @@ footer div:first-child {
    word-spacing: 10px;
    padding-top: 5px;
    transition: all 0.5s;
+}  
+
+#links > * {
+   margin-left: 80%;
 }
 
-#summary .networks span {
-   padding: 5px 10px;
-   margin-right: 5px;
-   border: 1px solid #cc3636;
+#links ul li {
+   list-style: ">";
+   color: #cc3636;
+   padding-left: 10px;
+   padding-top: 5px;
+}
+
+#links ul li * {
+   color: #e8e7e7;
+}
+
+#contact > * {
+   margin-left: 50%;
+}
+
+#contact .contacts {
+   display: flex;
+   flex-wrap: wrap;
+   flex-direction: column;
+   position: relative;
+}
+
+#contact .contacts span {
+   color: #e8e7e7;
+}
+
+#contact h3 {
+   text-transform: uppercase;
+   font-family: "Bebas Neue";
+   letter-spacing: 3px;
+   font-weight: 400;
+}
+
+#contact form input[name] {
+   height: 35px;
+   width: 150px;
+   margin: 0;
+}
+
+#contact form input[value] {
+   height: 39px;
+   width: 70px;
+   margin: 0;
+   margin-left: -5px;
+   background-color: #cc3636;
+   border: none;
+   color: white;
 }
 
 /*** 8. Jesse ***/
@@ -930,13 +973,13 @@ body {
 #header-menu .logo { 
    order: 3; 
    height: 50px;
-   flex: 1 1 calc(40% - 50px);
+   flex: 1 1 calc(35% - 50px);
 }
 #header-menu nav { 
    order: 4;
    height: 50px;
    text-align: right;
-   flex: 1 1 calc(60% - 50px); 
+   flex: 1 1 calc(65% - 50px); 
 }
 
 #header-menu .contacts {
