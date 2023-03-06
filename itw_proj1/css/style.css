@@ -281,7 +281,6 @@ i[class^="fas"] {
 #services {
    background-color:#e8e7e7;
    width: 100%;
-   padding: 50px 10px; /* 10px aby tam nebyl pruh na strane bily*/
 }
 
 #services .heading {
@@ -766,12 +765,17 @@ footer div {
 
 footer a {
    text-decoration: none;
-   color: white;
+   color: #e8e7e7;
 }
 
 #contact .contacts .mail a {
    text-decoration: none;
    color: #e8e7e7;
+   transition: all 0.5s;
+}
+
+#contact .contacts .mail a:hover {
+   color:#cc3636;
 }
 
 footer h2 {
@@ -786,11 +790,6 @@ footer div:first-child {
 
 #license {
    padding: 20px 0px;
-}
-
-#license span:last-child{
-   text-align: right;
-   margin-left: 40%;
 }
 
 #summary {
@@ -808,6 +807,11 @@ footer div:first-child {
    margin-right: 5px;
    border: 1px solid #cc3636;
    color: #e8e7e7;
+   transition: all 0.5s;
+}
+
+#summary .networks span:hover{
+   background-color: #cc3636;
 }
 
 #summary p {
@@ -822,7 +826,7 @@ footer div:first-child {
 }  
 
 #links > * {
-   margin-left: 80%;
+   padding-left: 80%;
 }
 
 #links ul li {
@@ -832,12 +836,17 @@ footer div:first-child {
    padding-top: 5px;
 }
 
-#links ul li * {
+#links ul li > * {
    color: #e8e7e7;
+   transition: all 0.5s;
+}
+
+#links ul li > *:hover {
+   color: #cc3636;
 }
 
 #contact > * {
-   margin-left: 50%;
+   padding-left: 50%;
 }
 
 #contact .contacts {
