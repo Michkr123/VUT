@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="css/style.css">
     <script>
         var lastScroll = false;
- 
         window.addEventListener("load", () => {
             window.addEventListener("scroll", () => {
                 if(window.scrollY > 0) {
@@ -44,7 +43,7 @@
             // note: you could process the form here and call an async function to send the values to the server
 
             setTimeout(() => {
-                document.getElementByI|d("heisenberg")?.classList.toggle("open");
+                document.getElementById("heisenberg")?.classList.toggle("open");
                 document.querySelectorAll("input[type='submit']")?.forEach((btn) => btn.disabled = null);
             }, 2000);
         }

@@ -45,8 +45,14 @@ i[class^="fas"] {
    color: #363535;
 }
 
+#header .networks {
+   padding-right: 5px;
+}
 
 #header .networks * {
+   padding-top: 15px;
+   padding-right: 2px;
+   transform: scale(1.1);
    transition: all 0.5s;
 }
 
@@ -71,6 +77,36 @@ i[class^="fas"] {
    font-family: "Poppins";
    border-top: 1px solid #ffd0d0;
    border-right: 1px solid #ffd0d0;
+}
+
+#header-menu nav * {
+   text-decoration: none;
+   color: gray;
+}
+
+#tours-button ul{
+   position: absolute;
+   background-color: white;
+   text-align: center;
+   padding-left: 0px;
+   padding-top: 10px;
+   width: 10%;
+   box-shadow: 0px 0px 5px 5px white;
+}
+
+#tours-button ul {
+   top: 100%;
+   right: 14%;
+}
+
+#tours-button ul li {
+   width: 100%;
+   height: 10px;
+   line-height: 1px;
+}
+
+#tours-button:hover > ul { 
+   visibility: visible;
 }
 
 #header-title {
@@ -159,11 +195,30 @@ i[class^="fas"] {
 #about {
    /*width: 60%;*/ /*podle zadani, ale pak to nefunguje a vypadat to na picu*/
    max-width: 1200px;
-   min-width: 1000px; 
-
+   min-width: 1000px;
+   padding-top: 300x; 
    margin: 0 auto;
    position: relative;
+   background-image: url("../img/meth.svg");
+   overflow: hidden;
+   background-size: 58%;
+   background-position-x: 100%;
+   background-position-y: 40%;
+   background-repeat: no-repeat;
 }
+
+/*#about:before {
+   content: "";
+   position: absolute;
+   background-image: url("../img/meth.svg");
+   background-repeat: no-repeat;
+   background-size: 100%;
+   width: 60%;
+   height: 350%;
+   left: 40%;
+   top: -90%;
+   min-width: 60%;
+}*/
 
 #about .heading {
    position: relative;
@@ -216,7 +271,7 @@ i[class^="fas"] {
 
 #about:hover > img {
    opacity: 1;
-   width: 41%;
+   transform: scale(105%);
 }
 
 /* dat to na celou sekci, nejak blbe to funguje */
@@ -232,6 +287,7 @@ i[class^="fas"] {
 #services .heading {
    display: inline-block;
    width: 100%;
+   min-width: 1000px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -271,8 +327,13 @@ i[class^="fas"] {
 }
 
 #services .section-content .section-item:hover > img {
-   width: 105%;
-   height: 320px;
+   transform: scale(105%);
+}
+
+#services .section-content .section-item:hover > h3 {
+   text-decoration: underline;
+   text-decoration-color: #cc3636;
+   text-underline-offset: 7px;
 }
 
 #services .section-content .section-item h3 {
@@ -289,6 +350,7 @@ i[class^="fas"] {
 
 #tours {
    padding: 50px 0px;
+   min-width: 1000px;
    background-image: url("../img/crystal-ship.svg");
    background-size: 40%;
    background-repeat: no-repeat;
@@ -298,6 +360,7 @@ i[class^="fas"] {
 #tours .heading {
    display: inline-block;
    width: 100%;
+   min-width: 1000px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -333,8 +396,8 @@ i[class^="fas"] {
 }
 
 #tour1 h3 {
-   text-align: right;
    padding-top: 3%;
+   text-align: right;
 }
 
 #tour1 div {
@@ -389,7 +452,7 @@ i[class^="fas"] {
 }
 
  #tours .tour-stars:before {
-      font-family: 'FontAwesome';
+      font-family: "Font awesome 6 Free";
       content: '\f005';
       color:#cc3636;
       padding-right: 5px;  
@@ -401,7 +464,7 @@ i[class^="fas"] {
 }
 
  #tours .tour-duration:before {
-   font-family: 'FontAwesome';
+   font-family: 'Font awesome 6 Free';
    content: '\f073';
    color:#cc3636;
    padding-right: 5px;
@@ -412,23 +475,21 @@ i[class^="fas"] {
 }
 
 #tours .tour-price:before {
-   font-family: 'FontAwesome';
+   font-family: 'Font awesome 6 Brands';
    content: '\f15a';
    color:#cc3636;
    padding-right: 5px;
 }
 
-
-/* animace */
-
-#tours .section-content div:hover > img {
+#tours .section-content .section-item:hover > img {
    opacity: 1;
-   width: 41%;
-   height: 41%;
+   transform: scale(105%);
 }
 
 #tours .section-content div:hover > h3 {
-   border-bottom: 1px solid #cc3636;
+   text-decoration: underline;
+   text-decoration-color: #cc3636;
+   text-underline-offset: 7px;
 }
 
 /*** 5. Price ***/
@@ -436,6 +497,7 @@ i[class^="fas"] {
 #price .heading {
    display: inline-block;
    width: 100%;
+   min-width: 1000px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -459,29 +521,58 @@ i[class^="fas"] {
    max-width: 1200px;
    min-width: 1000px;
 
-   background-image: url(../img/huel.jpg);
+   /*background-image: url(../img/huel.jpg);
    background-repeat: no-repeat;
    background-position-x: center;
-   background-size: cover;
+   background-size: cover;*/
    margin: 3% auto;
-   opacity: 0.8;
-   transform: scaleX(-1);
-   box-shadow: 0px 0px 30px 50px white inset;
+   /*opacity: 0.6;*/
+   /*transform: scaleX(-1);
+   box-shadow: 0px 0px 20px 40px white inset;*/
 }
 
-#price .section-content:hover {
-   opacity: 0.75;
+#price .section-content:before {
+   content: "";
+   background-image: url("../img/huel.jpg");
+   position: absolute;
+   width: 1200px;
+   height: 600px;
+   background-repeat: no-repeat;
+   background-size: cover;
+   margin-top: -2%;
+   transform: scaleX(-1);
+   opacity: 0.6;
+   box-shadow: 0px 0px 40px 50px white inset;
+}
+
+#price .section-content:hover:before {
+   opacity: 0.4;
 }
 
  #price .section-content div {
    padding: 20px;
    margin: 10px;
    display: inline-block;
-   transform: scaleX(-1);
    background-color: white;
-   box-shadow: 0px 0px 20px 20px white;
+   box-shadow: 0px 0px 10px 10px white;
    border-radius: 20px;
    font-family: "Poppins";
+}
+
+#price .section-content div ul li {
+   list-style: none;
+   padding-left: 20px;
+}
+
+#price .section-content .section-item ul li:before {
+   content: "";
+   position: absolute;
+   background-image: url("../img/crystal.svg");
+   height: 20px;
+   width: 15px;
+   background-size: 15px;
+   background-repeat: no-repeat;
+   margin-left: -20px ;
 }
 
 #price .section-content div * {
@@ -490,15 +581,50 @@ i[class^="fas"] {
 }
 
 #price .section-content .section-item:first-child{
+   position: absolute;
+   min-width: 150px;
+   margin-left: 600px;
+   margin-top: 50px;
+}
 
+#price .section-content .section-item h3{
+   display: inline-block;
+   padding-bottom: 10px;
+}
+
+#price .section-content .section-item span{
+   display: inline-block;
+   float: right;
+   color: blue;
+   visibility: hidden;
+}
+
+#price .section-content .section-item:hover > span {
+   visibility: visible;
+}
+
+#price .section-content .section-item:hover > h3 {
+   text-decoration: underline;
+   text-decoration-color: #cc3636;
+   text-underline-offset: 5px;
+}
+
+#price .section-content .section-item:hover ul li:before {
+   background-image: url("../img/crystal-blue.svg");
 }
 
 #price .section-content .section-item:nth-child(2){
-
+   position: absolute;
+   min-width: 150px;
+   margin-left: 750px;
+   margin-top: 190px;
 }
 
 #price .section-content .section-item:last-child{
-
+   position: absolute;
+   min-width: 250px;
+   margin-left: 850px;
+   margin-top: 360px;
 }
 
 /* napozicovat bubliny*/
@@ -508,6 +634,7 @@ i[class^="fas"] {
 #clients .heading {
    display: inline-block;
    width: 100%;
+   min-width: 1100px;
    text-align: center;
    font-family: "Poppins";
 }
@@ -539,10 +666,29 @@ i[class^="fas"] {
    text-align: center;
 }
 
+#clients .section-content .section-item:hover > img {
+   opacity: 1;
+   transform: scale(105%);
+   box-shadow: 0px 0px 15px 5px #cc3636;
+}
+
+#clients .section-content .section-item:hover > blockquote {
+   background-color: #cc3636;
+}
+
+#clients .section-content .section-item:hover > blockquote:after {
+   background-color: #ffd0d0;
+}
+
+#clients .section-content .section-item:hover > blockquote:before {
+   background-color: #ffd0d0;
+}
+
 #clients .section-content .section-item img {
    width: 200px;
    height: 200px;
    opacity: 0.8;
+   transition: all 0.5s;
 }
 
 #clients .section-content .section-item:first-child {
@@ -550,17 +696,33 @@ i[class^="fas"] {
    padding-right: 10%;
 }
 
+#clients .section-content .section-item img {
+   box-shadow: 0px 0px 15px 0px #363535;
+}
+
 #clients .section-content .section-item:first-child img {
    border-radius: 50% 30%;
-   box-shadow: 0px 0px 15px 0px #363535;
    float: right;
 } 
 
-#clients .section-content .section-item:first-child blockquote {
+#clients .section-content .section-item blockquote, blockquote:after, blockquote::before {
    background-color: #e8e7e7;
+}
+
+#clients .section-content .section-item:first-child blockquote {
    padding: 2% 15%;
    border-radius: 3% 40% / 30% 60%;
    float: left;
+}
+
+#clients .section-content .section-item:first-child blockquote:after {
+   content: "";
+   width: 80px;
+   height: 30px;
+   margin-left: 180px;
+   margin-top: 20px;
+   position: absolute;
+   border-radius: 30% 50%;
 } 
 
 #clients .section-content .section-item:last-child {
@@ -570,27 +732,33 @@ i[class^="fas"] {
 
 #clients .section-content .section-item:last-child img {
    border-radius: 30% 50%;
-   box-shadow: 0px 0px 15px 0px #363535;
    float: left;
 } 
 
 #clients .section-content .section-item:last-child blockquote {
-   background-color: #e8e7e7;
    padding: 2% 15%;
    border-radius: 40% 3% / 60% 30%;
    float: right;
+} 
+
+#clients .section-content .section-item:last-child blockquote:before {
+   content: "";
+   width: 80px;
+   height: 30px;
+   margin-left: -250px;
+   margin-top: 20px;
+   position: absolute;
+   border-radius: 50% 30%;
 } 
 
 #clients .section-content .section-item * {
    display: inline-block;
 }
 
-/* pridat male bubliny */
-
 /*** 7. Footer ***/
 
 footer {
-   min-width: 1000px;
+   min-width: 1100px;
    font-family: "Poppins";
    color: white;
 }
@@ -671,21 +839,50 @@ footer div:first-child {
    padding: 15px 20px;
 }
 
+#jesse {
+   visibility: hidden;
+   position: fixed;
+   bottom: 0;
+   right: 0;
+   margin: 15px;
+   padding: 15px 18px;
+   color: #cc3636;
+   border: solid  1px #cc3636;
+   z-index: 100;
+   /* objeveni az po scrollu */
+}
+
+html[class="scrolled"] > body > #jesse {
+   visibility: visible;
+}
+
+html[class="scrolled"] > body > #jesse:hover {
+   color:white;
+   background-color: #cc3636;
+   transition: all 0.5s; 
+}
+
 /*** 9. Heisenberg ***/
 
 #heisenberg {
    visibility: hidden;
-   position: absolute;
+   position: fixed;
    border-radius: 15px;
+   top: 5%;
+   left: 43%;
+   transform: translateY(30%);
    background: rgba(0,0,255,0.8);
    border: solid  1px white;
-   margin: 0 auto;
+   box-shadow: 0px 0px 15px 5px blue;
    height: 120px;
    width: 300px;
+   z-index: 99;
 }
 
 #heisenberg.open {
    visibility: visible;
+   transform: translateY(0);
+   transition: all 0.5s;
 }
 
 #heisenberg span {
@@ -761,23 +958,11 @@ body {
    color: black;
 }
 
-#header-menu nav * {
-   text-decoration: none;
-   color: gray;
-}
-#header-menu nav li * {
-   transition: all 0.5s;
-}
-
-#header-menu nav li *:hover {
+#header-menu nav ul li > a:hover {
    color:black;
    border-bottom: 1px solid;
 }
 
-
-#tours-button a:hover { /* on click*/
-
-}
 
 /* crossroad motel img */
 
@@ -820,32 +1005,9 @@ body {
    display: inline-block;
 }
 
-#tours-button ul{
-   visibility: hidden; /* dokoncit */
-   position: absolute;
-}
-
 #header-menu ul li {
    display: inline-block;
    height: 80px;
-}
-
-/* Jesse */
-#jesse {
-   visibility: hidden;
-   position: fixed;
-   bottom: 0;
-   right: 0;
-   margin: 15px;
-   padding: 15px 18px;
-   color: #cc3636;
-   border: solid  1px #cc3636;
-   z-index: 100;
-   /* objeveni az po scrollu */
-}
-
-html[class="scrolled"] > body > #jesse {
-   visibility: visible;
 }
 
 /* Footer */
@@ -859,7 +1021,12 @@ footer {
 }
 
 
-
+/* bucket list
+      - header-menu rozbalit tours
+      - header-form modre tlacitko + heisenberg
+      - services, zalamovat obrazky 
+      - footer
+*/
 
 
 
