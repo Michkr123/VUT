@@ -82,6 +82,7 @@ i[class^="fas"] {
 #header-menu nav * {
    text-decoration: none;
    color: gray;
+   transition: all 0.5s;
 }
 
 #tours-button ul{
@@ -112,7 +113,7 @@ i[class^="fas"] {
 #header-title {
    max-height: 80%;
    min-height: 400px;
-   min-width: 900px;
+   min-width: 768px;
    max-width: 100% ;
    background-image: url(../img/header.jpg);
    background-repeat: no-repeat;
@@ -175,7 +176,7 @@ i[class^="fas"] {
    border: 1px solid #cc3636;
    color: white;
    height: 44px;
-   border-radius: 5px;
+   border-radius: 4px;
 }
 
 /* upravy velikosti, nelibi se mi to odskoceni o pixely*/
@@ -563,6 +564,7 @@ i[class^="fas"] {
    background-size: 15px;
    background-repeat: no-repeat;
    margin-left: -20px ;
+   transition: all 0.5s;
 }
 
 #price .section-content div * {
@@ -601,6 +603,7 @@ i[class^="fas"] {
 
 #price .section-content .section-item:hover ul li:before {
    background-image: url("../img/crystal-blue.svg");
+   transition: all 0.5s;
 }
 
 #price .section-content .section-item:nth-child(2){
@@ -678,7 +681,6 @@ i[class^="fas"] {
    width: 200px;
    height: 200px;
    opacity: 0.8;
-   transition: all 0.5s;
 }
 
 #clients .section-content .section-item:first-child {
