@@ -7,6 +7,12 @@
  * a pro netrivialni useky kodu.
  */
 
+/*** Body ***/
+
+body {
+   display: inline;
+}
+
 /*** 1. Header ***/
 
 #header {
@@ -19,9 +25,51 @@
     min-width: 768px;
     margin: 0 auto;
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
     margin-top: 10px;
     background-color: white;
     box-shadow: 0px 10px 5px 5px white;
+}
+
+#header-menu .contacts { 
+   order: 1;
+   flex: 1 1 calc(50% - 50px);
+}
+#header-menu .networks { 
+   order: 2;
+   text-align: right; 
+   flex: 1 1 calc(50% - 50px);
+}
+#header-menu .logo { 
+   order: 3; 
+   height: 50px;
+   flex: 1 1 calc(40% - 50px);
+}
+#header-menu nav { 
+   order: 4;
+   height: 50px;
+   text-align: right;
+   flex: 1 1 calc(60% - 50px); 
+}
+
+#header-menu .contacts {
+   display: flex;
+   flex-wrap: wrap;
+}
+
+#header-menu .contacts .mail {
+   order: 1;
+   margin-right: 10px;
+}
+
+#header-menu .contacts .phone {
+   order: 2;
+}
+
+.contacts .mail a {
+   text-decoration: none;
+   color: black;
 }
 
 #header .contacts {
@@ -68,11 +116,34 @@ i[class^="fas"] {
    border-left: 1px solid #e8e7e7;
 }
 
+#header-menu .logo a {
+   font-family: "Bebas Neue";
+   color: black;
+   text-decoration: none;
+}
+
+#header-menu .logo:first-letter {
+   color:#cc3636;
+}
+
+#header-menu .logo a:hover {
+   visibility: hidden;
+   color: #cc3636;
+}
+
+#header-menu .logo a:hover:before {
+   visibility: visible;
+   position: relative;
+   content: "The Crystal Palace";
+}
+
+
 #header nav {
    font-size: 14px;
    letter-spacing: .05em;
    word-spacing: 20px;
    padding-right: 40px;
+   margin-left: 0;
    padding-top: 15px;
    font-family: "Poppins";
    border-top: 1px solid #ffd0d0;
@@ -82,6 +153,10 @@ i[class^="fas"] {
 #header-menu nav * {
    text-decoration: none;
    color: gray;
+}
+
+#header-menu nav ul {
+   padding: 0;
 }
 
 #header-menu ul li {
@@ -99,10 +174,11 @@ i[class^="fas"] {
 }
 
 #tours-button ul {
-   top: 100%;
+   top: 88%;
    right: 14%;
    width: 110px;
    visibility: hidden;
+   transition: all 0.3s;
 }
 
 #tours-button ul li {
@@ -186,6 +262,10 @@ i[class^="fas"] {
    min-width: 150px;
 }
 
+#header-form form input[name]:valid + input[type="submit"] {
+   background-color: blue;
+}
+
 #header-form form input[type="submit"] {
    background-color: #cc3636;
    border: 1px solid #cc3636;
@@ -209,7 +289,6 @@ i[class^="fas"] {
 /*** 2. About ***/
 
 #about {
-   /*width: 60%;*/ /*podle zadani, ale pak to nefunguje a vypadat to na picu*/
    max-width: 1200px;
    min-width: 768px;
    padding-top: 300x; 
@@ -222,19 +301,6 @@ i[class^="fas"] {
    background-position-y: 40%;
    background-repeat: no-repeat;
 }
-
-/*#about:before {
-   content: "";
-   position: absolute;
-   background-image: url("../img/meth.svg");
-   background-repeat: no-repeat;
-   background-size: 100%;
-   width: 60%;
-   height: 350%;
-   left: 40%;
-   top: -90%;
-   min-width: 60%;
-}*/
 
 #about .heading {
    position: relative;
@@ -601,7 +667,6 @@ i[class^="fas"] {
 }
 
 #price .section-content .section-item span{
-   display: inline-block;
    float: right;
    color: blue;
    visibility: hidden;
@@ -774,6 +839,11 @@ footer {
    min-width: 768px;
    font-family: "Poppins";
    color: white;
+   background-color: #363535;
+}
+
+footer .contacts {
+   font-family: "Poppins";
 }
 
 footer div {
@@ -813,10 +883,15 @@ footer div:first-child {
 
 #license {
    padding: 20px 0px;
+   text-decoration: none;
+}
+#license span:last-child a {
+   transition: all 0.5s;
 }
 
-#license span:last-child {
-   /* posunout doprava */
+#license span:last-child:hover > a {
+   color:#cc3636;
+   transition: all 0.5s;
 }
 
 #summary {
@@ -900,6 +975,10 @@ footer div:first-child {
    margin: 0;
 }
 
+#contact form input[name]:valid + input[type="submit"] {
+   background-color: blue;
+}
+
 #contact form input[value] {
    height: 39px;
    width: 55px;
@@ -978,110 +1057,4 @@ html[class="scrolled"] > body > #jesse:hover {
    height: 80%;
    float: left;
    margin: 10px;
-
-   /* zaobleni okraju */
 }
-
-/*** Vzhled stranky ***/
-
-/* Body */
-
-body {
-   display: inline;
-}
-
-/* contacts and sites */
-
-#header-menu { 
-   display: flex;
-   flex-wrap: wrap;
-   position: relative;
-}
-#header-menu .contacts { 
-   order: 1;
-   flex: 1 1 calc(50% - 50px);
-}
-#header-menu .networks { 
-   order: 2;
-   text-align: right; 
-   flex: 1 1 calc(50% - 50px);
-}
-#header-menu .logo { 
-   order: 3; 
-   height: 50px;
-   flex: 1 1 calc(35% - 50px);
-}
-#header-menu nav { 
-   order: 4;
-   height: 50px;
-   text-align: right;
-   flex: 1 1 calc(65% - 50px); 
-}
-
-#header-menu .contacts {
-   display: flex;
-   flex-wrap: wrap;
-}
-
-#header-menu .contacts .mail {
-   order: 1;
-   margin-right: 10px;
-}
-
-#header-menu .contacts .phone {
-   order: 2;
-}
-
-.contacts .mail a {
-   text-decoration: none;
-   color: black;
-}
-
-
-/* crossroad motel */
-
-#header-menu .logo a {
-   font-family: "Bebas Neue";
-   color: black;
-   text-decoration: none;
-}
-
-#header-menu .logo:first-letter {
-   color:#cc3636;
-}
-
-#header-menu .logo a:hover {
-   visibility: hidden;
-   color: #cc3636;
-}
-
-#header-menu .logo a:hover:before {
-   visibility: visible;
-   position: relative;
-   content: "The Crystal Palace";
-}
-
-/* Footer */
-
-footer {
-   background-color: #363535;
-}
-
-.contacts {
-   font-family: "Poppins";
-}
-
-
-/* bucket list
-      - header-menu rozbalit tours
-      - header-form modre tlacitko + heisenberg
-      - services, zalamovat obrazky 
-      - footer
-*/
-
-
-
-
-
-
- 
