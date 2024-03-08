@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="4dea8567-0d9a-4165-81ad-03bcce671155" name="Changes" comment="Jarní úklid" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,7 +52,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1709914469095</updated>
-      <workItem from="1709914470948" duration="310000" />
+      <workItem from="1709914470948" duration="653000" />
     </task>
     <task id="LOCAL-00001" summary="Jarní úklid">
       <option name="closed" value="true" />
@@ -59,7 +62,23 @@
       <option name="project" value="LOCAL" />
       <updated>1709914764093</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Jarní úklid">
+      <option name="closed" value="true" />
+      <created>1709915067215</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709915067215</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Jarní úklid">
+      <option name="closed" value="true" />
+      <created>1709915120950</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1709915120950</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
