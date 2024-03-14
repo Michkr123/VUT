@@ -7,6 +7,8 @@
 \usepackage[czech]{babel}
 \usepackage{amsmath}
 
+\newtheorem{theorem}{Definice}
+
 \title{ITY_project_2}
 \author{xmicha94}
 \date{March 2024}
@@ -17,7 +19,6 @@
 \begin{center}
 \Huge 
 \textsc{{\Huge Vysoké učení technické v Brně \\[0.5em]}}
-
 \textsc{{\huge Fakulta informačních technologií}}
 \vfill
 
@@ -38,7 +39,7 @@ příkazy \verb|\verb| a \verb|\emph|.
 Titulní strana je vysázena prostředím \texttt{titlepage}
 a nadpis je v optickém středu s využitím \textit{přesného} zlatého řezu, který byl probrán na přednášce. Dále jsou
 na titulní straně čtyři různé velikosti písma a mezi
-dvojicemi řádků textu je použito řádkování se zadanou relativní velikostí 0,5 em a 0,6 em\footnote{Použijte správný typ mezery mezi číslem a jednotkou}.
+dvojicemi řádků textu je použito řádkování se zadanou relativní velikostí 0,5 em a 0,6 em\footnote{Použijte správný typ mezery mezi číslem a jednotkou.}.
 
 \section{Matematický text}
 Matematické symboly a výrazy v plynulém textu jsou
@@ -48,30 +49,34 @@ Tato prostředí obracejí význam \verb|\emph|: uvnitř textu
 sázeného kurzívou se zvýrazňuje písmem v základním řezu. Někdy je vhodné použít konstrukci \verb|${}$|
 nebo \verb|\mbox{}|, která zabrání zalomení (matematického) textu. Pozor také na tvar i sklon řeckých písmen:
 srovnejte \verb|\epsilon| a \verb|\varepsilon|, \verb|\Xi| a \verb|\varXi|.
-\textbf{Definice 1.} Konečný přepisovací stroj \textit{neboli} Mea\-ly\-ho automat \textit{je definován jako uspořádaná pětice
-tvaru} $M = (Q, \sum, \Gamma, \delta, q_0)$, kde:
+\begin{theorem}
+\emph{Konečný přepisovací stroj} neboli \emph{Mea\-ly\-ho automat} je definován jako uspořádaná pětice
+tvaru $M = (Q, \mathit\Sigma, \mathit\Gamma, \delta, q_0)$, kde:
+\end{theorem}
 
 \begin{itemize}
-\item Q je konečná množina stavů,
-\item $\sum$ je konečná vstupní abeceda,
-\item $\Gamma$ je konečná výstupní abeceda,
-\item $\delta$ : Q × $\sum$ → Q × $\Gamma$ je totální přechodová funkce,
-\item $q_0$ $\in$ Q je počáteční stav.
+\item[$\bullet$] \textit{Q} \textit{je konečná množina} stavů,
+\item[$\bullet$] $\mathit\Sigma$ \textit{je konečná} vstupní abeceda,
+\item[$\bullet$] $\mathit\Gamma$ \textit{je konečná} výstupní abeceda,
+\item[$\bullet$] $\delta$ : \textit{Q} $\times$ $\mathit\Sigma$ → \textit{Q} $\times$ $\mathit\Gamma$ \textit{je totální} přechodová funkce,
+\item[$\bullet$] $q_0$ $\in$ \textit{Q} \textit{je} počáteční stav.
 \end{itemize}
 
 \subsection{Podsekce s definicí}
 
 Pomocí přechodové funkce $\delta$ zavedeme novou funkci $\delta^*$
-pro překlad vstupních slov u $\in$ $\sum^*$ do výstupních slov
-$\omega$ $\in$ $\Gamma^*$. \\
-\textbf{Definice 2.} \textit{Nechť} $M = (Q, \sum, \Gamma, \delta, q_0)$ \textit{je Mea\-ly\-ho
-automat}. Překládací funkce \textit{$\delta^*$ : Q $\times$ $\sum^*$ $\times$  $\Gamma^*$ $\rightarrow$ $\Gamma^*$
-je pro každý stav q $\in$ Q, symbol x $\in$ $\sum$, slova u $\in$ $\sum^*$,
-$w$ $\in$ $\Gamma^*$ definována rekurentním předpisem:}
+pro překlad vstupních slov u $\in$ $\mathit\Sigma^*$ do výstupních slov
+$w$ $\in$ $\mathit\Gamma^*$.
+\begin{theorem}
+    Nechť $M = (\mathit{Q}, \mathit\Sigma, \mathit\Gamma, \delta, q_0)$ je Mea\-ly\-ho
+    automat. \emph{Překládací funkce} $\delta^*$ : Q $\times$ $\mathit\Sigma^*$ $\times$  $\mathit\Gamma^*$ $\rightarrow$ $\mathit\Gamma^*$
+    je pro každý stav q $\in$ Q, symbol x $\in$ $\mathit\Sigma$, slova u $\in$ $\mathit\Sigma^*$,
+    $w$ $\in$ $\mathit\Gamma^*$ definována rekurentním předpisem:
+\end{theorem} 
 
 \begin{itemize}
-\item $\delta^*(q,\varepsilon, w) = w$
-\item $\delta^*(q,xu,w) = \delta^*(q',u,wy), kde (q',y) = \delta(q,x)$
+\item[$\bullet$] $\delta^*(q,\varepsilon, w) = w$
+\item[$\bullet$] $\delta^*(q,xu,w) = \delta^*(q',u,wy)$, kde $(q',y)$ = $\delta(q,x)$
 \end{itemize}
 
 \subsection{Rovnice}
@@ -92,7 +97,7 @@ anebo pomocí \verb|\left| a \verb|\right|. Kombinační čísla sázejte makrem
 \end{displaymath}
 
 \begin{displaymath}
-    F_{4+1} = \binom{n}{0} + \binom{n - 1}{1} + \binom{n - 2}{2} + \cdots + \binom{[\frac{n}{2}]}{[\frac{n}{2}]}
+    F_{n+1} = \binom{n}{0} + \binom{n - 1}{1} + \binom{n - 2}{2} + \cdots + \binom{[\frac{n}{2}]}{[\frac{n}{2}]}
 \end{displaymath}
 
 V rovnici (1) jsou tři typy závorek s různou \textit{explicitně} definovanou velikostí. Obě rovnice mají svisle zarovnaná rovnítka. Použijte k tomu vhodné prostředí.
@@ -125,7 +130,7 @@ D = \left|
 \left|
 \begin{array}{cc}
     x & y \\
-    y & w
+    t & w
 \end{array}
 \right|
 =
