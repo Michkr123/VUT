@@ -3,13 +3,13 @@
 #include "main.h"
 
 
-int establishing_connection(int client_socket)
+int establishing_connection(int client_socket, char *addr)
 {
     struct sockaddr_in server_addr;
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(S_PORT);
-    inet_pton(AF_INET, SERVER, &server_addr.sin_addr);
+    inet_pton(AF_INET, addr, &server_addr.sin_addr);
 
     int connect_check = connect(client_socket, (struct sockaddr *)&server_addr, sizeof(server_addr));
 
@@ -35,13 +35,8 @@ void disconnect_err(int client_socket)
     exit(1);
 }
 
-//************************* MAIN *************************//
-int main(int argc, char *argv[]) 
+int tcp_client(char *addr)
 {
-
-    // kontrola argumetu poganek
-    
-    
     int client_socket = socket(AF_INET, SOCK_STREAM, 0);
     if(client_socket == -1)
     {
@@ -49,7 +44,7 @@ int main(int argc, char *argv[])
         exit(1);
     }
     
-    if(establishing_connection(client_socket))
+    if(establishing_connection(client_socket, addr))
     {
         perror("ERROR: connect");
         exit(1);
@@ -69,6 +64,35 @@ int main(int argc, char *argv[])
         }
         printf(message);   
     }
+    return 0;
+}
+
+//************************* MAIN *************************//
+int main(int argc, char *argv[]) 
+{
+
+    // kontrola argumetu poganek
+
+    if(argc < 5)
+    {
+        perror("ERROR: arguments ./main -t [tcp/udp] -s [ip_addr]");
+        exit(1); // malo argumentu
+    }
+
+    if(argc < 5 || strcmp(argv[1], "-t") || (strcmp(argv[2], "tcp") && strcmp(argv[2], "udp")) || strcmp(argv[3], "-s")) //TODO kontrola adresy
+    {
+        perror("ERROR: arguments ./main -t [tcp/udp] -s [ip_addr]");
+        exit(1);
+    }
+
+    char *protocol = argv[2];
+    char *addr = argv[4];
+
+    if (!strcmp(protocol, "tcp"))
+    {
+        tcp_client(addr);
+    }
+    
     
     return 0;
 }

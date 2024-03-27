@@ -7,7 +7,6 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
-#define SERVER "127.0.0.1"
 #define S_PORT 4567
 
 #endif
