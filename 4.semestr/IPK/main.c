@@ -76,6 +76,14 @@ int send_message(int client_socket, char *message, char *state)
         }
         else if(!strcmp(word, "/msg"))
         {
+            char *message_content = strtok(NULL, " ");
+            char *more_arguments = strtok(NULL, " ");
+            if(message_content == NULL || more_arguments != NULL)
+            {
+                exit(1);
+            } 
+
+            sprintf(message, "MSG FROM %s IS %s\r\n", display_name, message_content);
 
         }
         else
