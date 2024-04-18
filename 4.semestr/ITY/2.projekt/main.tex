@@ -1,0 +1,148 @@
+\documentclass[a4paper, twocolumn, 11pt]{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage[left=1.4cm, top=2.3cm, text={18.3cm, 25.2cm}]{geometry}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[czech]{babel}
+\usepackage{amsmath}
+
+\newtheorem{theorem}{Definice}
+
+\title{ITY_project_2}
+\author{xmicha94}
+\date{March 2024}
+
+\begin{document}
+\thispagestyle{empty}
+\onecolumn
+\begin{center}
+\Huge 
+\textsc{{\Huge Vysoké učení technické v~Brně \\[0.5em]}}
+\textsc{{\huge Fakulta informačních technologií}}
+\vfill
+
+{\LARGE Typografie a publikování –– 2. projekt \\[0.6em]
+Sazba dokumentů a matematických výrazů}
+\vfill
+\end{center}
+
+{\LARGE 20024 \hfill Michálek Kryštof (xmicha94)}
+
+\newpage
+\twocolumn
+\section*{Úvod}
+V~této úloze si vysázíme titulní stranu a kousek matematického textu, v~němž se vyskytují například Definice 1 nebo rovnice (2) na straně 1. Pro vytvoření těchto odkazů používáme kombinace příkazů \verb|\label|,
+\verb|\ref|, \verb|\eqref| a \verb|\pageref|. Před odkazy patří nezlomitelná mezera. Pro zvýrazňování textu se používají
+příkazy \verb|\verb| a \verb|\emph|.
+
+Titulní strana je vysázena prostředím \texttt{titlepage}
+a nadpis je v~optickém středu s~využitím \textit{přesného} zlatého řezu, který byl probrán na přednášce. Dále jsou
+na titulní straně čtyři různé velikosti písma a mezi
+dvojicemi řádků textu je použito řádkování se zadanou relativní velikostí 0,5 em a 0,6 em\footnote{Použijte správný typ mezery mezi číslem a jednotkou.}.
+
+\section{Matematický text}
+Matematické symboly a výrazy v~plynulém textu jsou
+v~prostředí \texttt{math}. Definice a věty sázíme v~prostředí
+definovaném příkazem \verb|\newtheorem| z~balíku \texttt{amsthm}.
+Tato prostředí obracejí význam \verb|\emph|: uvnitř textu
+sázeného kurzívou se zvýrazňuje písmem v~základním řezu. Někdy je vhodné použít konstrukci \verb|${}$|
+nebo \verb|\mbox{}|, která zabrání zalomení (matematického) textu. Pozor také na tvar i sklon řeckých písmen:
+srovnejte \verb|\epsilon| a \verb|\varepsilon|, \verb|\Xi| a \verb|\varXi|.
+\begin{theorem}
+\emph{Konečný přepisovací stroj} neboli \emph{Mea\-ly\-ho automat} je definován jako uspořádaná pětice
+tvaru $M = (Q, \mathit\Sigma, \mathit\Gamma, \delta, q_0)$, kde:
+\end{theorem}
+
+\begin{itemize}
+\item[$\bullet$] \textit{Q} \textit{je konečná množina} stavů,
+\item[$\bullet$] $\mathit\Sigma$ \textit{je konečná} vstupní abeceda,
+\item[$\bullet$] $\mathit\Gamma$ \textit{je konečná} výstupní abeceda,
+\item[$\bullet$] $\delta$ : \textit{Q} $\times$ $\mathit\Sigma$ → \textit{Q} $\times$ $\mathit\Gamma$ \textit{je totální} přechodová funkce,
+\item[$\bullet$] $q_0$ $\in$ \textit{Q} \textit{je} počáteční stav.
+\end{itemize}
+
+\subsection{Podsekce s~definicí}
+
+Pomocí přechodové funkce $\delta$ zavedeme novou funkci $\delta^*$
+pro překlad vstupních slov u~$\in$ $\mathit\Sigma^*$ do výstupních slov
+$w$ $\in$ $\mathit\Gamma^*$.
+\begin{theorem}
+    Nechť $M = (\mathit{Q}, \mathit\Sigma, \mathit\Gamma, \delta, q_0)$ je Mea\-ly\-ho
+    automat. \emph{Překládací funkce} $\delta^*$ : Q $\times$ $\mathit\Sigma^*$ $\times$  $\mathit\Gamma^*$ $\rightarrow$ $\mathit\Gamma^*$
+    je pro každý stav q $\in$ Q, symbol x $\in$ $\mathit\Sigma$, slova u~$\in$ $\mathit\Sigma^*$,
+    $w$ $\in$ $\mathit\Gamma^*$ definována rekurentním předpisem:
+\end{theorem} 
+
+\begin{itemize}
+\item[$\bullet$] $\delta^*(q,\varepsilon, w) = w$
+\item[$\bullet$] $\delta^*(q,xu,w) = \delta^*(q',u,wy)$, kde $(q',y)$ = $\delta(q,x)$
+\end{itemize}
+
+\subsection{Rovnice}
+Složitější matematické formule sázíme mimo plynulý
+text pomocí prostředí \texttt{displaymath}. Lze umístit i více
+výrazů na jeden řádek, ale pak je třeba tyto vhodně
+oddělit, například pomocí \verb|\quad|, při dostatku místa
+i \verb|\qquad|.
+\begin{displaymath}
+    g^{a_n} \notin A^{B^n} \qquad y^1_0 - \sqrt[5]{x + \sqrt[7]{y}}\qquad x > y^2 \geq y^3
+\end{displaymath}
+
+Velikost závorek a svislých čar je potřeba přizpůsobit jejich obsahu. Velikost lze stanovit explicitně,
+anebo pomocí \verb|\left| a \verb|\right|. Kombinační čísla sázejte makrem \verb|\binom|.
+
+\begin{displaymath}
+    \Big|\bigcup P\Big| = \sum\limits _{\emptyset \neq X \subseteq P} (-1)^{|X|-1}\Big|\bigcap X\Big|
+\end{displaymath}
+
+\begin{displaymath}
+    F_{n+1} = \binom{n}{0} + \binom{n - 1}{1} + \binom{n - 2}{2} + \cdots + \binom{[\frac{n}{2}]}{[\frac{n}{2}]}
+\end{displaymath}
+
+V~rovnici (1) jsou tři typy závorek s~různou \textit{explicitně} definovanou velikostí. Obě rovnice mají svisle zarovnaná rovnítka. Použijte k~tomu vhodné prostředí.
+
+
+\begin{eqnarray}
+\bigg( \Big\{b \otimes \big[ c_1 \oplus c_2 \big] \circ a \Big\}^{\frac{2}{3}} \bigg) & = & log_z x \\
+\int_a^b f(x)dx & = & -\int_b^a f(y)dy
+\end{eqnarray}
+V~této větě vidíme, jak se vysází proměnná určující
+limitu v~běžném textu: $\lim_{m \to \infty} f(m)$.
+Podobně je to i s~dalšími symboly jako $\bigcup_{N\in M}$ N či $\sum\nolimits_{i=1}^m x_i^2$. 
+S~vynucením méně úsporné sazby příkazem \verb|\limits| budou
+vzorce vysázeny v~podobě $\lim\limits_{m \to \infty} f(m)$ a
+$\sum\limits_{i=1}^m x_i^2$.
+
+\section{Matice}
+Pro sázení matic se používá prostředí \texttt{array} a závorky
+s~výškou nastavenou pomocí \verb|\left|, \verb|\right|.
+\[
+D = \left| 
+\begin{array}{cccc}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{m1} & a_{m2} & \cdots & a_{mn} \\
+\end{array} 
+\right| 
+=
+\left|
+\begin{array}{cc}
+    x & y \\
+    t & w
+\end{array}
+\right|
+=
+xw - yt
+\]
+Prostředí \texttt{array} lze úspěšně využít i jinde, například
+na pravé straně následující rovnosti
+
+$$ \binom{n}{k} = \left\{
+\begin{array}{c l}
+\frac{n!}{k(n-k)!} & \text{pro } 0 \leq k~\leq n \\
+0 & \text{jinak}
+\end{array} \right. $$
+
+\end{document}
