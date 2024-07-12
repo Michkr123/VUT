@@ -25,12 +25,13 @@ Jsem budoucí student třetího ročníku na Fakultě Informačních Technologi�
 
 ### 📚 Projekty
 
-1. **[Název projektu 1]**
-   - Popis: Krátký popis projektu a jeho účel.
-   - Technologie: [Např. Python, Django]
-   - [Odkaz na repositář](https://github.com/uzivatelskejmeno/projekt1)
+1. **Procesor s jednoduchou instrukční sadou**
+   - Popis: procesor implementovaný v jazyce VHDL, který je schopen vykonávat program napsaný v rozšířené verzi jazyka BrainFuck.
+   - Jazyk: VHDL
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/4368f73f0d323704da991ebc2031cae958bf21ec/3.semestr/INP/INP_1)
 
-2. **[Název projektu 2]**
-   - Popis: Krátký popis projektu a jeho účel.
-   - Technologie: [Např. JavaScript, React]
-   - [Odkaz na repositář](https://github.com/uzivatelskejmeno/projekt2)
+2. **Parser**
+   - Popis: načte ze standardního vstupu zdrojový kód v IPP-code24, zkontroluje lexikální a syntaktickou správnost kódu a vypíše na standardní
+výstup XML reprezentaci programu.
+   - Jazyk: Python
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/a6524a7d0ac3b52d0882390771305d7f068de079/4.semestr/IPP/parser%20-%20python)
