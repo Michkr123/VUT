@@ -1,0 +1,157 @@
+{
+    "items": [
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": -67.5,
+            "scale": 1.953125,
+            "width": 20,
+            "x": 438.9999999999999,
+            "y": -89.00000000000017
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 172,
+            "y": 262
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 426,
+            "y": 84
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": -89,
+            "y": 35
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 8,
+            "y": 354
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 370,
+            "y": 479
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 211,
+            "y": -117
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 575,
+            "y": 333
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 615,
+            "y": -8
+        },
+        {
+            "height": 40,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 20,
+            "x": 624,
+            "y": 162
+        },
+        {
+            "height": 104,
+            "object": "Obstacle",
+            "rotation": -22.5,
+            "scale": 1,
+            "width": 102,
+            "x": -128,
+            "y": 63
+        },
+        {
+            "height": 33,
+            "object": "Obstacle",
+            "rotation": 45,
+            "scale": 1.5625,
+            "width": 102,
+            "x": 669,
+            "y": -122.99999999999994
+        },
+        {
+            "height": 10,
+            "object": "Obstacle",
+            "rotation": 0,
+            "scale": 1,
+            "width": 139,
+            "x": -111,
+            "y": 53
+        },
+        {
+            "object": "Robot",
+            "rotation": -90,
+            "x": 429,
+            "y": 251
+        },
+        {
+            "object": "Robot",
+            "rotation": -180,
+            "x": 455,
+            "y": -14
+        },
+        {
+            "object": "Robot",
+            "rotation": 90,
+            "x": 198,
+            "y": -8
+        },
+        {
+            "object": "Robot",
+            "rotation": 45,
+            "x": 102,
+            "y": 98.00000000000006
+        },
+        {
+            "object": "Robot",
+            "rotation": -135,
+            "x": 250,
+            "y": 217
+        },
+        {
+            "object": "Player",
+            "rotation": 0,
+            "x": -57,
+            "y": -111
+        }
+    ]
+}

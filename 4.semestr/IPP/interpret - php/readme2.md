@@ -63,6 +63,8 @@ Zde jsou implementovány instrukce PUSHS a POPS.
 Zde jsou uloženy jednotlivé proměnné, přesněji jejich hodnota a typ.
 
 ## Diagram tříd
+Diagram tříd je částečně vygenerován pomocí PHUML, bohužel se mi nepodařilo vygenerovat i spoje, proto jsem je musel dodělat zvlášť a kvůli časové tísni je diagram horší kvality.
+![uml_diagram](img/diagram.png)
 
 ## Testování
 Ze začátku jsem si testoval některé instrukce sám psaním vlastních primitivních testů a řučním spouštěním a kontrolou.
