@@ -1,4 +1,4 @@
-# Ahoj, já jsem Kryštof, vítej na mém githubu 👋
+# Ahoj, já jsem Kokot, vítej na mém githubu 👋
 
 ## O mně
 
