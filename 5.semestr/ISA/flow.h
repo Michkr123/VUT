@@ -8,9 +8,10 @@
 
 class Flow {
 private:
-    std::vector<Packet> packets;  // Collection of packets in the flow
+    std::vector<Packet> packets;  // Collection of packets in the flow  
     uint64_t firstPacketTimestamp; // Timestamp of the first packet
     uint64_t lastPacketTimestamp;  // Timestamp of the last packet
+    uint8_t numOfPackets;          // Number of packets
 
 public:
     // Constructor

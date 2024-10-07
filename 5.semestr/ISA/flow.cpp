@@ -1,7 +1,7 @@
 #include "flow.h"
 
 // Constructor
-Flow::Flow() : firstPacketTimestamp(0), lastPacketTimestamp(0) {}
+Flow::Flow() : firstPacketTimestamp(0), lastPacketTimestamp(0), numOfPackets(0) {}
 
 // Method to add a packet to the flow
 void Flow::addPacket(const Packet& packet) {
@@ -13,6 +13,7 @@ void Flow::addPacket(const Packet& packet) {
         firstPacketTimestamp = packetTimestamp;
     }
     lastPacketTimestamp = packetTimestamp;
+    numOfPackets++;
 }
 
 // Getters

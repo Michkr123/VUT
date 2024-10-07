@@ -2,7 +2,7 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++11
 TARGET = p2nprobe
-SOURCES = main.cpp packet.cpp flow.cpp 
+SOURCES = main.cpp packet.cpp flow.cpp NetFlowExporter.cpp
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Rules
