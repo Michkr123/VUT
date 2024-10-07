@@ -2,7 +2,7 @@
 CXX = g++
 CXXFLAGS = -Wall -Wextra -std=c++11
 TARGET = p2nprobe
-SOURCES = main.cpp # other_file.cpp Add your source files here
+SOURCES = main.cpp packet.cpp flow.cpp 
 OBJECTS = $(SOURCES:.cpp=.o)
 
 # Rules
