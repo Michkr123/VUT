@@ -3,12 +3,13 @@
 
 #include <cstdint>
 #include <netinet/in.h>
+#include <vector>
 
 // NetFlow v5 format
 // viz https://www.cisco.com/c/en/us/td/docs/net_mgmt/netflow_collection_engine/3-6/user/guide/format.html 
 
 // Struktura NetFlow v5 hlavičky
-struct NetFlowV5Header {
+struct netflow_v5_header {
     uint16_t version;
     uint16_t count;
     uint32_t sys_uptime;
@@ -21,7 +22,7 @@ struct NetFlowV5Header {
 };
 
 // Struktura NetFlow v5 záznamu o toku
-struct NetFlowV5Record {
+struct netflow_v5_record {
     uint32_t src_addr;
     uint32_t dst_addr;
     uint32_t nexthop;
@@ -44,16 +45,17 @@ struct NetFlowV5Record {
     uint16_t pad2;
 };
 
-class NetFlowV5 {
-public:
-    NetFlowV5(const char* collector_ip, int port);
-    ~NetFlowV5();
-
-    void sendFlows(const NetFlowV5Header &header, const NetFlowV5Record *records, int flow_count);
-
+class Netflow_v5 {
 private:
-    int sockfd;
-    struct sockaddr_in collector_addr;
+    netflow_v5_header nf_v5_header;
+    std::vector<netflow_v5_record> nf_v5_records;
+
+public:
+    Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence);
+
+    void addRecord(const netflow_v5_record& record);  // Method to add a flow record
+    void prepareHeader();                              // Prepare header for export
+    void exportToCollector(const char* collector_ip, uint16_t collector_port); // Export to collector
 };
 
 #endif // NETFLOW_EXPORTER_H
