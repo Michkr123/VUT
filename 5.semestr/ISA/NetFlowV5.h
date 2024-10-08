@@ -1,5 +1,5 @@
-#ifndef NETFLOW_EXPORTER_H
-#define NETFLOW_EXPORTER_H
+#ifndef NETFLOW_V5_H
+#define NETFLOW_V5_H
 
 #include <cstdint>
 #include <netinet/in.h>
@@ -44,10 +44,10 @@ struct NetFlowV5Record {
     uint16_t pad2;
 };
 
-class NetFlowExporter {
+class NetFlowV5 {
 public:
-    NetFlowExporter(const char* collector_ip, int port);
-    ~NetFlowExporter();
+    NetFlowV5(const char* collector_ip, int port);
+    ~NetFlowV5();
 
     void sendFlows(const NetFlowV5Header &header, const NetFlowV5Record *records, int flow_count);
 

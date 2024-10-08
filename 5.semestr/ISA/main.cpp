@@ -112,9 +112,9 @@ int main(int argc, char* argv[]) {
             // Check active/inactive timeouts and export flows if needed
             uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
             for (auto it = flows.begin(); it != flows.end();) {
-                if (it->isInactive(current_time, inactive_timeout * 1000000) || 
-                    it->isActiveExpired(current_time, active_timeout * 1000000)) {
-                    it->exportFlow(); // Export the flow
+                if (it->is_inactive(current_time, inactive_timeout * 1000000) || 
+                    it->is_active_expired(current_time, active_timeout * 1000000)) {
+                    it->export_flow(); // Export the flow //TODO dat flow do bufferu a nemazat ji, odesilat az po 30 nebo skonceni pcap
                     it = flows.erase(it); // Remove the flow after exporting
                 } else {
                     ++it;

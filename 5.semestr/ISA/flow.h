@@ -9,9 +9,10 @@
 class Flow {
 private:
     std::vector<Packet> packets;  // Collection of packets in the flow  
-    uint64_t firstPacketTimestamp; // Timestamp of the first packet
-    uint64_t lastPacketTimestamp;  // Timestamp of the last packet
-    uint8_t numOfPackets;          // Number of packets
+    uint64_t first_packet_timestamp; // Timestamp of the first packet
+    uint64_t last_packet_timestamp;  // Timestamp of the last packet
+    uint8_t num_of_packets;          // Number of packets
+    uint32_t size_of_flow;           // Size of flow in bytes
 
 public:
     // Constructor
@@ -21,17 +22,19 @@ public:
     void addPacket(const Packet& packet);
 
     // Getters
-    uint64_t getFirstPacketTimestamp() const;
-    uint64_t getLastPacketTimestamp() const;
+    uint64_t getFirst_packet_timestamp() const;
+    uint64_t getLast_packet_timestamp() const;
+    uint8_t getNum_of_packets() const;
+    uint32_t getSize_of_flow() const;
 
     // Check if the flow is inactive (based on inactive timeout)
-    bool isInactive(uint64_t currentTimestamp, uint64_t inactiveTimeout) const;
+    bool is_inactive(uint64_t currentTimestamp, uint64_t inactiveTimeout) const;
 
     // Check if the flow has exceeded the active timeout
-    bool isActiveExpired(uint64_t currentTimestamp, uint64_t activeTimeout) const;
+    bool is_active_expired(uint64_t currentTimestamp, uint64_t activeTimeout) const;
 
     // Export the flow (stub implementation)
-    void exportFlow() const;
+    void export_flow() const;
 
     // Check if the flow matches a packet (5-tuple match)
     bool matches(const Packet& packet) const; // Removed extra qualification

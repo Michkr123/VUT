@@ -1,4 +1,4 @@
-#include "NetFlowExporter.h"
+#include "NetFlowV5.h"
 #include <iostream>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -6,7 +6,7 @@
 #include <unistd.h>
 
 // Konstruktor pro inicializaci exportéru
-NetFlowExporter::NetFlowExporter(const char* collector_ip, int port) {
+NetFlowV5::NetFlowV5(const char* collector_ip, int port) {
     sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("Socket creation failed");
@@ -23,12 +23,12 @@ NetFlowExporter::NetFlowExporter(const char* collector_ip, int port) {
 }
 
 // Destruktor pro zavření socketu
-NetFlowExporter::~NetFlowExporter() {
+NetFlowV5::~NetFlowV5() {
     close(sockfd);
 }
 
 // Funkce pro odesílání NetFlow v5 toků
-void NetFlowExporter::sendFlows(const NetFlowV5Header &header, const NetFlowV5Record *records, int flow_count) {
+void NetFlowV5::sendFlows(const NetFlowV5Header &header, const NetFlowV5Record *records, int flow_count) {
     uint8_t buffer[1500]; // typická velikost UDP paketu
     memset(buffer, 0, sizeof(buffer));
 
