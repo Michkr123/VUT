@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <iostream>
 #include "packet.h"
+#include "netflow_v5.h" // Include the NetFlow v5 header
 
 class Flow {
 private:
@@ -32,6 +33,9 @@ public:
 
     // Check if the flow has exceeded the active timeout
     bool is_active_expired(uint64_t currentTimestamp, uint64_t activeTimeout) const;
+
+    // Convert flow to NetFlow v5 record
+    netflow_v5_record toNetFlowRecord() const; 
 
     // Export the flow (stub implementation)
     void export_flow() const;

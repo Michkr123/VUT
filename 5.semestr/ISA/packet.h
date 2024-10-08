@@ -17,13 +17,13 @@ private:
     uint8_t tos;        // Type of Service (TOS)
 
     uint32_t pkt_size;  // size of packet
-    uint8_t tcp_flag;   // flag
+    uint8_t tcp_flags;   // flag
     
     
 public:
     // Constructor
     Packet(uint32_t src_ip, uint32_t dst_ip, uint16_t src_port, uint16_t dst_port,
-           uint8_t protocol, uint64_t timestamp, uint8_t tos, uint32_t pkt_size, uint8_t tcp_flag);
+           uint8_t protocol, uint64_t timestamp, uint8_t tos, uint32_t pkt_size, uint8_t tcp_flags);
 
     // Getters
     uint32_t getSrc_ip() const;
@@ -34,7 +34,7 @@ public:
     uint64_t getTimestamp() const;
     uint8_t getTOS() const;
     uint32_t getPkt_size() const;
-    uint8_t getTcp_flag() const;
+    uint8_t getTcp_flags() const;
 
     // Display packet details (for debugging purposes)
     // void displayPacketInfo() const;

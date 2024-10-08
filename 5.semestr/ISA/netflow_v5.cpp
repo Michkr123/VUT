@@ -19,18 +19,18 @@ Netflow_v5::Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_ns
 }
     
 // Function to add a flow record
-void Netflow_v5::addRecord(const netflow_v5_record& record) {
+void Netflow_v5::add_record(const netflow_v5_record& record) {
     nf_v5_records.push_back(record);    // Add the record to the vector
     nf_v5_header.count++;               // Increment the count of records
 }
 
 // Function to prepare the header for export
-void Netflow_v5::prepareHeader() {
+void Netflow_v5::prepare_header() {
     nf_v5_header.count = htons(nf_v5_header.count); // Convert count to network byte order for export
 }
 
 // Function to export the data to a collector
-void Netflow_v5::exportToCollector(const char* collector_ip, uint16_t collector_port) {
+void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collector_port) {
     // Create a socket for UDP
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
