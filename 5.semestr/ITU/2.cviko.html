@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html>
+    <head>
+    <title> ITU ajax </title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
+    <style type="text/css">
+    div, input { margin: 10px; }
+    </style>
+    </head>
+    <body>
+
+    <div id="chatArea" style="height: 300px; border: solid #aaa 1px; overflow:auto;"></div> 
+
+    <form onsubmit="return uploadData()">
+    <input type="text" id="newMessageString">
+    <input type="submit" value="send">
+    </form>
+
+    <div id="status" style="border: solid #aaa 1px; ">&nbsp;</div> 
+
+
+    <script type="text/javascript">
+
+        /***
+        * XMLHttpRequest object constructor (for compatibility with various browsers)
+        */
+       
+        const READY_STATE_FINISHED = 4;
+        const STATUS_OK = 200;
+        const HTML = "https://pckiss.fit.vutbr.cz/itu/api.php";
+        const login = "xmicha94";
+        let lastMessageID = 0;
+
+        function createXmlHttpRequestObject() 
+        {
+            var request;
+        
+            try
+            {
+                request = new XMLHttpRequest(); // should work on all browsers except IE6 or older
+            } 
+            catch (e) 
+            { 
+                try 
+                {
+                    request = new ActiveXObject("Microsoft.XMLHttp"); // browser is IE6 or older
+                }
+                catch (e) 
+                {
+                    // ignore error
+                }
+            }
+        
+            if (!request) 
+            {
+                alert("Error creating the XMLHttpRequest object.");
+            } 
+            else 
+            {
+                return request;
+            }
+        }
+
+        function uploadData()
+        {
+            document.getElementById("status").innerHTML = "uploadData()";
+
+            try 
+            {
+                var request = createXmlHttpRequestObject(); // stores XMLHttpRequestObject
+                request.open("POST", HTML, true);
+                request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                var pole = document.getElementById("newMessageString").value;
+                request.onreadystatechange = function() {
+                    if (request.readyState == READY_STATE_FINISHED && request.status == STATUS_OK) {
+                        downloadData();
+                    }
+                };                
+                request.send("data=" + pole + "&user=" + login);
+            } 
+            catch (e) 
+            {
+                alert(e.toString());
+            }
+
+            return false; // to avoid default form submit behavior 
+        }
+
+        function downloadData() 
+        {
+            document.getElementById("status").innerHTML = "downloadData()";
+
+            try 
+            {
+                var request = createXmlHttpRequestObject(); // stores XMLHttpRequestObject
+                //// put your code here
+                request.open("GET", HTML, true);
+                request.onreadystatechange = function() // anonymous function (a function without a name).
+                {
+                    if ((request.readyState == READY_STATE_FINISHED) && (request.status == STATUS_OK)) // process is completed and http status is OK
+                    {
+                        var pole = JSON.parse(request.responseText);
+                        for (var i in pole)
+                        {
+                            let messageID = parseInt(pole[i].id);
+                            console.log(messageID);
+                            if (messageID > lastMessageID) {
+                                document.getElementById("chatArea").innerHTML += pole[i].dts + "    " + pole[i].login + ": " + pole[i].cnt + "<br>"; 
+                                lastMessageID = messageID;
+                            }
+                        }
+                    }
+                }
+                
+                request.send(null);
+            } 
+            catch (e) 
+            {
+                alert(e.toString());
+            }
+
+            return false; // to avoid default form submit behavior 
+        }
+
+        setInterval(downloadData, 1000);
+    </script>
+    </body>
+</html>
