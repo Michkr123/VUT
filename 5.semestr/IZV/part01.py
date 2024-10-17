@@ -31,8 +31,6 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
         plt.plot(x, coeff * np.sin(x), label=f"$y_{coeff}(x)$")
         plt.fill_between(x, coeff * np.sin(x), alpha=0.1)
 
-    ax.xaxis.set_major_formatter(plt.FuncFormatter(format_func))
-
     # Customize the plot
     plt.xlabel("X")
     plt.ylabel("$f_{a}(x)$")
@@ -56,19 +54,14 @@ def generate_sinus(show_figure: bool = False, save_path: str | None = None):
 def download_data() -> Dict[str, List[Any]]:
     pass
 
-
 def format_func(value, tick_number):
     N = int(np.round(2 * value / np.pi))
-    
-    if N >= 0 and N < 6:
-        return {0: "0", 1: r"$\frac{\pi}{2}$", 2: r"$\pi$"}.get(N, "")
-    
-    elif N % 2 > 0:  # For odd N
-        return f"${N} \\frac{{\\pi}}{{2}}$"  # Properly escaped for mathtext
-    
-    else:  # For even N
-        return f"${N // 2} \\pi$"  # Properly escaped for mathtext
-
+    if N>=0 and N < 6:
+        return {0:"0", 1: r"$\piz /2$", 2: r"$\pi$"}[N]
+    elif N % 2 > 0:
+        return f"${N}\pi/2$"
+    else:
+        return f"${N // 2}\pi$"
 
 if __name__ == "__main__":
     generate_graph([7, 4, 3])
