@@ -55,7 +55,7 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
 
 
 def generate_sinus(show_figure: bool = False, save_path: str | None = None):
-    x = np.linspace(0, 100, 1000)
+    x = np.linspace(0, 100, 10000)
     fig, ax = plt.subplots(3, 1, figsize=(10, 8))
     y1 = 0.5 * np.cos(np.pi * x / 50)
     y2 = 0.25 * (np.sin(np.pi * x) + np.sin(3/2 * np.pi * x))
@@ -86,7 +86,7 @@ def generate_sinus(show_figure: bool = False, save_path: str | None = None):
     # Third subplot: Tangent function
 
     for i in range(len(x) - 1):
-        if y3[i] > y1[i]:
+        if y3[i] >= y1[i]:
             color = 'green'
         elif x[i] <= 50:
             color = 'red'
