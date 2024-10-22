@@ -25,6 +25,9 @@ def distance(a: np.array, b: np.array) -> np.array:
 def generate_graph(a: List[float], show_figure: bool = False, save_path: str | None = None):
     x = np.linspace(0, 6 * np.pi, 1000)
 
+    a = np.array(a).reshape(-1, 1)
+    y_values = np.power(a, 2) * np.sin(x)
+
     ax = plt.gca()
     ax.xaxis.set_major_formatter(FuncFormatter(format_func))
 
@@ -33,12 +36,10 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
     ax.set_xlim(0,6*np.pi)
     yticks = np.arange(-50, 50)
     ax.set_yticks([-40, -20, 0, 20, 40])
-    #ax.set_yticks(yticks)
 
-
-    for coeff in a:
-        plt.plot(x, np.power(coeff, 2) * np.sin(x), label=f"$y_{coeff}(x)$")
-        plt.fill_between(x, np.power(coeff, 2) * np.sin(x), alpha=0.1)
+    for i, coeff in enumerate(a.flatten()):
+            ax.plot(x, y_values[i], label=f"$y_{int(coeff)}(x)$")
+            ax.fill_between(x, y_values[i], alpha=0.1)
 
     plt.xlabel("X")
     plt.ylabel("$f_{a}(x)$")
@@ -54,28 +55,64 @@ def generate_graph(a: List[float], show_figure: bool = False, save_path: str | N
 
 
 def generate_sinus(show_figure: bool = False, save_path: str | None = None):
-    pass
+    x = np.linspace(0, 100, 1000)
+    fig, ax = plt.subplots(3, 1, figsize=(10, 8))
+    y1 = 0.5 * np.cos(np.pi * x / 50)
+    y2 = 0.25 * (np.sin(np.pi * x) + np.sin(3/2 * np.pi * x))
+    y3 = y1 + y2
+
+    xticks = np.arange(0, 101, 25)
+    yticks = np.arange(-0.8, 0.81, 0.4)
+
+
+    # First subplot: Sine function
+    ax[0].plot(x, y1, label='Sine', color='b')
+    ax[0].set_xlim(0,100)
+    ax[0].set_xticks(xticks)
+    ax[0].set_ylim(-0.8, 0.8)
+    ax[0].set_yticks(yticks)
+    ax[0].tick_params(axis='x', labelbottom=False)
+    ax[0].set_ylabel("$f_{1}(t)$")
+
+    # Second subplot: Cosine function
+    ax[1].plot(x, y2, label='Cosine', color='b')
+    ax[1].set_xlim(0,100)
+    ax[1].set_xticks(xticks)
+    ax[1].set_ylim(-0.8, 0.8)
+    ax[1].set_yticks(yticks)
+    ax[1].tick_params(axis='x', labelbottom=False)
+    ax[1].set_ylabel("$f_{2}(t)$")
+
+
+
+    # Third subplot: Tangent function
+    ax[2].plot(x, y3, label='Tangent', color='g')
+    ax[2].set_xlim(0,100)
+    ax[2].set_xticks(xticks)
+    ax[2].set_ylim(-0.8, 0.8)
+    ax[2].set_yticks(yticks)
+    ax[2].set_ylabel("$f_{1}(t) + f_{2}(t)$")
+
+
+    if save_path:
+        plt.savefig(save_path)
+
+    if show_figure:
+        plt.show()
+
+    plt.close()
 
 
 def download_data() -> Dict[str, List[Any]]:
     pass
 
-#def format_func(value, tick_number):
-#    N = int(np.round(2 * value / np.pi))
-#
-#    if (N == 0) :
-#        return fr"${N}$"
-#    elif (N % 1 == 0):
-#        return f"${N}\pi$"
-#    else :
-#        return f"$\frac{{N}}{2}\pi$"
-
 def format_func(value, tick_number):
     N = int(np.round(2 * value / np.pi))
     if N>=0 and N < 3:
-        return {0:"0", 1: r"$\pi/2$", 2: r"$\pi$"}[N]
+        return {0:"0", 1:f"$\\frac{{{N}}}{{2}}\pi$", 2: r"$\pi$"}[N]
     elif N % 2 > 0:
-        return f"${N}\pi/2$"
+        return f"$\\frac{{{N}}}{{2}}\pi$"
+
     else:
         return f"${N // 2}\pi$"
 
