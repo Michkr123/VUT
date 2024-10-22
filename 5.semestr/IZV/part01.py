@@ -83,15 +83,26 @@ def generate_sinus(show_figure: bool = False, save_path: str | None = None):
     ax[1].tick_params(axis='x', labelbottom=False)
     ax[1].set_ylabel("$f_{2}(t)$")
 
-
-
     # Third subplot: Tangent function
-    ax[2].plot(x, y3, label='Tangent', color='g')
+
+    for i in range(len(x) - 1):
+        if y3[i] > y1[i]:
+            color = 'green'
+        elif x[i] <= 50:
+            color = 'red'
+        else:
+            color = 'orange'
+        
+        ax[2].plot(x[i:i+2], y3[i:i+2], color=color)
+
+
+    #ax[2].plot(x, y3, color='g')
     ax[2].set_xlim(0,100)
     ax[2].set_xticks(xticks)
     ax[2].set_ylim(-0.8, 0.8)
     ax[2].set_yticks(yticks)
     ax[2].set_ylabel("$f_{1}(t) + f_{2}(t)$")
+
 
 
     if save_path:
@@ -115,6 +126,7 @@ def format_func(value, tick_number):
 
     else:
         return f"${N // 2}\pi$"
+    
 
 if __name__ == "__main__":
     generate_graph([7, 4, 3])
