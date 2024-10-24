@@ -1,77 +1,87 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "ssd1306.h"
 #include "driver/gpio.h"
+#include "oled.h"
 
-// OLED display configuration
-#define SCREEN_WIDTH 128
-#define SCREEN_HEIGHT 64
-#define SSD1306_I2C_ADDRESS 0x3C  // Change this if necessary
+// Define pinnumbers for the oled display
+#define OLED_RST GPIO_NUM_27  // Reset pin
+#define OLED_CS GPIO_NUM_5      // Chip select pin
+#define OLED_DC GPIO_NUM_4     // Data/Command pin
+#define OLED_CLK GPIO_NUM_18    // Clock pin
+#define OLED_MOSI GPIO_NUM_23   // Data pin
 
-// Encoder pin definitions
-#define ENCODER1_CLK_PIN  12  // Encoder 1 CLK
-#define ENCODER1_DT_PIN   14  // Encoder 1 DT
-#define ENCODER1_SW_PIN   13  // Encoder 1 button
-#define ENCODER2_CLK_PIN  25  // Encoder 2 CLK
-#define ENCODER2_DT_PIN   27  // Encoder 2 DT
-#define ENCODER2_SW_PIN   26  // Encoder 2 button
+// Define pin numbers for the rotary encoders
+#define POS_X_A GPIO_NUM_25     // CLK pin for encoder X
+#define POS_X_B GPIO_NUM_26     // DT pin for encoder X
+#define POS_Y_A GPIO_NUM_17     // CLK pin for encoder Y
+#define POS_Y_B GPIO_NUM_16     // DT pin for encoder Y
 
-// Initial coordinates
-int x = 0;  // X position (0-127)
-int y = 0;  // Y position (0-63)
+#define DELAY (1 / portTICK_PERIOD_MS)  // Delay in milliseconds for FreeRTOS
 
-// Function to read encoder
-int readEncoder(int clkPin, int dtPin) {
-    static int lastCLK = HIGH;
-    int currentCLK = gpio_get_level(clkPin);
-    
-    int value = 0;
+// Variables for tracking encoders position
+int pos_x = 0, pos_y = 0;
+int pos_x_last, pos_y_last;
+int pos_x_val, pos_y_val;
+int color = 1;
 
-    // Check for clock rising edge
-    if (currentCLK == LOW && lastCLK == HIGH) {
-        int dtState = gpio_get_level(dtPin);
-        value = (dtState == LOW) ? 1 : -1; // Determine direction
+// Function to read the encoder state with debounce
+int read_encoder(int pin_a, int pin_b, int *last_state) {
+    int current_state = gpio_get_level(pin_a);
+    if (current_state != *last_state) {
+        vTaskDelay(DELAY);  // Debounce delay
+        if (current_state != gpio_get_level(pin_a)) { // Check again after delay
+            return 0; // No change
+        }
+        *last_state = current_state; // Update last state
+        // Determine the direction of rotation
+        return (gpio_get_level(pin_b) == current_state) ? 1 : -1; // Clockwise or counterclockwise
     }
-
-    lastCLK = currentCLK; // Store the current clock state
-    return value;
+    return 0; // No change
 }
 
-void app_main(void) {
-    // Initialize the OLED display
-    ssd1306_init(SSD1306_I2C_ADDRESS, SCREEN_WIDTH, SCREEN_HEIGHT);
-    ssd1306_clear_screen(SSD1306_COLOR_BLACK);
+void app_main() {
+    gpio_set_direction(OLED_DC, GPIO_MODE_OUTPUT);
+    gpio_set_direction(OLED_RST, GPIO_MODE_OUTPUT);
+    // Initialize the OLED
+    oled_init();
 
-    // Configure GPIO for encoders
-    gpio_set_direction(ENCODER1_CLK_PIN, GPIO_MODE_INPUT);
-    gpio_set_direction(ENCODER1_DT_PIN, GPIO_MODE_INPUT);
-    gpio_set_direction(ENCODER1_SW_PIN, GPIO_MODE_INPUT);
-    gpio_set_direction(ENCODER2_CLK_PIN, GPIO_MODE_INPUT);
-    gpio_set_direction(ENCODER2_DT_PIN, GPIO_MODE_INPUT);
-    gpio_set_direction(ENCODER2_SW_PIN, GPIO_MODE_INPUT);
+    // Set GPIO direction for the encoders
+    gpio_set_direction(POS_X_A, GPIO_MODE_INPUT);
+    gpio_set_direction(POS_X_B, GPIO_MODE_INPUT);
+    gpio_set_direction(POS_Y_A, GPIO_MODE_INPUT);
+    gpio_set_direction(POS_Y_B, GPIO_MODE_INPUT);
+    // Read initial state of pin A
+    int pos_x_last = gpio_get_level(POS_X_A);
+    int pos_y_last = gpio_get_level(POS_Y_A);
 
     while (1) {
-        // Read encoders
-        int encoder1Value = readEncoder(ENCODER1_CLK_PIN, ENCODER1_DT_PIN);
-        int encoder2Value = readEncoder(ENCODER2_CLK_PIN, ENCODER2_DT_PIN);
+        // Read the encoders
+        int x_change = read_encoder(POS_X_A, POS_X_B, &pos_x_last);
+        int y_change = read_encoder(POS_Y_A, POS_Y_B, &pos_y_last);
 
-        // Update X and Y values based on encoder readings
-        x = (x + encoder1Value + 128) % 128; // Wrap around
-        y = (y + encoder2Value + 64) % 64;   // Wrap around
+        // Update positions based on the direction of rotation
+        if((pos_x > 0 && x_change == -1) || (pos_x < 127 && x_change == 1))
+            pos_x += x_change;
+        if((pos_y > 0 && y_change == 1) || (pos_y < 63 && y_change == -1))
+            pos_y -= y_change;
 
-        // Clear display and draw the selected pixel
-        ssd1306_clear_screen(SSD1306_COLOR_BLACK);
-        ssd1306_draw_pixel(x, y, SSD1306_COLOR_WHITE);
-        ssd1306_refresh();  // Refresh the display
-
-        // Check button presses to reset the display
-        if (gpio_get_level(ENCODER1_SW_PIN) == 0 || gpio_get_level(ENCODER2_SW_PIN) == 0) {
-            ssd1306_clear_screen(SSD1306_COLOR_BLACK);  // Reset display to all black
-            ssd1306_refresh();
-            vTaskDelay(500 / portTICK_PERIOD_MS);  // Debounce delay
+        // Print positions if changed
+        if (x_change != 0 || y_change != 0) {
+            printf("Position: [%d,%d]\n", pos_x, pos_y);
+            //oled_draw_pixel(pos_x, pos_y);
         }
 
-        vTaskDelay(100 / portTICK_PERIOD_MS);  // Adjust this value for a smoother experience
+        if(pos_x == pos_y)
+        {
+            oled_fill_screen();
+        }
+        else
+        {
+            oled_erase_screen();
+        }
+
+        // Small delay for loop consistency
+        vTaskDelay(DELAY);
     }
 }
