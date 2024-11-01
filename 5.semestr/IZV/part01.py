@@ -15,8 +15,7 @@ from numpy.typing import NDArray
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 from typing import List, Callable, Dict, Any
-from math import sin
-
+import urllib.parse as up
 
 def distance(a: np.array, b: np.array) -> np.array:
     distance = np.sqrt(np.sum(np.power(b - a, 2), axis=1))   
@@ -115,8 +114,47 @@ def generate_sinus(show_figure: bool = False, save_path: str | None = None):
 
 
 def download_data() -> Dict[str, List[Any]]:
-    pass
+    url = "https://ehw.fit.vutbr.cz/izv/st_zemepis_cz.html"
+    
+    response = requests.get(url)
+    response.encoding = 'utf-8'
+    response.raise_for_status()
+    page_content = response.text
+    
+    soup = BeautifulSoup(page_content, "html.parser")
+    
+    tables = soup.body.find_all("table")
+    if len(tables) < 2:
+        raise ValueError("Less than two tables found in the body.")
+    
+    tbody = tables[1].find("tbody")
+    rows = tbody.find_all("tr")
+    
+    data = {
+        "positions": [],
+        "lats": [],
+        "longs": [],
+        "heights": []
+    }
 
+    for row in rows[1:]: 
+        cells = row.find_all("td")
+        if len(cells) >= 7: 
+            position = cells[0].get_text(strip=True)
+            lat = float(cells[2].get_text(strip=True).replace(",", ".").replace("°", ""))
+            long = float(cells[4].get_text(strip=True).replace(",", ".").replace("°", ""))
+            height = float(cells[6].get_text(strip=True).replace(",", "."))
+
+            # Append to the dictionary lists
+            data["positions"].append(position)
+            data["lats"].append(lat)
+            data["longs"].append(long)
+            data["heights"].append(height)
+    
+    return data
+
+
+    
 def format_func(value, tick_number):
     N = int(np.round(2 * value / np.pi))
     if N>=0 and N < 3:
