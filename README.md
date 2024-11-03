@@ -29,14 +29,14 @@
 | xvrskaa00  | www.ticketportal.cz | www.fiverr.com     |
 | a          |                     |                    |
 | b          |                     |                    |
-| c          |                     |                    |
+| xmicha94   | www.kudyznudy.cz    | www.prague.eu      |
 | xhronpe00  | www.ticketmaster.cz | www.eventbrite.com |
 
 ## Autoři
-| Jméno          | Jméno Git účtu  | VUT login  |
-|----------------|-----------------|------------|
-| Adam Vrška     | Tetour          | xvrskaa00  |
-|                | antonu07        |            |
-| Marek Konečný  | MarekKonec      |            |
-|                | Michkr123       |            |
-| Petr Hron      | catohas         | xhronpe00  |
+| Jméno            | Jméno Git účtu  | VUT login  |
+|------------------|-----------------|------------|
+| Adam Vrška       | Tetour          | xvrskaa00  |
+|                  | antonu07        |            |
+| Marek Konečný    | MarekKonec      |            |
+| Kryštof Michálek | Michkr123       | xmicha94   |
+| Petr Hron        | catohas         | xhronpe00  |
