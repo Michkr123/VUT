@@ -24,13 +24,13 @@
 - úprava profilu (kvalifikace, kontaktní údaje)
   
 ## Průzkum existujících řešení
-| VUT login  | Název aplikace      |                |
-|------------|---------------------|----------------|
-| xvrskaa00  | www.ticketportal.cz | www.fiverr.com |
-| a          |                     |                |
-| b          |                     |                |
-| c          |                     |                |
-| xhronpe00  |                     |                |
+| VUT login  | Název aplikace      |                    |
+|------------|---------------------|--------------------|
+| xvrskaa00  | www.ticketportal.cz | www.fiverr.com     |
+| a          |                     |                    |
+| b          |                     |                    |
+| c          |                     |                    |
+| xhronpe00  | www.ticketmaster.cz | www.eventbrite.com |
 
 ## Autoři
 | Jméno          | Jméno Git účtu  | VUT login  |
@@ -39,4 +39,4 @@
 |                | antonu07        |            |
 | Marek Konečný  | MarekKonec      |            |
 |                | Michkr123       |            |
-|                | catohas         | xhronpe00  |
+| Petr Hron      | catohas         | xhronpe00  |
