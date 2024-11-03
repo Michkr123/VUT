@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "event_id": 3,
+        "username": "Jan Nov\u00e1k",
+        "comment": "J\u00eddlo bylo dobr\u00e9",
+        "rating": 5,
+        "date_posted": "2024-11-03T18:03:26.968028"
+    },
+    {
+        "id": 2,
+        "event_id": 3,
+        "username": "Petr Falta",
+        "comment": "Nic moc.",
+        "rating": 2,
+        "date_posted": "2024-11-03T18:03:53.968228"
+    }
+]
