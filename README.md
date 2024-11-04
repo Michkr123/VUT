@@ -27,7 +27,7 @@
 | VUT login  | Název aplikace      |                    |
 |------------|---------------------|--------------------|
 | xvrskaa00  | www.ticketportal.cz | www.fiverr.com     |
-| a          |                     |                    |
+| xkonec85   | www.goout.net       | www.gotobrno.cz    |
 | b          |                     |                    |
 | xmicha94   | www.kudyznudy.cz    | www.prague.eu      |
 | xhronpe00  | www.ticketmaster.cz | www.eventbrite.com |
@@ -37,6 +37,6 @@
 |------------------|-----------------|------------|
 | Adam Vrška       | Tetour          | xvrskaa00  |
 |                  | antonu07        |            |
-| Marek Konečný    | MarekKonec      |            |
+| Marek Konečný    | MarekKonec      | xkonec85   |
 | Kryštof Michálek | Michkr123       | xmicha94   |
 | Petr Hron        | catohas         | xhronpe00  |
