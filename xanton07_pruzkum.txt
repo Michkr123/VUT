@@ -1,0 +1,41 @@
+Uživatelský přůzkum:
+provedl Marek Antoňů s Vojtěchem A.
+
+z pohledu uživatele:
+Ocenil by přehledné zobrazení základních údajů jako místo, datum a čas konání akce. Také krátký popis, případně harmonogram.
+Také je pro něj důležité aby bylo možné akce filtrovat podle data, místa konání a druhu akce.
+Ocenil by hodnocení od účastníků akce, pro porovnání s dalšími ročníky dané akce.
+Chtěl by vidět cenu lístků na akci a ideálně počet volných lístků.
+
+z pohledu brigádníka:
+U každé akce by chtěl vidět práci, která je po něm požadovaná, dobu po kterou bude na akci pracovat a peněžní ohodnocení za práci.
+Preferoval by, kdyby měl možnost na akce se sám hlásit.
+Chtěl by aby brigádníci měli možnost hodnotit organizátory pro ostatní brigádníky.
+Preferoval by, kdyby byly akce rozděleny na jednotlivé pozice.
+
+z pohledu organizátora:
+Ocenil by jednoduchou a přehlednou zprávu všech svých akcí.
+Chtěl by jednoduché a rychlé přijmutí, nebo odmítnutí brigádníků.
+Ocenil by aby se hodnocení brigádníků zobrazovalo, pri rozhodování o přijetí, nebo odmítnutí.
+
+Průzkum trhu:
+
+kdykde.cz:
++ Udalosti rozděleny do logických kategorií a podkategorií, např. kategorie Koncerty je rozdělena do hudebních žárnů.
++ Události je možné vyhledávat podle data, místa a kategorie. Je možné vyhledávat události i mimo Českou Republiku.
++ Události ve filtrovaném seznamu lze rozkliknout a podivat se na podrobnější popis akce a přesnou lokaci akce.
++ Na stránce jsou krátké články o již proběhlých akcích.
+- Koupě vstupenek není možné přímo na stánce, přesměruje uživatele na jinou stránku.
+- Vyhledávání podle data je možné pro rozsah měsíce od zadaného data, nebo nejbližší víkend.
+- Stránka neumožnuje přihlášení, tudíž nelze ukládat akce, které jsou pro mně zajímavé.
+- Stránka neumožnuje vytváření uživatelských recenzí, nebo článků.
+
+freelancer.com
++ Pracovní nabídky jsou rozděleny do kategorií podle potřebných dovedností, na obory např. IT a okruhy v daném oboru např. programování v C++.
++ Zaměstnavatel může vytvořit nabídku, nebo kontaktovat pracovníka přímo. Pokud vytvoří nabídku, tak pracovníci nabízejí jejich požadovaný plat.
++ Zamestnavatelé mají na svých profilech hodnocení od pracovníků, kteří pro ně pracovali a naopak.
++ Pracovníci mají na svých profilech své certifikáty, podle kterých může zaměstnavatel poznat jejich dovednosti.
++ Pracovníci mají na svých profilech své portfolio.
+- Stránka používá uživatelská jména, která nemusí být reálná.
+- Při zadání práce formou soutěže pracovník odevzdává téměř hotovou práci, a zaměstnavatel odmění pouze jednoho.
+- Pracovník muže přehánět svoje zkušenosti.
