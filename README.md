@@ -36,7 +36,7 @@
 | Jméno            | Jméno Git účtu  | VUT login  |
 |------------------|-----------------|------------|
 | Adam Vrška       | Tetour          | xvrskaa00  |
-|                  | antonu07        |            |
+| Marek Antoňů     | antonu07        | xanton07   |
 | Marek Konečný    | MarekKonec      | xkonec85   |
 | Kryštof Michálek | Michkr123       | xmicha94   |
 | Petr Hron        | catohas         | xhronpe00  |
