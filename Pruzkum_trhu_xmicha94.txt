@@ -33,11 +33,11 @@ Uživatel:
     Náhled mapy u místa konání poskytne uživatelům lepší představu o tom, kde se akce koná.
 
 Brigádník:
-    Vidět akce s dostupnými pozicemi a náplní práce.
-    Snadno zažádat o brigádu na vybrané akci.
-    Přehled akcí, na kterých má brigádník směny.
+    Mít přehled o všech akcích, které hledají brigádníky, s podrobným popisem náplně práce, požadavky a specifikacemi.
+    Mít možnost jednoduše a rychle zažádat o pozici na vybrané akci prostřednictvím aplikace nebo webu.
+    Mít přehled o všech akcích, na kterých má brigádnické směny, včetně informací o datu, čase a místě konání.
 
 Organizátor:
-    Přidávat, upravovat a spravovat informace o akcích.
-    Najímat brigádníky na konkrétní pozice.
-    Přehled všech akcí, které organizuje.
+    Přidávat nové akce do systému, upravovat jejich detaily, jako jsou místo, čas konání a požadavky na brigádníky.
+    Prohlížet dostupné brigádníky a vybrat ty, kteří nejlépe odpovídají požadavkům pro konkrétní pozice na akcích.
+    Mít přehled o všech organizovaných akcích, včetně informací o počtu brigádníků, jejich přiřazení a průběhu příprav.
