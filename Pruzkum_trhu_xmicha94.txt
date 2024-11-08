@@ -20,6 +20,8 @@ Proti:
     Úvodní část stránky je zbytečně obsáhlá a obsahuje velký úvodní obrázek, který zabírá mnoho místa. Kvůli tomu je nutné stránkou posouvat dolů, aby byl vůbec vidět přehled akcí. Tento úvod není pro uživatele příliš přínosný a zpomaluje rychlý přístup k aktuálnímu obsahu, což může působit jako zdržení.
 
 Uživatelský průzkum
+
+Uživatel:
     Web by měl mít filtry pro výběr akcí podle typu, místa konání nebo data, což usnadní hledání konkrétních akcí.
     Informace o akci by měly zahrnovat místo konání, čas, cenu a popis, aby uživatelé měli všechny potřebné detaily pohromadě.
     Měla by být zajištěna jednoduchá možnost zakoupení lístků přímo na webu.
@@ -29,3 +31,13 @@ Uživatelský průzkum
     Vyhledávání podle klíčových slov by mělo být dostupné pro snadnější nalezení specifických akcí.
     Hudební akce by měly být rozděleny podle hudebních žánrů, aby si uživatelé mohli vybrat podle svého vkusu.
     Náhled mapy u místa konání poskytne uživatelům lepší představu o tom, kde se akce koná.
+
+Brigádník:
+    Vidět akce s dostupnými pozicemi a náplní práce.
+    Snadno zažádat o brigádu na vybrané akci.
+    Přehled akcí, na kterých má brigádník směny.
+
+Organizátor:
+    Přidávat, upravovat a spravovat informace o akcích.
+    Najímat brigádníky na konkrétní pozice.
+    Přehled všech akcí, které organizuje.
