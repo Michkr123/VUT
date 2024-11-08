@@ -11,4 +11,5 @@ Dříve zvládali pouze jednoduché věci ale dneska už vysvětlí nebo pomohou
 ## Využité knihovny
 - https://react.dev/learn (toto je velice užitečný zdroj)
 - https://tailwindcss.com/docs/utility-first (toto také)
+- https://www.typescriptlang.org/ (přidáva typování do JavaScriptu)
 - https://reactrouter.com/en/main/start/overview (toto je tady pro úplnost)
