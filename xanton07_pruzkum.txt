@@ -2,21 +2,23 @@ Uživatelský přůzkum:
 provedl Marek Antoňů s Vojtěchem A.
 
 z pohledu uživatele:
-Ocenil by přehledné zobrazení základních údajů jako místo, datum a čas konání akce. Také krátký popis, případně harmonogram.
+Ocenil by přehledné zobrazení základních údajů jako místo, datum a čas konání akce.
+Také by očekával krátký popis akce, případně její harmonogram.
 Také je pro něj důležité aby bylo možné akce filtrovat podle data, místa konání a druhu akce.
 Ocenil by hodnocení od účastníků akce, pro porovnání s dalšími ročníky dané akce.
 Chtěl by vidět cenu lístků na akci a ideálně počet volných lístků.
 
 z pohledu brigádníka:
 U každé akce by chtěl vidět práci, která je po něm požadovaná, dobu po kterou bude na akci pracovat a peněžní ohodnocení za práci.
-Preferoval by, kdyby měl možnost na akce se sám hlásit.
+Preferoval by, kdyby se na akce hlásil sám, a organizátor by jeho přihlášku přijmul, nebo odmítnul.
 Chtěl by aby brigádníci měli možnost hodnotit organizátory pro ostatní brigádníky.
-Preferoval by, kdyby byly akce rozděleny na jednotlivé pozice.
+Preferoval by, kdyby byly akce rozděleny na jednotlivé pozice, a možnost filtrovat prigády podle pozice.
 
 z pohledu organizátora:
-Ocenil by jednoduchou a přehlednou zprávu všech svých akcí.
+Ocenil by jednoduchou a přehlednou správu všech svých akcí.
 Chtěl by jednoduché a rychlé přijmutí, nebo odmítnutí brigádníků.
-Ocenil by aby se hodnocení brigádníků zobrazovalo, pri rozhodování o přijetí, nebo odmítnutí.
+Ocenil by aby se hodnocení brigádníků od organizátorů, u kterých brigádník pracoval.
+Hodnocení by se mělo zobrazovat, pri rozhodování o přijetí, nebo odmítnutí.
 
 Průzkum trhu:
 
