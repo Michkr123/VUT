@@ -9,12 +9,12 @@ import EventDetails from "./components/EventDetails";
 import WorkerPage from "./WorkerPage";
 import AdminPage from "./AdminPage";
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     {/* Routování mezi jednotlivými časti aplikace */}
     <Router>
       <div className="min-h-screen bg-gray-50">
-        <Header />
+        <Header /> {/* Hlavička je zde aby se zobrazila v jakékoliv části aplikace */}
         <Routes>
           <Route path="/" element={<EventsPage />} />
           <Route path="/event/:id" element={<EventDetails />} />
