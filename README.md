@@ -28,7 +28,7 @@
 |------------|---------------------|--------------------|
 | xvrskaa00  | www.ticketportal.cz | www.fiverr.com     |
 | xkonec85   | www.goout.net       | www.gotobrno.cz    |
-| b          |                     |                    |
+| xanton07   | www.kdykde.cz	   | www.freelancer.com |
 | xmicha94   | www.kudyznudy.cz    | www.prague.eu      |
 | xhronpe00  | www.ticketmaster.cz | www.eventbrite.com |
 
