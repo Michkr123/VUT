@@ -9,6 +9,10 @@ import EventDetails from "./components/EventDetails";
 import WorkerPage from "./WorkerPage";
 import AdminPage from "./AdminPage";
 import NewEvent from './NewEvent';
+import ProfilePage from "./ProfilePage";
+import AddReviewPage from "./AddReviewPage";
+
+const login = "xmicha94";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -22,6 +26,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/worker" element={<WorkerPage />} />
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/new_event" element={<NewEvent />} />
+          <Route path="/profile" element={<ProfilePage login={login} />} />
+          <Route path="/event/:id/addreview" element={<AddReviewPage login={login} />} />
         </Routes>
       </div>
     </Router>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EventImage from './EventImage';
+import { Link } from 'react-router-dom';
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -89,6 +90,17 @@ const EventDetails = () => {
         )}
       </div>
 
+      {/* Formulář pro přidání recenze */}
+      <Link 
+        to={`/event/${event.id}/addreview`}
+        key={event.id} 
+        className="text-white hover:text-indigo-200"
+        >
+        <button className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+            Přidat recenzi
+        </button>
+      </Link>
+
       {/* Recenze */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h3 className="text-xl font-bold mb-4">Recenze ({event.reviews.length})</h3>
@@ -110,59 +122,6 @@ const EventDetails = () => {
             </div>
           ))}
         </div>
-
-        {/* Formulář pro přidání recenze */}
-        <form onSubmit={handleSubmitReview} className="space-y-4">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-              Uživatelské jméno
-            </label>
-            <input
-              type="text"
-              id="username"
-              value={newReview.username}
-              onChange={(e) => setNewReview({ ...newReview, username: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="rating" className="block text-sm font-medium text-gray-700">
-              Hodnocení
-            </label>
-            <select
-              id="rating"
-              value={newReview.rating}
-              onChange={(e) => setNewReview({ ...newReview, rating: Number(e.target.value) })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            >
-              <option key={5} value={5}>5 hvězdiček</option>
-              <option key={4} value={4}>4 hvězdičky</option>
-              <option key={3} value={3}>3 hvězdičky</option>
-              <option key={2} value={2}>2 hvězdičky</option>
-              <option key={1} value={1}>1 hvězdička</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="comment" className="block text-sm font-medium text-gray-700">
-              Komentář
-            </label>
-            <textarea
-              id="comment"
-              value={newReview.comment}
-              onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-              rows={4}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-          >
-            Zveřejnit recenzi
-          </button>
-        </form>
       </div>
     </div>
   );
