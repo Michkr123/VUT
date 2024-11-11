@@ -86,9 +86,10 @@ def get_events():
 def add_event():
     events = load_events()
     event_data = request.get_json()
-    
+
     # Kontrola obrázku pokud byl poskytnut
     image_data = event_data.get("image")
+
     if image_data and not is_valid_base64_image(image_data):
         return jsonify({"error": "Invalid image format. Must be base64 encoded image."}), 400
 
@@ -100,7 +101,11 @@ def add_event():
         "date_of_event": event_data.get("date_of_event"),
         "event_category": event_data.get("event_category"),
         "address": event_data.get("address"),
-        "image": image_data
+        "image": image_data,
+        "organizer": event_data.get("organizer"),
+        "region": event_data.get("region"),
+        "city": event_data.get("city"),
+        "description": event_data.get("description"),
     }
     events.append(event)
     save_events(events)

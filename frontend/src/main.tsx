@@ -8,6 +8,7 @@ import EventsPage from "./EventsPage";
 import EventDetails from "./components/EventDetails";
 import WorkerPage from "./WorkerPage";
 import AdminPage from "./AdminPage";
+import NewEvent from './NewEvent';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/event/:id" element={<EventDetails />} />
           <Route path="/worker" element={<WorkerPage />} />
           <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin/new_event" element={<NewEvent />} />
         </Routes>
       </div>
     </Router>
