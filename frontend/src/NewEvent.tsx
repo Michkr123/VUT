@@ -40,10 +40,17 @@ const NewEvent = () =>{
   };
 
   return(
-    <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <form onSubmit={handleSubmitEvent} className="space-y-4">
-          <label htmlFor="image" className="block text-sm font-medium text-gray-700">
+    <div className="flex justify-center items-center h-screen">
+      <form onSubmit={handleSubmitEvent} className="space-y-4">
+
+        {previewUrl && (
+          <div>
+            <img src={previewUrl} alt="Preview" style={{height:"200px", width: "auto"}}/>
+          </div>
+        )}
+
+        <div className="flex items-center space-x-2">
+          <label htmlFor="image" className="text-gray-700">
             Obrázek: 
           </label>
           <input
@@ -54,14 +61,10 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-          {previewUrl && (
-            <div>
-              <img src={previewUrl} alt="Preview" style={{width: "200px", height:"auto"}}/>
-            </div>
-          )}
-
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="name" className="text-gray-700">
             Nazev akce: 
           </label>
           <input
@@ -69,12 +72,13 @@ const NewEvent = () =>{
             id="name"
             value={newEvent.name}
             onChange={(e) => setNewEvent({ ...newEvent, name: e.target.value })}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+            className="pr-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <label htmlFor="event_category" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="event_category" className="text-gray-700">
             Typ akce: 
           </label>
           <select
@@ -91,9 +95,10 @@ const NewEvent = () =>{
             <option value="workshop">Workshop</option>
             <option value="exposition">Výstava</option>
           </select>
+        </div>
 
-
-          <label htmlFor="organizer" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="organizer" className="text-gray-700">
             Organizátor:
           </label>
           <input
@@ -104,9 +109,10 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <label htmlFor="eventType" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="eventType" className="text-gray-700">
             Kraj: 
           </label>
           <select
@@ -131,9 +137,10 @@ const NewEvent = () =>{
             <option value="moravskoslezsky">Moravskoslezský</option>
             <option value="zlinsky">Zlínský</option>
           </select>
+        </div>
 
-
-          <label htmlFor="city" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="city" className="text-gray-700">
             Město:
           </label>
           <input
@@ -144,9 +151,10 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <label htmlFor="address" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="address" className="text-gray-700">
             Adresa:
           </label>
           <input
@@ -157,9 +165,10 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <label htmlFor="date_of_event" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="date_of_event" className="text-gray-700">
             Datum:
           </label>
           <input
@@ -170,9 +179,10 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+        <div className="flex items-center space-x-2">
+          <label htmlFor="description" className="text-gray-700">
             Popis:
           </label>
           <input
@@ -183,17 +193,17 @@ const NewEvent = () =>{
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             required
           />
+        </div>
 
-
-          <Link to="/admin">
+        <div className="flex justify-between mt-6 gap-10">
+          <Link to="/admin" className="text-white hover:text-indigo-200">
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              className="inline-flex justify-center rounded-md border border-transparent bg-gray-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Zpět
             </button>
           </Link>
-
 
           <button
             type="submit"
@@ -201,8 +211,9 @@ const NewEvent = () =>{
           >
             Vytvořit
           </button>
-        </form>
-      </div>
+        </div>
+
+      </form>
     </div>
   );
 };
