@@ -52,6 +52,7 @@ private:
 
 public:
     Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence);
+    
 
     void add_record(const netflow_v5_record& record);  // Method to add a flow record
     void prepare_header();                              // Prepare header for export

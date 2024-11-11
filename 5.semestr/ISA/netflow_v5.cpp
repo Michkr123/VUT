@@ -24,7 +24,7 @@ void Netflow_v5::add_record(const netflow_v5_record& record) {
     nf_v5_header.count++;               // Increment the count of records
 }
 
-// Function to prepare the header for export
+// Function to prepare the header for export //TODO netusim?
 void Netflow_v5::prepare_header() {
     nf_v5_header.count = htons(nf_v5_header.count); // Convert count to network byte order for export
 }
@@ -62,7 +62,11 @@ void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collecto
     if (sent_bytes < 0) {
         perror("sendto failed");
     } else {
-        std::cout << "Sent " << sent_bytes << " bytes to collector." << std::endl;
+        int bytes = 0;
+        for(auto& record : this->nf_v5_records){
+            bytes += record.dOctets;
+        }
+        std::cout << "Sent " << bytes << " bytes to collector." << std::endl;
     }
 
     // Clean up

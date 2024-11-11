@@ -26,8 +26,6 @@ uint64_t Flow::getLast_packet_timestamp() const {
     return last_packet_timestamp;
 }
 
-uint8_t Flow::getNum_of_packets() const { return num_of_packets; }
-
 uint32_t Flow::getSize_of_flow() const { return size_of_flow; }
 
 // Check if the flow is inactive (based on inactive timeout)

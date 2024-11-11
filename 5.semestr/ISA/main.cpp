@@ -12,6 +12,7 @@
 #include "netflow_v5.h"
 
 const int MAX_FLOWS = 30;
+int flow_sequence = 0;
 
 int main(int argc, char* argv[]) {
     std::string host;
@@ -28,7 +29,7 @@ int main(int argc, char* argv[]) {
                 active_timeout = std::stoi(optarg); 
                 break;
             case 'i':
-                inactive_timeout = std::stoi(optarg); 
+                inactive_timeout = std::stoi(optarg);
                 break;
             default: 
                 std::cerr << "Usage: ./p2nprobe <host>:<port> <pcap_file_path> [-a <active_timeout> -i <inactive_timeout>]" << std::endl;
@@ -44,7 +45,14 @@ int main(int argc, char* argv[]) {
             host = arg.substr(0, colon_pos);
             port = arg.substr(colon_pos + 1);
         } else {
-            pcap_file_path = arg;
+            if(pcap_file_path == "") {
+                pcap_file_path = arg;
+
+            }
+            else {
+                std::cerr << "Usage: ./p2nprobe <host>:<port> <pcap_file_path> [-a <active_timeout> -i <inactive_timeout>]" << std::endl;
+                return 1;
+            }
         }
     }
 
@@ -84,7 +92,7 @@ int main(int argc, char* argv[]) {
             uint16_t dst_port = ntohs(tcp_header->dest);
             uint64_t timestamp = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
             uint32_t pkt_size = header.len; 
-            uint8_t tcp_flag = tcp_header->th_flags;  
+            uint8_t tcp_flag = tcp_header->th_flags; //TODO most likely not needed
 
             // Create a Packet object
             Packet packet(src_ip, dst_ip, src_port, dst_port, IPPROTO_TCP, timestamp, ip_header->ip_tos, pkt_size, tcp_flag);
@@ -102,6 +110,7 @@ int main(int argc, char* argv[]) {
             // If no matching flow is found, create a new flow
             if (!flow_found) {
                 Flow new_flow;
+                flow_sequence++;
                 new_flow.addPacket(packet);
                 active_flows.push_back(new_flow);
             }
@@ -113,28 +122,28 @@ int main(int argc, char* argv[]) {
                     it->is_active_expired(current_time, active_timeout * 1000000)) {
                     flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
                     it = active_flows.erase(it); // Remove the flow after adding to buffer
+                    //std::cout << flow_buffer.size() << "\n";
+
+                    // Export flows when buffer has 30 flows
+                    if (flow_buffer.size() >= MAX_FLOWS) {
+                        // Create a NetFlow v5 message right before exporting
+                        uint32_t sys_uptime = 0;  // You can replace this with actual uptime if needed
+                        uint32_t unix_secs = current_time / 1000000;
+                        uint32_t unix_nsecs = (current_time % 1000000) * 1000;
+                        uint32_t flow_sequence = 0;  // This should increment with each NetFlow message
+                        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
+
+                        netflow_v5.prepare_header();
+                        for (const auto& record : flow_buffer) {
+                            netflow_v5.add_record(record);  // Add each flow record to the NetFlow message
+                        }
+                        netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send to collector
+                        flow_buffer.clear();  // Clear the buffer after exporting
+                    }
                 } else {
                     ++it;
                 }
             }
-
-            // Export flows when buffer has 30 flows
-            if (flow_buffer.size() >= MAX_FLOWS) {
-                // Create a NetFlow v5 message right before exporting
-                uint32_t sys_uptime = 0;  // You can replace this with actual uptime if needed
-                uint32_t unix_secs = current_time / 1000000;
-                uint32_t unix_nsecs = (current_time % 1000000) * 1000;
-                uint32_t flow_sequence = 0;  // This should increment with each NetFlow message
-                Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
-
-                netflow_v5.prepare_header();
-                for (const auto& record : flow_buffer) {
-                    netflow_v5.add_record(record);  // Add each flow record to the NetFlow message
-                }
-                netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send to collector
-                flow_buffer.clear();  // Clear the buffer after exporting
-            }
-
         }
     }
 
@@ -144,7 +153,6 @@ int main(int argc, char* argv[]) {
         uint32_t sys_uptime = 0;  // You can replace this with actual uptime if needed
         uint32_t unix_secs = current_time / 1000000;
         uint32_t unix_nsecs = (current_time % 1000000) * 1000;
-        uint32_t flow_sequence = 0;  // This should increment with each NetFlow message
         Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
 
         netflow_v5.prepare_header();
