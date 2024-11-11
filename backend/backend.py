@@ -25,6 +25,14 @@ def load_events():
     except FileNotFoundError:
         print('events.json not found')
         return []
+    
+def load_profiles():
+    try:
+        with open('profiles.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        print('profiles.json not found')
+        return []
 
 
 def save_events(events):
@@ -80,6 +88,14 @@ def get_events():
         enhanced_events.append(event_copy)
     
     return jsonify(enhanced_events)
+
+@app.route('/profiles/<login>', methods=['GET'])
+def get_profile(login):
+    profiles = load_profiles()
+    profile = next((p for p in profiles if p['login'] == login), None)
+    if profile is None:
+        return jsonify({"error": "Profile not found"}), 404
+    return jsonify(profile)
 
 
 @app.route('/events', methods=['POST'])

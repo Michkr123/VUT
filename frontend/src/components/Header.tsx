@@ -10,6 +10,7 @@ const Header = () => {
           <Link to="/" className="text-white hover:text-indigo-200">Události</Link>
           <Link to="/worker" className="text-white hover:text-indigo-200">Pracovník</Link>
           <Link to="/admin" className="text-white hover:text-indigo-200">Admin</Link>
+          <Link to="/profile" className="text-white hover:text-indigo-200">Profil</Link>
         </nav>
       </div>
     </header>
