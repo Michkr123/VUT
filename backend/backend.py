@@ -39,6 +39,9 @@ def save_events(events):
     with open('events.json', 'w') as file:
         json.dump(events, file, indent=4)
 
+def save_profiles(profiles):
+    with open('profiles.json', 'w') as file:
+        json.dump(profiles, file, indent=4)
 
 def load_reviews():
     try:
@@ -155,6 +158,31 @@ def update_event_image(event_id):
     events[event_index]['image'] = image_data
     save_events(events)
     return jsonify({"message": "Image updated successfully"})
+
+@app.route('/profiles/<login>', methods=['PUT'])
+def update_profile(login):
+    profiles = load_profiles()
+    profile_index = next((index for index, profile in enumerate(profiles) if profile['login'] == login), None)
+    if profile_index is None:
+        return jsonify({"error": "Profile not found"}), 404
+
+    # Extract updated fields from the request JSON
+    data = request.get_json()
+    email = data.get('email')
+    phone = data.get('phone')
+    nickname = data.get('nickname')
+
+    # Update the fields only if provided
+    if email is not None:
+        profiles[profile_index]['email'] = email
+    if phone is not None:
+        profiles[profile_index]['phone'] = phone
+    if nickname is not None:
+        profiles[profile_index]['nickname'] = nickname
+
+    save_profiles(profiles)
+    return jsonify({"message": "Profile updated successfully"})
+
 
 
 @app.route('/events/<int:event_id>/reviews', methods=['GET'])

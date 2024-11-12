@@ -10,9 +10,11 @@ import WorkerPage from "./WorkerPage";
 import AdminPage from "./AdminPage";
 import NewEvent from './NewEvent';
 import ProfilePage from "./ProfilePage";
+import ProfileChangePage from "./ProfileChangePage";
 import AddReviewPage from "./AddReviewPage";
+import ProfileEditPage from "./ProfileEditPage";
 
-const login = "xmicha94";
+const login = "admin";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
@@ -27,7 +29,9 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/admin" element={<AdminPage />} />
           <Route path="/admin/new_event" element={<NewEvent />} />
           <Route path="/profile" element={<ProfilePage login={login} />} />
+          <Route path="/profilechange" element={<ProfileChangePage login={login} />} />
           <Route path="/event/:id/addreview" element={<AddReviewPage login={login} />} />
+          <Route path="/profile/edit" element={<ProfileEditPage login={login} />} />
         </Routes>
       </div>
     </Router>
