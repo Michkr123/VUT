@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate  } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { useUser } from './UserContext';
 
 import EventImage from "./components/EventImage";
 
-interface AddReviewPageProps { login: string; }
-
-interface Profile {
-    login: string;
-    email: string;
-    phone: string;
-    nickname: string;
-    image: string;
-}
-
-const AddReviewPage: React.FC<AddReviewPageProps> = ({ login }) => {
+const AddReviewPage = () => {
     const { id } = useParams();
+    const { login } = useUser();
     const navigate = useNavigate(); 
     const [event, setEvent] = useState<any>(null);
-    const [profile, setProfile] = useState<Profile | null>(null);
 
     const [newReview, setNewReview] = useState({ username: '', comment: '', rating: 5 });
   
@@ -27,7 +18,6 @@ const AddReviewPage: React.FC<AddReviewPageProps> = ({ login }) => {
             try {
                 const response = await fetch(`http://localhost:5000/profiles/${login}`);
                 const data = await response.json();
-                setProfile(data);
                 if (data) {
                     setNewReview((prevReview) => ({
                         ...prevReview,
