@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <cstdint>
+#include <arpa/inet.h>
 #include <iostream>
 #include "packet.h"
 #include "netflow_v5.h" // Include the NetFlow v5 header

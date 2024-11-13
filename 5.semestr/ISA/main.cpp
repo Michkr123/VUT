@@ -86,13 +86,13 @@ int main(int argc, char* argv[]) {
         if (ip_header->ip_p == IPPROTO_TCP) {
             struct tcphdr* tcp_header = (struct tcphdr*)(packet_data + 14 + (ip_header->ip_hl * 4));
 
-            uint32_t src_ip = ntohl(ip_header->ip_src.s_addr);
-            uint32_t dst_ip = ntohl(ip_header->ip_dst.s_addr);
-            uint16_t src_port = ntohs(tcp_header->source);
-            uint16_t dst_port = ntohs(tcp_header->dest);
+            uint32_t src_ip = ip_header->ip_src.s_addr;
+            uint32_t dst_ip = ip_header->ip_dst.s_addr;
+            uint16_t src_port = tcp_header->source;
+            uint16_t dst_port = tcp_header->dest;
             uint64_t timestamp = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
             uint32_t pkt_size = header.len; 
-            uint8_t tcp_flag = tcp_header->th_flags; //TODO most likely not needed
+            uint8_t tcp_flag = tcp_header->th_flags;
 
             // Create a Packet object
             Packet packet(src_ip, dst_ip, src_port, dst_port, IPPROTO_TCP, timestamp, ip_header->ip_tos, pkt_size, tcp_flag);
@@ -127,16 +127,24 @@ int main(int argc, char* argv[]) {
                     // Export flows when buffer has 30 flows
                     if (flow_buffer.size() >= MAX_FLOWS) {
                         // Create a NetFlow v5 message right before exporting
-                        uint32_t sys_uptime = 0;  // You can replace this with actual uptime if needed
-                        uint32_t unix_secs = current_time / 1000000;
-                        uint32_t unix_nsecs = (current_time % 1000000) * 1000;
-                        uint32_t flow_sequence = 0;  // This should increment with each NetFlow message
-                        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
+                        uint32_t sys_uptime = (current_time / 1000) % UINT32_MAX; 
+                        uint32_t unix_secs = header.ts.tv_sec;
+                        uint32_t unix_nsecs = header.ts.tv_usec * 1000;
 
-                        netflow_v5.prepare_header();
+                        // Debug only
+                        std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
+                        std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
+                        std::cout << "current_time: " << current_time << std::endl;
+                        std::cout << "sys_uptime: " << sys_uptime << std::endl;
+                        std::cout << "unix_secs: " << unix_secs << std::endl;
+                        std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
+
+                        //uint32_t flow_sequence = 0;  // This should increment with each NetFlow message - //TODO nejspis se nema nulovat
+                        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
                         for (const auto& record : flow_buffer) {
                             netflow_v5.add_record(record);  // Add each flow record to the NetFlow message
                         }
+                        netflow_v5.prepare_header();
                         netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send to collector
                         flow_buffer.clear();  // Clear the buffer after exporting
                     }
@@ -147,18 +155,33 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    // End all active flows CHECK THIS
+    for (auto it = active_flows.begin(); it != active_flows.end();) {
+        flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
+        it = active_flows.erase(it);
+    }
+
     // Export remaining flows at the end of the PCAP file
     if (!flow_buffer.empty()) {
-        uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
-        uint32_t sys_uptime = 0;  // You can replace this with actual uptime if needed
-        uint32_t unix_secs = current_time / 1000000;
-        uint32_t unix_nsecs = (current_time % 1000000) * 1000;
-        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
 
-        netflow_v5.prepare_header();
+        uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
+        uint32_t sys_uptime = (current_time / 1000) % UINT32_MAX; 
+        uint32_t unix_secs = header.ts.tv_sec;
+        uint32_t unix_nsecs = header.ts.tv_usec * 1000;
+
+        // Debug only
+        std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
+        std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
+        std::cout << "current_time: " << current_time << std::endl;
+        std::cout << "sys_uptime: " << sys_uptime << std::endl;
+        std::cout << "unix_secs: " << unix_secs << std::endl;
+        std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
+
+        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
         for (const auto& record : flow_buffer) {
             netflow_v5.add_record(record);
         }
+        netflow_v5.prepare_header();
         netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send remaining flows to the collector
         flow_buffer.clear();
     }

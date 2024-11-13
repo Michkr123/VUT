@@ -16,20 +16,31 @@ Netflow_v5::Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_ns
     nf_v5_header.engine_type = 0;
     nf_v5_header.engine_id = 0;
     nf_v5_header.sampling_interval = 0;
+
 }
+
     
 // Function to add a flow record
 void Netflow_v5::add_record(const netflow_v5_record& record) {
     nf_v5_records.push_back(record);    // Add the record to the vector
-    nf_v5_header.count++;               // Increment the count of records
+
+    //Debugging: Print record details
+    // std::cout << "Adding record: " << std::endl
+    //           << "src_addr: " << inet_ntoa(*(in_addr*)&record.src_addr) << std::endl
+    //           << "dst_addr: " << inet_ntoa(*(in_addr*)&record.dst_addr) << std::endl
+    //           << "src_port: " << ntohs(record.src_port) << std::endl
+    //           << "dst_port: " << ntohs(record.dst_port) << std::endl
+    //           << "dPkts: " << ntohl(record.dPkts) << std::endl
+    //           << "dOctets: " << ntohl(record.dOctets) << std::endl
+    //           << "first: " << ntohl(record.first) << std::endl
+    //           << "last: " << ntohl(record.last) << std::endl
+    //           << std::endl;
 }
 
-// Function to prepare the header for export //TODO netusim?
-void Netflow_v5::prepare_header() {
-    nf_v5_header.count = htons(nf_v5_header.count); // Convert count to network byte order for export
+void Netflow_v5::prepare_header() {  
+    nf_v5_header.count = htons(nf_v5_records.size()); 
 }
 
-// Function to export the data to a collector
 void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collector_port) {
     // Create a socket for UDP
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
@@ -48,8 +59,20 @@ void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collecto
     // Prepare the data for sending
     size_t header_size = sizeof(nf_v5_header);
     size_t record_size = sizeof(netflow_v5_record);
-    size_t total_size = header_size + (nf_v5_header.count * record_size);
+    size_t total_size = header_size + (nf_v5_records.size() * record_size);
     char* buffer = new char[total_size]; // Allocate buffer for header and records
+
+    // Debugging: Print header details before copying to buffer
+    // std::cout << "version: " << ntohs(nf_v5_header.version) << std::endl;
+    // std::cout << "count: " << ntohs(nf_v5_header.count) << std::endl;
+    // std::cout << "sys_uptime: " << ntohl(nf_v5_header.sys_uptime) << std::endl;
+    // std::cout << "unix_secs: " << ntohl(nf_v5_header.unix_secs) << std::endl;
+    // std::cout << "unix_nsecs: " << ntohl(nf_v5_header.unix_nsecs) << std::endl;
+    // std::cout << "flow_sequence: " << ntohl(nf_v5_header.flow_sequence) << std::endl;
+    // std::cout << "engine_type: " << (int)nf_v5_header.engine_type << std::endl;
+    // std::cout << "engine_id: " << (int)nf_v5_header.engine_id << std::endl;
+    // std::cout << "sampling_interval: " << ntohs(nf_v5_header.sampling_interval) << std::endl;
+    // std::cout << "____________________________" << std::endl;
 
     // Copy header to buffer
     memcpy(buffer, &nf_v5_header, header_size);
@@ -63,13 +86,14 @@ void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collecto
         perror("sendto failed");
     } else {
         int bytes = 0;
-        for(auto& record : this->nf_v5_records){
+        for (const auto& record : nf_v5_records) {
             bytes += record.dOctets;
         }
-        std::cout << "Sent " << bytes << " bytes to collector." << std::endl;
+        //std::cout << "Sent " << bytes << " bytes to collector." << std::endl;
     }
 
     // Clean up
     delete[] buffer;  // Free allocated buffer
     close(sockfd);    // Close the socket
 }
+
