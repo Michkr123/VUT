@@ -201,11 +201,11 @@ const EventsPage = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-start">
                     <div className="flex flex-col gap-1">
-                      <p className="text-gray-600">
+                      {/* <p className="text-gray-600">
                         {event.available_tickets 
                           ? `Dostupné vstupenky: ${event.available_tickets}`
                           : "Počet vstupenek neznámý"}
-                      </p>
+                      </p> */}
                       <p className="text-gray-600">
                         {event.region ? "Region: " + capitalize(event.region) : "Region akce neznámý"}
                       </p>
