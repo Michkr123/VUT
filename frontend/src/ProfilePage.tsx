@@ -1,5 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useUser } from './UserContext';
+import { Avatar } from '@mui/material';
+import { deepPurple } from '@mui/material/colors';
 
 interface Profile {
     login: string;
@@ -9,10 +12,9 @@ interface Profile {
     image: string;
 }
 
-interface ProfilePageProps { login: string; }
-
-const ProfilePage: React.FC<ProfilePageProps>= ({ login }) => {
+const ProfilePage = () => {
     const [profile, setProfile] = useState<Profile | null>(null);
+    const { login } = useUser();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -38,10 +40,9 @@ const ProfilePage: React.FC<ProfilePageProps>= ({ login }) => {
             </Link>
           </div>
           <div className="flex flex-col items-center bg-gray-200 min-h-screen p-8">
-              <img
-                  src={profile?.image}
-                  alt='image'
-              />
+              <Avatar sx={{ width: 200, height: 200, bgcolor: deepPurple[500]}} alt={profile?.nickname} src={profile?.image}>
+                {profile?.nickname}
+              </Avatar>
 
               <div className="grid grid-cols-2 grid-rows-5 gap-4 p-4">
                   <p className="text-right pr-2">Login: </p>
