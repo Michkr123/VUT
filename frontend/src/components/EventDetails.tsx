@@ -15,7 +15,7 @@ const EventDetails = () => {
     hour: '2-digit',
     minute: '2-digit',
     second: '2-digit',
-    hour12: false, // 24 hodinový formát
+    hour12: false, // 24-hour format
     timeZoneName: 'short'
   };
 
@@ -33,34 +33,17 @@ const EventDetails = () => {
     fetchEventDetails();
   }, [id]);
 
-  const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch(`http://localhost:5000/events/${id}/reviews`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newReview),
-      });
-      if (response.ok) {
-        // Obnovení detailů akce aby se zobrazila nová recenze
-        const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
-        const refreshedData = await refreshResponse.json();
-        setEvent(refreshedData);
-        setNewReview({ username: '', comment: '', rating: 5 });
-      }
-    } catch (error) {
-      console.error('Error submitting review:', error);
-    }
-  };
-
   if (!event) return <div className="container mx-auto px-4 py-8">Načítání...</div>;
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-        <h2 className="text-2xl font-bold mb-4">{event.name}</h2>
+      <div className="bg-gray-200 rounded-lg shadow-lg p-6 mb-8 relative" style={{ maxWidth: '700px', margin: '0 auto' }}>
+        <h2 className="text-3xl font-bold mb-2">{event.name}</h2>
+        <div className="text-sm text-gray-600 mb-4 flex justify-between items-center">
+          <p>workshop</p>
+          <p>{event.date_of_event || 'Datum konání neznámo'}</p>
+        </div>
+
         <div className="h-64 mb-4 rounded overflow-hidden">
           {event.image ? (
             <EventImage
@@ -69,39 +52,40 @@ const EventDetails = () => {
               className="w-full h-full object-cover"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-500">
+            <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
               Obrázek není dostupný
             </div>
           )}
         </div>
-        <p className="text-gray-600">Dostupné vstupenky: {event.available_tickets}</p>
-        <p className="text-gray-600">
-          Průměrné hodnocení: {event.average_rating ? event.average_rating.toFixed(1) : 'Zatím žádné hodnocení'}
+
+        <p className="text-gray-800 text-sm mb-2">
+          {event.description || "Popis události není k dispozici."}
         </p>
-        {event.address ? (
-          <p className="text-gray-600">Adresa: {event.address}</p>
-        ) : (
-          <p className="text-gray-600">Adresa akce neznámá</p>
-        )}
-        {event.date_of_event ? (
-          <p className="text-gray-600">Datum konání: {event.date_of_event}</p>
-        ) : (
-          <p className="text-gray-600">Datum konání neznámo</p>
-        )}
+
+        <div className="my-4 bg-gray-100 p-4 rounded shadow-inner">
+          <h3 className="text-lg font-bold">Organizátor:</h3>
+          <p className="text-gray-600">{event.organizer || "Organizátor neznámý"}</p>
+        </div>
+
+        <div className="flex justify-center my-4">
+          <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit</button>
+          <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit se jako dobrovolník</button>
+        </div>
+
+        <div className="text-center mt-4">
+          <Link 
+            to={`/event/${event.id}/addreview`}
+            key={event.id} 
+            className="text-white hover:text-indigo-200"
+          >
+            <button className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+              Přidat recenzi
+            </button>
+          </Link>
+        </div>
       </div>
 
-      {/* Formulář pro přidání recenze */}
-      <Link 
-        to={`/event/${event.id}/addreview`}
-        key={event.id} 
-        className="text-white hover:text-indigo-200"
-        >
-        <button className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-            Přidat recenzi
-        </button>
-      </Link>
-
-      {/* Recenze */}
+      {/* Reviews */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
         <h3 className="text-xl font-bold mb-4">Recenze ({event.reviews.length})</h3>
         <div className="mb-8">
