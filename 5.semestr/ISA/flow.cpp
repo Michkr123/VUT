@@ -50,8 +50,8 @@ netflow_v5_record Flow::toNetFlowRecord() const {
     record.output = htons(0); // Set as needed (if applicable), converted to network byte order
     record.dPkts = htonl(num_of_packets);
     record.dOctets = htonl(size_of_flow);
-    record.first = htonl(static_cast<uint32_t>(first_packet_timestamp));
-    record.last = htonl(static_cast<uint32_t>(last_packet_timestamp));
+    record.first = htonl(static_cast<uint32_t>(first_packet_timestamp / 1000));
+    record.last = htonl(static_cast<uint32_t>(last_packet_timestamp / 1000));
     record.src_port = packets[0].getSrc_port(); // Convert to network byte order
     record.dst_port = packets[0].getDst_port(); // Convert to network byte order
     record.pad1 = 0;

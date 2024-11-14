@@ -10,6 +10,7 @@
 #include "packet.h"
 #include "flow.h"
 #include "netflow_v5.h"
+#include <chrono>
 
 const int MAX_FLOWS = 30;
 int flow_sequence = 0;
@@ -20,6 +21,8 @@ int main(int argc, char* argv[]) {
     std::string pcap_file_path;
     int active_timeout = 60;   // Active timeout in seconds
     int inactive_timeout = 60; // Inactive timeout in seconds
+    auto timestamp_start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+    //std::cout << timestamp << std::endl;
 
     // Parse command-line arguments
     int opt;
@@ -91,7 +94,7 @@ int main(int argc, char* argv[]) {
             uint16_t src_port = tcp_header->source;
             uint16_t dst_port = tcp_header->dest;
             uint64_t timestamp = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
-            uint32_t pkt_size = header.len; 
+            uint32_t pkt_size = header.caplen; 
             uint8_t tcp_flag = tcp_header->th_flags;
 
             // Create a Packet object
@@ -117,29 +120,28 @@ int main(int argc, char* argv[]) {
 
             // Check active/inactive timeouts and add expired flows to buffer
             uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
-            for (auto it = active_flows.begin(); it != active_flows.end();) {
+            for (auto it = active_flows.rbegin(); it != active_flows.rend();) {
                 if (it->is_inactive(current_time, inactive_timeout * 1000000) || 
                     it->is_active_expired(current_time, active_timeout * 1000000)) {
                     flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
-                    it = active_flows.erase(it); // Remove the flow after adding to buffer
-                    //std::cout << flow_buffer.size() << "\n";
+                    it = decltype(it)(active_flows.erase(std::next(it).base())); // Remove the flow after adding to buffer                    //std::cout << flow_buffer.size() << "\n";
 
                     // Export flows when buffer has 30 flows
                     if (flow_buffer.size() >= MAX_FLOWS) {
                         // Create a NetFlow v5 message right before exporting
-                        uint32_t sys_uptime = (current_time / 1000) % UINT32_MAX; 
+                        uint32_t timestamp_now = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch()).count();;
+                        uint32_t sys_uptime = timestamp_now - timestamp_start;
                         uint32_t unix_secs = header.ts.tv_sec;
                         uint32_t unix_nsecs = header.ts.tv_usec * 1000;
 
                         // Debug only
-                        std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
-                        std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
-                        std::cout << "current_time: " << current_time << std::endl;
+                        // std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
+                        // std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
+                        // std::cout << "current_time: " << current_time << std::endl;
                         std::cout << "sys_uptime: " << sys_uptime << std::endl;
-                        std::cout << "unix_secs: " << unix_secs << std::endl;
-                        std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
+                        // std::cout << "unix_secs: " << unix_secs << std::endl;
+                        // std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
 
-                        //uint32_t flow_sequence = 0;  // This should increment with each NetFlow message - //TODO nejspis se nema nulovat
                         Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
                         for (const auto& record : flow_buffer) {
                             netflow_v5.add_record(record);  // Add each flow record to the NetFlow message
@@ -155,27 +157,28 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // End all active flows CHECK THIS
-    for (auto it = active_flows.begin(); it != active_flows.end();) {
+    // End all active flows, export from latest to newest
+    for (auto it = active_flows.rbegin(); it != active_flows.rend();) {
         flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
-        it = active_flows.erase(it);
+        it = decltype(it)(active_flows.erase(std::next(it).base()));
     }
+
 
     // Export remaining flows at the end of the PCAP file
     if (!flow_buffer.empty()) {
 
-        uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
-        uint32_t sys_uptime = (current_time / 1000) % UINT32_MAX; 
+        uint32_t timestamp_now = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch()).count();;
+        uint32_t sys_uptime = timestamp_now - timestamp_start;//(current_time / 1000) - timestamp_start; 
         uint32_t unix_secs = header.ts.tv_sec;
         uint32_t unix_nsecs = header.ts.tv_usec * 1000;
 
         // Debug only
-        std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
-        std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
-        std::cout << "current_time: " << current_time << std::endl;
+        // std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
+        // std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
+        // std::cout << "current_time: " << current_time << std::endl;
         std::cout << "sys_uptime: " << sys_uptime << std::endl;
-        std::cout << "unix_secs: " << unix_secs << std::endl;
-        std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
+        // std::cout << "unix_secs: " << unix_secs << std::endl;
+        // std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
 
         Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
         for (const auto& record : flow_buffer) {
