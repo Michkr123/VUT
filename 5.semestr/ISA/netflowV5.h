@@ -1,3 +1,8 @@
+/*
+ISA project - PCAP NetFlow v5 exporter
+Author: Michálek Kryštof (xmicha94) 
+*/
+
 #ifndef NETFLOW_V5_H
 #define NETFLOW_V5_H
 
@@ -6,10 +11,10 @@
 #include <vector>
 
 // NetFlow v5 format
-// viz https://www.cisco.com/c/en/us/td/docs/net_mgmt/netflow_collection_engine/3-6/user/guide/format.html 
+// https://www.cisco.com/c/en/us/td/docs/net_mgmt/netflow_collection_engine/3-6/user/guide/format.html 
 
-// Struktura NetFlow v5 hlavičky
-struct netflow_v5_header {
+// Structure of the netflow v5 header
+struct netflowV5Header {
     uint16_t version;
     uint16_t count;
     uint32_t sys_uptime;
@@ -21,8 +26,8 @@ struct netflow_v5_header {
     uint16_t sampling_interval;
 };
 
-// Struktura NetFlow v5 záznamu o toku
-struct netflow_v5_record {
+// Structure of the netflow v5 record
+struct netflowV5Record {
     uint32_t src_addr;
     uint32_t dst_addr;
     uint32_t nexthop;
@@ -45,18 +50,18 @@ struct netflow_v5_record {
     uint16_t pad2;
 };
 
-class Netflow_v5 {
+class NetflowV5 {
 private:
-    netflow_v5_header nf_v5_header;
-    std::vector<netflow_v5_record> nf_v5_records;
+    netflowV5Header nf_v5_header;
+    std::vector<netflowV5Record> nf_v5_records;
 
 public:
-    Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence);
+    // Constructor
+    NetflowV5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence);
     
-
-    void add_record(const netflow_v5_record& record);  // Method to add a flow record
-    void prepare_header();                              // Prepare header for export
-    void export_to_collector(const char* collector_ip, uint16_t collector_port); // Export to collector
+    void addRecord(const netflowV5Record& record); 
+    void prepareHeader();
+    void exportToCollector(const char* collector_ip, uint16_t collector_port);
 };
 
 #endif // NETFLOW_EXPORTER_H

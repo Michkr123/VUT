@@ -1,3 +1,8 @@
+/*
+ISA project - PCAP NetFlow v5 exporter
+Author: Michálek Kryštof (xmicha94) 
+*/
+
 #ifndef FLOW_H
 #define FLOW_H
 
@@ -6,7 +11,7 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include "packet.h"
-#include "netflow_v5.h" // Include the NetFlow v5 header
+#include "netflowV5.h"
 
 class Flow {
 private:
@@ -20,28 +25,16 @@ public:
     // Constructor
     Flow();
 
-    // Method to add a packet to the flow
-    void addPacket(const Packet& packet);
-
     // Getters
-    uint64_t getFirst_packet_timestamp() const;
-    uint64_t getLast_packet_timestamp() const;
-    uint32_t getSize_of_flow() const;
+    uint64_t getFirstPacketTimestamp() const;
+    uint64_t getLastPacketTimestamp() const;
+    uint32_t getSizeOfFlow() const;
 
-    // Check if the flow is inactive (based on inactive timeout)
-    bool is_inactive(uint64_t currentTimestamp, uint64_t inactiveTimeout) const;
-
-    // Check if the flow has exceeded the active timeout
-    bool is_active_expired(uint64_t currentTimestamp, uint64_t activeTimeout) const;
-
-    // Convert flow to NetFlow v5 record
-    netflow_v5_record toNetFlowRecord() const; 
-
-    // Export the flow (stub implementation)
-    void export_flow() const;
-
-    // Check if the flow matches a packet (5-tuple match)
-    bool matches(const Packet& packet) const; // Removed extra qualification
+    void addPacket(const Packet& packet);
+    bool isInactive(uint64_t currentTimestamp, uint64_t inactiveTimeout) const;
+    bool isActiveExpired(uint64_t currentTimestamp, uint64_t activeTimeout) const;
+    netflowV5Record toNetFlowRecord() const; 
+    bool matches(const Packet& packet) const;
 };
 
 #endif  // FLOW_H

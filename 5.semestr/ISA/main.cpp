@@ -1,16 +1,21 @@
+/*
+ISA project - PCAP NetFlow v5 exporter
+Author: Michálek Kryštof (xmicha94) 
+*/
+
 #include <iostream>
 #include <unistd.h>
 #include <pcap.h>
 #include <map>
 #include <vector>
-#include <netinet/ip.h>    // Provides iphdr structure
-#include <netinet/tcp.h>   // Provides tcphdr structure
-#include <netinet/udp.h>   // Provides udphdr structure
+#include <netinet/ip.h>
+#include <netinet/tcp.h>
+#include <netinet/udp.h>
 #include <arpa/inet.h>
+#include <chrono>
 #include "packet.h"
 #include "flow.h"
-#include "netflow_v5.h"
-#include <chrono>
+#include "netflowV5.h"
 
 const int MAX_FLOWS = 30;
 int flow_sequence = 0;
@@ -19,12 +24,15 @@ int main(int argc, char* argv[]) {
     std::string host;
     std::string port;
     std::string pcap_file_path;
-    int active_timeout = 60;   // Active timeout in seconds
-    int inactive_timeout = 60; // Inactive timeout in seconds
-    auto timestamp_start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
-    //std::cout << timestamp << std::endl;
 
-    // Parse command-line arguments
+    // Default timeouts
+    int active_timeout = 60;
+    int inactive_timeout = 60;
+
+    // Timestamp of the export device boot
+    auto timestamp_start = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+    // Parse -i and -a arguments
     int opt;
     while ((opt = getopt(argc, argv, "a:i:")) != -1) {
         switch (opt) {
@@ -40,7 +48,7 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // Process remaining arguments (host:port and PCAP file)
+    // Parse other arguments
     for (int i = optind; i < argc; ++i) {
         std::string arg = argv[i];
         if (arg.find(':') != std::string::npos) {
@@ -65,7 +73,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Open the PCAP file
+    // open PCAP file
     char errbuf[PCAP_ERRBUF_SIZE];
     pcap_t* pcap = pcap_open_offline(pcap_file_path.c_str(), errbuf);
     if (pcap == nullptr) {
@@ -73,22 +81,21 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    // Variables to store packet data
+    // Variables for packet
     const u_char* packet_data;
     struct pcap_pkthdr header;
 
     // List of active flows and buffer to export flows
     std::vector<Flow> active_flows;
-    std::vector<netflow_v5_record> flow_buffer;
+    std::vector<netflowV5Record> flow_buffer;
 
     // Loop through all packets in the file
     while ((packet_data = pcap_next(pcap, &header)) != nullptr) {
-        // Parse packet headers
-        struct ip* ip_header = (struct ip*)(packet_data + 14);  // Assuming Ethernet header is 14 bytes
-
+        struct ip* ip_header = (struct ip*)(packet_data + 14);
         if (ip_header->ip_p == IPPROTO_TCP) {
             struct tcphdr* tcp_header = (struct tcphdr*)(packet_data + 14 + (ip_header->ip_hl * 4));
 
+            // Prepare data for the packet class object
             uint32_t src_ip = ip_header->ip_src.s_addr;
             uint32_t dst_ip = ip_header->ip_dst.s_addr;
             uint16_t src_port = tcp_header->source;
@@ -97,10 +104,10 @@ int main(int argc, char* argv[]) {
             uint32_t pkt_size = header.caplen; 
             uint8_t tcp_flag = tcp_header->th_flags;
 
-            // Create a Packet object
+            // Create a packet object
             Packet packet(src_ip, dst_ip, src_port, dst_port, IPPROTO_TCP, timestamp, ip_header->ip_tos, pkt_size, tcp_flag);
 
-            // Look for an existing flow that matches the packet (based on 5-tuple)
+            // Check if the packet match any existing flow
             bool flow_found = false;
             for (auto& flow : active_flows) {
                 if (flow.matches(packet)) {
@@ -121,34 +128,37 @@ int main(int argc, char* argv[]) {
             // Check active/inactive timeouts and add expired flows to buffer
             uint64_t current_time = header.ts.tv_sec * 1000000 + header.ts.tv_usec;
             for (auto it = active_flows.rbegin(); it != active_flows.rend();) {
-                if (it->is_inactive(current_time, inactive_timeout * 1000000) || 
-                    it->is_active_expired(current_time, active_timeout * 1000000)) {
-                    flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
-                    it = decltype(it)(active_flows.erase(std::next(it).base())); // Remove the flow after adding to buffer                    //std::cout << flow_buffer.size() << "\n";
+                if (it->isInactive(current_time, inactive_timeout * 1000000) || it->isActiveExpired(current_time, active_timeout * 1000000)) {
+                    // Add expired flow to flow buffer and delete it from active - from latest to newest
+                    flow_buffer.push_back(it->toNetFlowRecord());
+                    it = decltype(it)(active_flows.erase(std::next(it).base()));
 
                     // Export flows when buffer has 30 flows
                     if (flow_buffer.size() >= MAX_FLOWS) {
-                        // Create a NetFlow v5 message right before exporting
+                        // Prepare netflow v5 header data
                         uint32_t timestamp_now = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch()).count();;
                         uint32_t sys_uptime = timestamp_now - timestamp_start;
                         uint32_t unix_secs = header.ts.tv_sec;
                         uint32_t unix_nsecs = header.ts.tv_usec * 1000;
 
-                        // Debug only
+                        //TODO Debug only
                         // std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
                         // std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
                         // std::cout << "current_time: " << current_time << std::endl;
-                        std::cout << "sys_uptime: " << sys_uptime << std::endl;
+                        // std::cout << "sys_uptime: " << sys_uptime << std::endl;
                         // std::cout << "unix_secs: " << unix_secs << std::endl;
                         // std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
 
-                        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
+                        // Create a netflow object with header data and add all 30 records from the flow buffer
+                        NetflowV5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
                         for (const auto& record : flow_buffer) {
-                            netflow_v5.add_record(record);  // Add each flow record to the NetFlow message
+                            netflow_v5.addRecord(record);
                         }
-                        netflow_v5.prepare_header();
-                        netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send to collector
-                        flow_buffer.clear();  // Clear the buffer after exporting
+                        netflow_v5.prepareHeader();
+                        // Export the netflow v5 message
+                        netflow_v5.exportToCollector(host.c_str(), std::stoi(port));
+                        // Clear the flow bufffer
+                        flow_buffer.clear();
                     }
                 } else {
                     ++it;
@@ -157,35 +167,37 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    // End all active flows, export from latest to newest
+    // End all active flows and push them to the flow_buffer - from latest to newest
     for (auto it = active_flows.rbegin(); it != active_flows.rend();) {
-        flow_buffer.push_back(it->toNetFlowRecord());  // Convert to NetFlow record and add to buffer
+        flow_buffer.push_back(it->toNetFlowRecord());
         it = decltype(it)(active_flows.erase(std::next(it).base()));
     }
 
-
-    // Export remaining flows at the end of the PCAP file
+    // Export remaining flows from the flow buffer
     if (!flow_buffer.empty()) {
-
+        // Prepare netflow v5 header data
         uint32_t timestamp_now = std::chrono::duration_cast<std::chrono::milliseconds>( std::chrono::system_clock::now().time_since_epoch()).count();;
         uint32_t sys_uptime = timestamp_now - timestamp_start;//(current_time / 1000) - timestamp_start; 
         uint32_t unix_secs = header.ts.tv_sec;
         uint32_t unix_nsecs = header.ts.tv_usec * 1000;
 
-        // Debug only
+        //TODO Debug only
         // std::cout << "header.ts.tv_sec: " << header.ts.tv_sec << std::endl;
         // std::cout << "header.ts.tv_usec: " << header.ts.tv_usec << std::endl;
         // std::cout << "current_time: " << current_time << std::endl;
-        std::cout << "sys_uptime: " << sys_uptime << std::endl;
+        // std::cout << "sys_uptime: " << sys_uptime << std::endl;
         // std::cout << "unix_secs: " << unix_secs << std::endl;
         // std::cout << "unix_nsecs: " << unix_nsecs << std::endl;
 
-        Netflow_v5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
+        // Create a netflow object with header data and add all 30 records from the flow buffer
+        NetflowV5 netflow_v5(sys_uptime, unix_secs, unix_nsecs, flow_sequence);
         for (const auto& record : flow_buffer) {
-            netflow_v5.add_record(record);
+            netflow_v5.addRecord(record);
         }
-        netflow_v5.prepare_header();
-        netflow_v5.export_to_collector(host.c_str(), std::stoi(port));  // Send remaining flows to the collector
+        netflow_v5.prepareHeader();
+        // Export the netflow v5 message
+        netflow_v5.exportToCollector(host.c_str(), std::stoi(port));
+        // Clear the flow bufffer
         flow_buffer.clear();
     }
 

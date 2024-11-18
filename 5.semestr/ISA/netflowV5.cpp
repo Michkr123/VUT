@@ -1,12 +1,17 @@
-#include "netflow_v5.h"
+/*
+ISA project - PCAP NetFlow v5 exporter
+Author: Michálek Kryštof (xmicha94) 
+*/
+
 #include <iostream>
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <cstring>
 #include <unistd.h>
+#include "netflowV5.h"
 
-// Konstruktor pro inicializaci exportéru
-Netflow_v5::Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence) {
+// Costructor
+NetflowV5::NetflowV5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsecs, uint32_t flow_sequence) {
     nf_v5_header.version = htons(5);
     nf_v5_header.count = htons(0);
     nf_v5_header.sys_uptime = htonl(sys_uptime);
@@ -16,15 +21,13 @@ Netflow_v5::Netflow_v5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_ns
     nf_v5_header.engine_type = 0;
     nf_v5_header.engine_id = 0;
     nf_v5_header.sampling_interval = 0;
-
 }
-
     
-// Function to add a flow record
-void Netflow_v5::add_record(const netflow_v5_record& record) {
-    nf_v5_records.push_back(record);    // Add the record to the vector
+// Function to add a flow record - add_record(record);
+void NetflowV5::addRecord(const netflowV5Record& record) {
+    nf_v5_records.push_back(record);
 
-    //Debugging: Print record details
+    //TODO Debugging: Print record details
     // std::cout << "Adding record: " << std::endl
     //           << "src_addr: " << inet_ntoa(*(in_addr*)&record.src_addr) << std::endl
     //           << "dst_addr: " << inet_ntoa(*(in_addr*)&record.dst_addr) << std::endl
@@ -37,32 +40,34 @@ void Netflow_v5::add_record(const netflow_v5_record& record) {
     //           << std::endl;
 }
 
-void Netflow_v5::prepare_header() {  
+// Function to convert header data from host byte to network byte order
+void NetflowV5::prepareHeader() {  
     nf_v5_header.count = htons(nf_v5_records.size()); 
 }
 
-void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collector_port) {
+// Fuction to export netflow v5 message to the collector
+void NetflowV5::exportToCollector(const char* collector_ip, uint16_t collector_port) {
     // Create a socket for UDP
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd < 0) {
         perror("socket creation failed");
         return;
     }
-
     struct sockaddr_in collector_addr;
     memset(&collector_addr, 0, sizeof(collector_addr));
-    
-    collector_addr.sin_family = AF_INET; // IPv4
-    collector_addr.sin_port = htons(collector_port); // Set collector port
-    inet_pton(AF_INET, collector_ip, &collector_addr.sin_addr); // Convert IP to binary form
+    // Set IPv4l, converts port from host byte to network byte order
+    collector_addr.sin_family = AF_INET;
+    collector_addr.sin_port = htons(collector_port);
+    // Converts IPv4 address from text to binary
+    inet_pton(AF_INET, collector_ip, &collector_addr.sin_addr);
 
-    // Prepare the data for sending
+    // Prepare buffer for the netflow v5 message 
     size_t header_size = sizeof(nf_v5_header);
-    size_t record_size = sizeof(netflow_v5_record);
+    size_t record_size = sizeof(netflowV5Record);
     size_t total_size = header_size + (nf_v5_records.size() * record_size);
-    char* buffer = new char[total_size]; // Allocate buffer for header and records
+    char* buffer = new char[total_size];
 
-    // Debugging: Print header details before copying to buffer
+    //TODO  Debugging: Print header details before copying to buffer
     // std::cout << "version: " << ntohs(nf_v5_header.version) << std::endl;
     // std::cout << "count: " << ntohs(nf_v5_header.count) << std::endl;
     // std::cout << "sys_uptime: " << ntohl(nf_v5_header.sys_uptime) << std::endl;
@@ -89,11 +94,9 @@ void Netflow_v5::export_to_collector(const char* collector_ip, uint16_t collecto
         for (const auto& record : nf_v5_records) {
             bytes += record.dOctets;
         }
-        //std::cout << "Sent " << bytes << " bytes to collector." << std::endl;
     }
 
-    // Clean up
-    delete[] buffer;  // Free allocated buffer
-    close(sockfd);    // Close the socket
+    delete[] buffer;
+    close(sockfd);
 }
 
