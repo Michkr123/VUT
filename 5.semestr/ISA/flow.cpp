@@ -49,8 +49,8 @@ netflowV5Record Flow::toNetFlowRecord() const {
     record.output = htons(0);
     record.dPkts = htonl(num_of_packets);
     record.dOctets = htonl(size_of_flow);
-    record.first = htonl(static_cast<uint32_t>(first_packet_timestamp / 1000)); //TODO this conversion is bad :(
-    record.last = htonl(static_cast<uint32_t>(last_packet_timestamp / 1000));
+    record.first = htonl((uint32_t)(first_packet_timestamp) / 1000000);
+    record.last = htonl((uint32_t)(last_packet_timestamp) / 1000000);
     record.src_port = packets[0].getSrcPort();
     record.dst_port = packets[0].getDstPort();
     record.pad1 = 0;
@@ -62,29 +62,6 @@ netflowV5Record Flow::toNetFlowRecord() const {
     record.src_mask = 0;
     record.dst_mask = 0;
     record.pad2 = 0;
-
-    //TODO Debugging: Print record details
-    // std::cout << "src_addr: " << inet_ntoa(*(in_addr*)&record.src_addr) << std::endl;
-    // std::cout << "dst_addr: " << inet_ntoa(*(in_addr*)&record.dst_addr) << std::endl;
-    // std::cout << "nexthop: " << inet_ntoa(*(in_addr*)&record.nexthop) << std::endl;
-    // std::cout << "input: " << ntohs(record.input) << std::endl;
-    // std::cout << "output: " << ntohs(record.output) << std::endl;
-    // std::cout << "dPkts: " << ntohl(record.dPkts) << std::endl;
-    // std::cout << "dOctets: " << ntohl(record.dOctets) << std::endl;
-    // std::cout << "first: " << ntohl(record.first) << std::endl;
-    // std::cout << "last: " << ntohl(record.last) << std::endl;
-    // std::cout << "src_port: " << ntohs(record.src_port) << std::endl;
-    // std::cout << "dst_port: " << ntohs(record.dst_port) << std::endl;
-    // std::cout << "pad1: " << (int)record.pad1 << std::endl;
-    // std::cout << "tcp_flags: " << (int)record.tcp_flags << std::endl;
-    // std::cout << "prot: " << (int)record.prot << std::endl;
-    // std::cout << "tos: " << (int)record.tos << std::endl;
-    // std::cout << "src_as: " << ntohs(record.src_as) << std::endl;
-    // std::cout << "dst_as: " << ntohs(record.dst_as) << std::endl;
-    // std::cout << "src_mask: " << (int)record.src_mask << std::endl;
-    // std::cout << "dst_mask: " << (int)record.dst_mask << std::endl;
-    // std::cout << "pad2: " << ntohs(record.pad2) << std::endl;
-    // std::cout << "_________________________________________" << std::endl;
 
     return record;
 }

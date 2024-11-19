@@ -26,18 +26,6 @@ NetflowV5::NetflowV5(uint32_t sys_uptime, uint32_t unix_secs, uint32_t unix_nsec
 // Function to add a flow record - add_record(record);
 void NetflowV5::addRecord(const netflowV5Record& record) {
     nf_v5_records.push_back(record);
-
-    //TODO Debugging: Print record details
-    // std::cout << "Adding record: " << std::endl
-    //           << "src_addr: " << inet_ntoa(*(in_addr*)&record.src_addr) << std::endl
-    //           << "dst_addr: " << inet_ntoa(*(in_addr*)&record.dst_addr) << std::endl
-    //           << "src_port: " << ntohs(record.src_port) << std::endl
-    //           << "dst_port: " << ntohs(record.dst_port) << std::endl
-    //           << "dPkts: " << ntohl(record.dPkts) << std::endl
-    //           << "dOctets: " << ntohl(record.dOctets) << std::endl
-    //           << "first: " << ntohl(record.first) << std::endl
-    //           << "last: " << ntohl(record.last) << std::endl
-    //           << std::endl;
 }
 
 // Function to convert header data from host byte to network byte order
@@ -66,18 +54,6 @@ void NetflowV5::exportToCollector(const char* collector_ip, uint16_t collector_p
     size_t record_size = sizeof(netflowV5Record);
     size_t total_size = header_size + (nf_v5_records.size() * record_size);
     char* buffer = new char[total_size];
-
-    //TODO  Debugging: Print header details before copying to buffer
-    // std::cout << "version: " << ntohs(nf_v5_header.version) << std::endl;
-    // std::cout << "count: " << ntohs(nf_v5_header.count) << std::endl;
-    // std::cout << "sys_uptime: " << ntohl(nf_v5_header.sys_uptime) << std::endl;
-    // std::cout << "unix_secs: " << ntohl(nf_v5_header.unix_secs) << std::endl;
-    // std::cout << "unix_nsecs: " << ntohl(nf_v5_header.unix_nsecs) << std::endl;
-    // std::cout << "flow_sequence: " << ntohl(nf_v5_header.flow_sequence) << std::endl;
-    // std::cout << "engine_type: " << (int)nf_v5_header.engine_type << std::endl;
-    // std::cout << "engine_id: " << (int)nf_v5_header.engine_id << std::endl;
-    // std::cout << "sampling_interval: " << ntohs(nf_v5_header.sampling_interval) << std::endl;
-    // std::cout << "____________________________" << std::endl;
 
     // Copy header to buffer
     memcpy(buffer, &nf_v5_header, header_size);
