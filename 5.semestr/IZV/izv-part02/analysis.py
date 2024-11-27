@@ -1,12 +1,10 @@
 #!/usr/bin/env python3.12
 # coding=utf-8
-#%%
 from matplotlib import pyplot as plt
 import pandas as pd
 import seaborn as sns
 import numpy as np
 import zipfile
-import sys
 
 # muzete pridat libovolnou zakladni knihovnu ci knihovnu predstavenou na prednaskach
 # dalsi knihovny pak na dotaz
@@ -26,7 +24,6 @@ def load_data(filename: str, ds: str) -> pd.DataFrame:
         # Spojení datových rámců dohromady 
         combined_df = pd.concat(data_frames, ignore_index=True) 
         return combined_df 
-
 
 
 # Ukol 2: zpracovani dat
@@ -52,7 +49,6 @@ def parse_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 
     return new_df
 
-#%%
 # Ukol 3: počty nehod v jednotlivých regionech podle stavu vozovky
 def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
     # Replace numerical values in p16 with descriptive strings
@@ -69,7 +65,7 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
     
     for ax, condition in zip(axs.flatten(), conditions):
         sns.barplot(data=accident_counts[accident_counts['road_condition'] == condition], x='region', y='counts', ax=ax)
-        ax.set_title(f'Stav povrchu vozovky: {condition}')
+        ax.set_title(condition)
         ax.set_xlabel('Kraj')
         ax.set_ylabel('Počet nehod')
     
@@ -84,7 +80,8 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
         plt.show()
     else:
         plt.close()
-#%%
+
+
 # Ukol4: alkohol a následky v krajích
 def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
     # Merge the dataframes on index p1
@@ -116,20 +113,20 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
             data=injury_counts[injury_counts['injury_level'] == injury_level],
             x='region', y='counts', hue='person', ax=ax, palette='muted'
         )
-        ax.set_title(f'Úroveň zranění: {injury_level}')
+        ax.set_title(injury_level)
         ax.set_xlabel('')
         ax.set_ylabel('Počet následků')
 
     # Move the legend outside of the plots
     handles, labels = axs[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc='upper center', title='Osoba', bbox_to_anchor=(0.5, -0.05), ncol=2)
+    fig.legend(handles, labels, loc='center right', bbox_to_anchor=(0.8, 0.475), ncol=1)
     
     # Remove individual legends
     for ax in axs.flatten():
         ax.legend().set_visible(False)
     
     plt.suptitle('Počet nehod pod vlivem alkoholu v jednotlivých regionech podle úrovně zranění', fontsize=16)
-    fig.tight_layout(rect=[0, 0.03, 1, 0.95])  # Adjust layout to make space for the legend
+    fig.tight_layout(rect=[0, 0, 0.7, 1])  # Adjust layout to make space for the legend
     
     # Save figure if location provided
     if fig_location:
@@ -142,10 +139,67 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
 
 
 # Ukol 5: Druh nehody (srážky) v čase
-def plot_type(df: pd.DataFrame, fig_location: str = None,
-              show_figure: bool = False):
-    pass
-
+def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
+    # Select four regions
+    selected_regions = ['MSK', 'PHA', 'PAK', 'KVK']  # You can change these to other regions if needed
+    
+    # Filter for collisions only
+    collision_types = {
+        1: 's chodcem', 2: 's domacím zvířetem', 3: 's lesní zvěří', 4: 's nekolejovým vozidlem',
+        5: 's pevnou překážkou', 6: 's tramvají', 7: 's vlakem', 8: 's vozidlem zaparkovaným'
+    }
+    
+    df['collision_type'] = df['p6'].map(collision_types)
+    
+    # Filter for selected regions
+    df_filtered = df[df['region'].isin(selected_regions)]
+    
+    # Pivot table to get the number of collisions per day per region and collision type
+    pivot_df = df_filtered.pivot_table(
+        index=['date', 'region'], 
+        columns='collision_type', 
+        values='p1', 
+        aggfunc='count', 
+        fill_value=0
+    ).reset_index()
+    
+    # Resample by month for each region and collision type
+    pivot_df['date'] = pd.to_datetime(pivot_df['date'])
+    monthly_data = pivot_df.groupby(['region', pd.Grouper(key='date', freq='MS')]).sum().reset_index()
+    
+    # Plot
+    sns.set(style="whitegrid")
+    fig, axs = plt.subplots(2, 2, figsize=(15, 10), sharex=True)
+    regions_sorted = sorted(selected_regions)
+    
+    for ax, region in zip(axs.flatten(), regions_sorted):
+        region_data = monthly_data[monthly_data['region'] == region]
+        region_data = region_data.set_index('date')
+        region_data = region_data.loc['2023-01-01':'2024-10-01']
+        
+        region_data.plot(ax=ax, title=f'Region: {region}')
+        ax.set_xlabel('Datum')
+        ax.set_ylabel('Počet nehod')
+        
+    # Remove the legend from individual plots
+    for ax in axs.flatten():
+        ax.get_legend().remove()
+    
+    # Add a single legend
+    handles, labels = axs[0, 0].get_legend_handles_labels()
+    fig.legend(handles, labels, loc='upper right', bbox_to_anchor=(1.15, 0.5), title='Druh srážky', ncol=1)
+    
+    plt.suptitle('Počet nehod v jednotlivých regionech podle druhu srážky', fontsize=16)
+    fig.tight_layout(rect=[0, 0.03, 1, 0.95])
+    
+    # Save the figure if fig_location is provided
+    if fig_location:
+        plt.savefig(fig_location, bbox_inches='tight')
+    
+    # Show the figure if show_figure is True
+    if show_figure:
+        plt.show()
+    plt.close(fig)
 
 if __name__ == "__main__":
     # zde je ukazka pouziti, tuto cast muzete modifikovat podle libosti
@@ -157,7 +211,7 @@ if __name__ == "__main__":
     df2 = parse_data(df, True)
     
     # plot_state(df2, "01_state.png")
-    plot_alcohol(df2, df_consequences, "02_alcohol.png", True)
+    #plot_alcohol(df2, df_consequences, "02_alcohol.png", True)
     plot_type(df2, "03_type.png")
 
 
