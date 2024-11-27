@@ -66,8 +66,11 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
     for ax, condition in zip(axs.flatten(), conditions):
         sns.barplot(data=accident_counts[accident_counts['road_condition'] == condition], x='region', y='counts', ax=ax)
         ax.set_title(condition)
-        ax.set_xlabel('Kraj')
+        ax.set_xlabel('')
         ax.set_ylabel('Počet nehod')
+
+        for container in ax.containers: 
+            ax.bar_label(container)
     
     plt.suptitle('Počet nehod v jednotlivých regionech podle stavu vozovky', fontsize=16)
     
@@ -116,6 +119,9 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
         ax.set_title(injury_level)
         ax.set_xlabel('')
         ax.set_ylabel('Počet následků')
+        
+        # Set font size of x-axis labels
+        ax.tick_params(axis='x', labelsize=8)
 
     # Move the legend outside of the plots
     handles, labels = axs[0, 0].get_legend_handles_labels()
@@ -125,7 +131,7 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
     for ax in axs.flatten():
         ax.legend().set_visible(False)
     
-    plt.suptitle('Počet nehod pod vlivem alkoholu v jednotlivých regionech podle úrovně zranění', fontsize=16)
+    plt.suptitle('Počet nehod pod vlivem alkoholu v jednotlivých regionech podle úrovně zranění', fontsize=16, x=0.4)
     fig.tight_layout(rect=[0, 0, 0.7, 1])  # Adjust layout to make space for the legend
     
     # Save figure if location provided
@@ -136,7 +142,6 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
     if show_figure:
         plt.show()
     plt.close(fig)  # Ensure the figure is closed to end the program properly
-
 
 # Ukol 5: Druh nehody (srážky) v čase
 def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
@@ -206,12 +211,18 @@ if __name__ == "__main__":
     # skript nebude pri testovani pousten primo, ale budou volany konkreni
     # funkce.
     
-    df = load_data("data_23_24.zip", "nehody")
-    df_consequences = load_data("data_23_24.zip", "nasledky")
-    df2 = parse_data(df, True)
+    # df = load_data("data_23_24.zip", "nehody")
+    # df_consequences = load_data("data_23_24.zip", "nasledky")
+    # df2 = parse_data(df, True)
+
+    # df2.to_pickle('parsed_data.pkl')
+    # df_consequences.to_pickle('consequences_data.plk')
     
-    # plot_state(df2, "01_state.png")
-    #plot_alcohol(df2, df_consequences, "02_alcohol.png", True)
+    df2 = pd.read_pickle('parsed_data.pkl')
+    df_consequences = pd.read_pickle('consequences_data.plk')
+
+    plot_state(df2, "01_state.png")
+    plot_alcohol(df2, df_consequences, "02_alcohol.png", True)
     plot_type(df2, "03_type.png")
 
 
