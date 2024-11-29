@@ -48,13 +48,13 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
     # Vytvoření mapy a namapování stavu vozovky
     condition_map = {1: "Suchý povrch", 2: "Suchý povrch", 3: "Mokro", 4: "Bláto", 5: "Náledí, ujetý sníh", 6: "Náledí, ujetý sníh"}
     df['road_condition'] = df['p16'].map(condition_map)
-    #vyfiltrování prázdných záznamů
+    # Vyfiltrování prázdných záznamů
     filtered_df = df[df['road_condition'].notna()]
+    # Seskupíme podle krajů
     grouped_df = filtered_df.groupby(['region', 'road_condition'])
     counts_series = grouped_df.size()
     accident_counts = counts_series.reset_index(name='counts')
     
-    # Set up the plot
     sns.set_theme(style="whitegrid")
     fig, axs = plt.subplots(2, 2, figsize=(15, 10), constrained_layout=True)
     conditions = accident_counts['road_condition'].unique()
@@ -65,10 +65,16 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
         ax.set_xlabel('')
         ax.set_ylabel('Počet nehod')
         
-        if i % 2 == 0: # Left column 
+        if i % 2 == 0: 
             ax.set_ylabel('Počet nehod') 
         else: 
             ax.set_ylabel('')
+
+        if i > 1:
+            ax.set_xlabel('Kraj')
+        else:
+            ax.set_xlabel('')
+            
 
         for container in ax.containers: 
             ax.bar_label(container)
@@ -112,14 +118,21 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
     fig, axs = plt.subplots(2, 2, figsize=(15, 10))
     injury_levels_sorted = ['Bez zranění', 'Lehké zranění', 'Těžké zranění', 'Usmrcení']
     
-    for ax, injury_level in zip(axs.flatten(), injury_levels_sorted):
+    for i, (ax, injury_level) in enumerate(zip(axs.flatten(), injury_levels_sorted)):
         sns.barplot(
             data=injury_counts[injury_counts['injury_level'] == injury_level],
             x='region', y='counts', hue='person', ax=ax, palette='muted'
         )
         ax.set_title(injury_level)
-        ax.set_xlabel('')
-        ax.set_ylabel('Počet následků')
+        if i > 1:
+            ax.set_xlabel('Kraj')
+        else:
+            ax.set_xlabel('')
+
+        if i % 2 == 0:
+            ax.set_ylabel('Počet následků')
+        else:
+            ax.set_ylabel('')
         
         # Set font size of x-axis labels
         ax.tick_params(axis='x', labelsize=8)
@@ -154,7 +167,6 @@ def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = Fa
     
     # Select four regions randomly
     selected_regions = np.random.choice(unique_regions, 4, replace=False)
-    selected_regions = ['MSK', 'PHA', 'PAK', 'KVK']
     # Filter for collisions only
     collision_types = {
         1: 's jedoucím nekolejovým vozidlem', 2: 's vozidlem zaparkovaným', 3: 's pevnou překážkou', 4: 's chodcem',
@@ -184,14 +196,17 @@ def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = Fa
     fig, axs = plt.subplots(2, 2, figsize=(20, 10), sharex=True)
     regions_sorted = sorted(selected_regions)
     
-    for ax, region in zip(axs.flatten(), regions_sorted):
+    for i, (ax, region) in enumerate(zip(axs.flatten(), regions_sorted)):
         region_data = monthly_data[monthly_data['region'] == region]
         region_data = region_data.set_index('date')
         region_data = region_data.loc['2023-01-01':'2024-9-29']
         
         region_data.plot(ax=ax, title=f'Kraj: {region}')
         ax.set_xlabel('')
-        ax.set_ylabel('Počet nehod')
+        if i % 2 == 0:
+            ax.set_ylabel('Počet nehod')
+        else:
+            ax.set_ylabel('')
         
     # Remove the legend from individual plots
     for ax in axs.flatten():
