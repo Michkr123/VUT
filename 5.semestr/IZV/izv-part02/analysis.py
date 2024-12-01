@@ -12,26 +12,45 @@ import zipfile
 
 # Ukol 1: nacteni dat ze ZIP souboru
 def load_data(filename: str, ds: str) -> pd.DataFrame:
+    """
+    Nacte data ze ZIP souboru.
+
+    Argumenty:
+        filename (str): Název souboru ZIP.
+        ds (str): Dataset, který se má načíst.
+
+    Návratová hodnota:
+        pd.DataFrame: Kombinovaný datový rámec obsahující data ze všech souborů .xls.
+    """
     with zipfile.ZipFile(filename, 'r') as z:
         files = z.namelist()
         data_frames = []
         
-        # Čtení všech odpovídajícíh souborů s koncovkou .xls s dekódováním cp1250
+        # Čtení všech odpovídajících souborů s koncovkou .xls s dekódováním cp1250
         for file in files:
-            if ds in file and file.endswith('.xls'): 
-                with z.open(file) as f: 
-                    df = pd.read_html(f, encoding='cp1250')[0] 
-                    # Smazání nepojmenovaných sloupců 
-                    df = df.loc[:, ~df.columns.str.contains('^Unnamed')] 
-                    data_frames.append(df) 
-                    
-        # Spojení datových rámců dohromady 
-        combined_df = pd.concat(data_frames, ignore_index=True) 
-        return combined_df 
-
+            if ds in file and file.endswith('.xls'):
+                with z.open(file) as f:
+                    df = pd.read_html(f, encoding='cp1250')[0]
+                    # Smazání nepojmenovaných sloupců
+                    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+                    data_frames.append(df)
+        
+        # Spojení datových rámců dohromady
+        combined_df = pd.concat(data_frames, ignore_index=True)
+        return combined_df
 
 # Ukol 2: zpracovani dat
 def parse_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
+    """
+    Zpracuje a připraví data pro další analýzu.
+
+    Argumenty:
+        df (pd.DataFrame): Vstupní datový rámec.
+        verbose (bool): Pokud je True, vypíše velikost datového rámce.
+
+    Návratová hodnota:
+        pd.DataFrame: Zpracovaný datový rámec.
+    """
     new_df = df.copy()
     # Převod sloupce p2a na formát data "DD.MM.YYYY"
     new_df['date'] = pd.to_datetime(new_df['p2a'], format='%d.%m.%Y')
@@ -52,6 +71,17 @@ def parse_data(df: pd.DataFrame, verbose: bool = False) -> pd.DataFrame:
 
 # Ukol 3: počty nehod v jednotlivých regionech podle stavu vozovky
 def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
+    """
+    Vykreslí počty nehod v jednotlivých regionech podle stavu vozovky.
+
+    Argumenty:
+        df (pd.DataFrame): Zpracovaný datový rámec.
+        fig_location (str): Cesta pro uložení obrázku.
+        show_figure (bool): Pokud je True, zobrazí graf.
+
+    Návratová hodnota:
+        -
+    """
     # Vytvoření mapy a namapování stavu vozovky
     condition_map = {1: "Suchý povrch", 2: "Suchý povrch", 3: "Mokro", 4: "Bláto", 5: "Náledí, ujetý sníh", 6: "Náledí, ujetý sníh"}
     df['road_condition'] = df['p16'].map(condition_map)
@@ -75,9 +105,9 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
         ax.set_xlabel('')
         ax.set_ylabel('Počet nehod')
         
-        if i % 2 == 0: 
-            ax.set_ylabel('Počet nehod') 
-        else: 
+        if i % 2 == 0:
+            ax.set_ylabel('Počet nehod')
+        else:
             ax.set_ylabel('')
 
         if i > 1:
@@ -85,19 +115,33 @@ def plot_state(df: pd.DataFrame, fig_location: str = None, show_figure: bool = F
         else:
             ax.set_xlabel('')
 
-        for container in ax.containers: 
+        for container in ax.containers:
             ax.bar_label(container)
-            
+
     plt.suptitle('Počet nehod v jednotlivých regionech podle stavu vozovky', fontsize=16)
+    
     if fig_location:
         plt.savefig(fig_location)
+    
     if show_figure:
         plt.show()
+    
     plt.close()
-
 
 # Ukol4: alkohol a následky v krajích
 def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
+    """
+    Vykreslí počet nehod pod vlivem alkoholu v jednotlivých regionech podle úrovně zranění.
+
+    Argumenty:
+        df (pd.DataFrame): Datový rámec s nehodami.
+        df_consequences (pd.DataFrame): Datový rámec s následky nehod.
+        fig_location (str): Cesta pro uložení obrázku.
+        show_figure (bool): Pokud je True, zobrazí graf.
+
+    Návratová hodnota:
+        -
+    """
     # Spojení dvou df na základě indexu p1
     merged_df = pd.merge(df, df_consequences, on='p1', suffixes=('_accident', '_consequence'))
     
@@ -125,8 +169,7 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
     for i, (ax, injury_level) in enumerate(zip(axs.flatten(), injury_levels_sorted)):
         sns.barplot(
             data=injury_counts[injury_counts['injury_level'] == injury_level],
-            x='region', y='counts', hue='person', ax=ax, palette='muted'
-        )
+            x='region', y='counts', hue='person', ax=ax, palette='muted'        )
         ax.set_title(injury_level)
         if i > 1:
             ax.set_xlabel('Kraj')
@@ -140,7 +183,7 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
         
         ax.tick_params(axis='x', labelsize=8)
         
-        for container in ax.containers: 
+        for container in ax.containers:
             ax.bar_label(container, fontsize=6)
 
     handles, labels = axs[0, 0].get_legend_handles_labels()
@@ -154,13 +197,25 @@ def plot_alcohol(df: pd.DataFrame, df_consequences: pd.DataFrame, fig_location: 
     fig.tight_layout(rect=[0, 0, 0.7, 1])
     
     if fig_location:
-        plt.savefig(fig_location, bbox_inches='tight')    
+        plt.savefig(fig_location, bbox_inches='tight')
+    
     if show_figure:
         plt.show()
     plt.close(fig)
 
 # Ukol 5: Druh nehody (srážky) v čase
 def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = False):
+    """
+    Vykreslí druh nehod (srážek) v jednotlivých regionech v čase.
+
+    Argument:
+        df (pd.DataFrame): Datový rámec s nehodami.
+        fig_location (str): Cesta pro uložení obrázku.
+        show_figure (bool): Pokud je True, zobrazí graf.
+
+    Návratová hodnota:
+        -
+    """
     # Získání seznamu unikátních regionů
     unique_regions = df['region'].unique() 
 
@@ -223,6 +278,7 @@ def plot_type(df: pd.DataFrame, fig_location: str = None, show_figure: bool = Fa
         plt.show()
     plt.close(fig)
 
+
 if __name__ == "__main__":
     # zde je ukazka pouziti, tuto cast muzete modifikovat podle libosti
     # skript nebude pri testovani pousten primo, ale budou volany konkreni
@@ -243,4 +299,3 @@ if __name__ == "__main__":
 # Pak muzete data jednou nacist a dale ladit jednotlive funkce
 # Pripadne si muzete vysledny dataframe ulozit nekam na disk (pro ladici
 # ucely) a nacitat jej naparsovany z disku
-
