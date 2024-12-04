@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  4 DEC 2024 11:49
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  4 DEC 2024 12:14
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -716,12 +716,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 207--207
 
 [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}] [3] (./projekt.toc<<ot1.cmap
 >><<oml.cmap>><<oms.cmap>><<omx.cmap>>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 3.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 4.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -736,7 +736,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.34 ...ylepšení a rozšíření}{11}{chapter.8}
+l.34 ...ylepšení a rozšíření}{12}{chapter.9}
                                                   % [1
 
 
@@ -765,10 +765,6 @@ l.9 \chapter
 
 ]
 Kapitola 1.
-
-Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 20.
-
 [4
 
 ]
@@ -801,7 +797,11 @@ Kapitola 8.
 
 ]
 Kapitola 9.
-) (./projekt.bbl [12
+[12
+
+]
+Kapitola 10.
+) (./projekt.bbl [13
 
 ]
 
@@ -813,7 +813,7 @@ LaTeX Warning: Empty `thebibliography' environment on input line 5.
 \tf@ptc=\write6
 \openout6 = `projekt.ptc'.
 
- [13
+ [14
 
 ] (./projekt.aux)
  ***********
@@ -821,11 +821,11 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2021/03/21>
  ***********
 Package rerunfilecheck Info: File `projekt.out' has not changed.
-(rerunfilecheck)             Checksum: 4D6AF41AF29D661277F1EBC8113EEEB3;7802.
+(rerunfilecheck)             Checksum: 6E22E85C47C6FAFEBFD5D27EB835CF96;7793.
  ) 
 Here is how much of TeX's memory you used:
- 16045 strings out of 474222
- 252657 string characters out of 5748733
+ 16046 strings out of 474222
+ 252658 string characters out of 5748733
  1936975 words of memory out of 5000000
  37885 multiletter control sequences out of 15000+600000
  630370 words of font info for 89 fonts, out of 8000000 for 9000
@@ -835,10 +835,10 @@ Here is how much of TeX's memory you used:
 b></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmri10.pfb>
-Output written on projekt.pdf (16 pages, 409308 bytes).
+Output written on projekt.pdf (17 pages, 409862 bytes).
 PDF statistics:
- 349 PDF objects out of 1000 (max. 8388607)
- 299 compressed objects within 3 object streams
- 56 named destinations out of 1000 (max. 500000)
+ 354 PDF objects out of 1000 (max. 8388607)
+ 302 compressed objects within 4 object streams
+ 57 named destinations out of 1000 (max. 500000)
  352 words of extra memory for PDF output out of 10000 (max. 10000000)
 
