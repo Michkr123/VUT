@@ -29,7 +29,7 @@ volatile int pos_x_player_a = 125, pos_y_player_a = 32;
 volatile int pos_x_player_b = 0, pos_y_player_b = 32;
 volatile int real_pos_y_player_a = 32, real_pos_y_player_b = 32;
 
-volatile int ball_pos_x = 64, ball_pos_y = 32, ball_x_dir = 2, ball_y_dir = 2;
+volatile int ball_pos_x = 64, ball_pos_y = 32, ball_x_dir = 2, ball_y_dir = 0; //TODO set y_dir = 2
 volatile int prev_ball_pos_x = 64, prev_ball_pos_y = 32;
 
 volatile bool x_button_pressed = false; // Flag for X button press
@@ -37,6 +37,8 @@ volatile bool y_button_pressed = false; // Flag for Y button press
 volatile bool update_player_a_flag = false;
 volatile bool update_player_b_flag = false;
 volatile int color = 1;
+volatile int game = 1;
+volatile int speed = 10, time = 0;
 
 void update_ball() {
     // Update the changed pixels for the ball
@@ -56,7 +58,7 @@ void update_player_a() {
     // Clear entire area for player A
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 63; j++) {
-            set_pixel(125 + i, j, 0); // Clear the area
+            set_pixel(125 + i, j, !color); // Clear the area
         }
     }
     // Draw new position
@@ -72,7 +74,7 @@ void update_player_b() {
     // Clear entire area for player B
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 63; j++) {
-            set_pixel(0 + i, j, 0); // Clear the area
+            set_pixel(0 + i, j, !color); // Clear the area
         }
     }
     // Draw new position
@@ -82,6 +84,28 @@ void update_player_b() {
         }
     }
     real_pos_y_player_b = pos_y_player_b;
+}
+
+void reset_players() {
+    pos_x_player_a = 125;
+    pos_y_player_a = 32;
+    pos_x_player_b = 0;
+    pos_y_player_b = 32;
+
+    update_player_a_flag = true;
+    update_player_b_flag = true;
+}
+
+void reset_game() {
+    time = 0;
+    speed = 10;
+}
+
+void reset_ball() {
+    ball_pos_x = 64;
+    ball_pos_y = 32;
+    ball_x_dir = 2;
+    ball_y_dir = 0;
 }
 
 // Interrupt handler for player_a encoder
@@ -171,55 +195,91 @@ void app_main() {
     update_player_a();
     update_player_b();
 
-    while (1) {
-        // Update positions based on the direction of rotation
-        update_ball();
-        
-        if (update_player_a_flag) {
-            update_player_a();
-            update_player_a_flag = false;
+    while(1) {
+        while (game) {
+            // Update positions based on the direction of rotation
+            time++;
+            if (time % ((1000/speed) * 4) == 0) {
+                if(speed > 1){
+                    speed--;
+                }
+            }
+            update_ball();
+            
+            if (update_player_a_flag) {
+                update_player_a();
+                update_player_a_flag = false;
+            }
+
+            if (update_player_b_flag) {
+                update_player_b();
+                update_player_b_flag = false;
+            }
+            
+            if(time % speed == 0) {
+                ball_pos_x += ball_x_dir;
+                ball_pos_y += ball_y_dir;
+            }
+
+            if (ball_pos_x < 3) {
+                ball_x_dir = -ball_x_dir;
+                ball_pos_x = 3;
+                if(!(ball_pos_y >= pos_y_player_b - 2 && ball_pos_y <= pos_y_player_b + 10)) {
+                    game = 0;
+                }
+            } else if (ball_pos_x > 122) {
+                ball_x_dir = -ball_x_dir;
+                ball_pos_x = 122;
+                if(!(ball_pos_y >= pos_y_player_a - 2 && ball_pos_y <= pos_y_player_a + 10)) {
+                    game = 0;
+                }
+            }
+
+            if (ball_pos_y < 0) {
+                ball_y_dir = -ball_y_dir;
+                ball_pos_y = 0;
+            } else if (ball_pos_y > 61) {
+                ball_y_dir = -ball_y_dir;
+                ball_pos_y = 61;
+            }
+
+            printf("x: %i, y: %i\n", ball_pos_x, ball_pos_y);
+
+            // Handle button presses outside the ISR
+            if (x_button_pressed) {
+                color = 1;
+                erase_display(color);
+                x_button_pressed = false; // Reset flag
+            }
+
+            if (y_button_pressed) {
+                color = 0;
+                erase_display(color);
+                y_button_pressed = false; // Reset flag
+            }
+
+            // Small delay for loop consistency and yielding to the scheduler
+            delay(DELAY);
         }
-
-        if (update_player_b_flag) {
-            update_player_b();
-            update_player_b_flag = false;
+        erase_display(!color);
+        volatile int player_a_ready = 0, player_b_ready = 0;
+        while(!game) {
+            // Handle button presses outside the ISR
+            if(x_button_pressed) {
+                player_a_ready = 1;
+                x_button_pressed = false; // Reset flag
+            }
+            if(y_button_pressed) {
+                player_b_ready = 1;
+                y_button_pressed = false; // Reset flag
+            }
+            if(player_a_ready && player_b_ready) {
+                erase_display(color);
+                game = 1;
+                reset_game();
+                reset_ball();
+                reset_players();
+            }
         }
-
-        ball_pos_x += ball_x_dir;
-        ball_pos_y += ball_y_dir;
-
-        if (ball_pos_x < 3) {
-            ball_x_dir = -ball_x_dir;
-            ball_pos_x = 3;
-        } else if (ball_pos_x > 122) {
-            ball_x_dir = -ball_x_dir;
-            ball_pos_x = 122;
-        }
-
-        if (ball_pos_y < 0) {
-            ball_y_dir = -ball_y_dir;
-            ball_pos_y = 0;
-        } else if (ball_pos_y > 61) {
-            ball_y_dir = -ball_y_dir;
-            ball_pos_y = 61;
-        }
-
-        printf("x: %i, y: %i\n", ball_pos_x, ball_pos_y);
-
-        // Handle button presses outside the ISR
-        if (x_button_pressed) {
-            color = 1;
-            erase_display(color);
-            x_button_pressed = false; // Reset flag
-        }
-
-        if (y_button_pressed) {
-            color = 0;
-            erase_display(color);
-            y_button_pressed = false; // Reset flag
-        }
-
-        // Small delay for loop consistency and yielding to the scheduler
-        delay(DELAY);
     }
 }
