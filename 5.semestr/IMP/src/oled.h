@@ -20,6 +20,7 @@
 #define OLED_CMD_DISPLAY_ON  0xAF
 #define OLED_CMD_FILL        0xA5
 
+
 void oled_init();
 void spi_write(uint8_t data);
 void send_command(uint8_t command);
