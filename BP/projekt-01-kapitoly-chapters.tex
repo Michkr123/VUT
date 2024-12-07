@@ -17,7 +17,7 @@ U~podpisu lze analyzovat statické a dynamické parametry písma.
 Podpis je v~praxi stále nejrozsáhlejším způsobem autentizace. 
 Podaří-li se důveryhodně podpis napodobit, bude možnost obejít bezpečností zabezpečení. 
 To představuje velké bezpečností riziko a nutnost upravení dosavadních bezpečnostích metod pro autentizaci. 
-Bavíme se zde spíše o~digitálním podpisu. Ten obsahuje daleko méně informací a je tedy méně náročné ho falzifikovat.
+Bavíme se zde spíše o~digitálním podpisu. Ten obsahuje daleko méně informací a je tedy méně náročné ho falzifikovat. %nebo ne? lol
 
 %TOLE JE SPIS ABSTRAKT
 %Bude třeba sestavit snímací zařízení pro získaní potřebných parametrů podpisu.
@@ -49,16 +49,28 @@ Obecně je ale bráno za podpis vlastnoruční uvedění jména a příjmení, n
 Charakteristiky podpisu je nepřeberné množství informací, podle kterých jde jednotlivé podpisy od sebe odlišit. 
 Charakteristiky se dělí na statické a dynamické~\ref{sec:pojmy}. 
 Jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v době podpisu.
-Mezi hlavní zkoumané charakteristiky
-
+Mezi hlavní zkoumané charakteristiky patří celkový vzhled podpisu, tloušťka čar, rychlost psaní, průbeh tahů... %TODO vymyslel jsem si lol
 
 \section{Biometrická autentizace}
+Biometrická autentizace probíhá na základě biologických a behaviorálních charakteristik člověka\ref{sec:pojmy}. 
+Obě tyto skupiny znaků jsou pro každého člověka unikátní a nezaměnitelné. To je důvodem, proč je lze využít k autentizaci.
+Existuje spousta 
+%nevim nic z hlavy :(
 
-
-\section{Dynamické parametry podpisu}
-
+\section{Parametry podpisu řešené v rámci této práce}
+V rámci této práce budou snímány následující parametry:
+\begin{itemize}
+  \item{\textbf{Celkový vzhled podpisu}}
+  \item{\textbf{Pohyb propisky} při psaní pomocí akcelerometru zabudovaném v MPU-6050 ze kterého bude vypočítán celkový průběh podpisu, především pak \textbf{pozice pera} a \textbf{rychlost psaní čar}.}
+  \item{\textbf{Sklon propisky} pomocí gyroskopu, který je také součástí MPU-6050}
+  \item{\textbf{Přítlak} pomocí čtveřice přítlakových senzorů Interlink Electronics FSR® 400.}
+\end{itemize}
+Kombinací těchto nasnímaných parametrů by bylo možné dostatečně věrohodně napodobit původní vlastnoruční podpis. 
 
 \section{Rozpoznávání falsifikátů}
+Rozpoznávání falzifikátů je u digitálního podpisu automatizované.
+Probíhá na základě porovnávání uloženého vzorku v databázi s podpisem, kterým se daný člověk snaží autentizovat. %použito správně slovo autentizce?
+
 
 \chapter{Analýza současných řešení}
 \section{Současná řešení v~oblasti biometrie}
