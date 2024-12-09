@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  7 DEC 2024 13:36
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  9 DEC 2024 15:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -600,31 +600,31 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 ))
 \enitdp@checklist=\count339
 LaTeX Font Info:    Trying to load font information for T1+lmr on input line 20
-1.
+6.
 
 (/usr/share/texmf/tex/latex/lm/t1lmr.fd
 File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 ) (./projekt.aux)
 \openout1 = `projekt.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 201.
-LaTeX Font Info:    ... okay on input line 201.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 206.
+LaTeX Font Info:    ... okay on input line 206.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -659,14 +659,14 @@ e
 \c@mv@tabular=\count346
 \c@mv@boldtabular=\count347
 \c@lstlisting=\count348
-Package hyperref Info: Link coloring ON on input line 201.
+Package hyperref Info: Link coloring ON on input line 206.
 
 (./projekt.out) (./projekt.out)
 \@outlinefile=\write3
 \openout3 = `projekt.out'.
 
-LaTeX Font Info:    Trying to load font information for T1+qhv on input line 20
-7.
+LaTeX Font Info:    Trying to load font information for T1+qhv on input line 21
+2.
  (/usr/share/texmf/tex/latex/tex-gyre/t1qhv.fd
 File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 )
@@ -681,41 +681,36 @@ File: t1qhv.fd 2009/09/25 v1.2 font definition file for T1/qhv
 File: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf Graphic file (type pdf)
 <use template-fig/VUT_symbol_barevne_CMYK_CZ.pdf>
 Package pdftex.def Info: template-fig/VUT_symbol_barevne_CMYK_CZ.pdf  used on i
-nput line 207.
+nput line 212.
 (pdftex.def)             Requested size: 116.65646pt x 115.17995pt.
 LaTeX Font Info:    Trying to load font information for T1+opensans-TLF on inpu
-t line 207.
+t line 212.
 
 (/usr/share/texlive/texmf-dist/tex/latex/opensans/T1opensans-TLF.fd
 File: T1opensans-TLF.fd 2019/06/24 Font definitions for T1/opensans-TLF.
 )
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 18.0pt on input line 207.
+(Font)              scaled to size 18.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 18.0pt on input line 207.
+(Font)              scaled to size 18.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 11.0pt on input line 207.
+(Font)              scaled to size 11.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 11.0pt on input line 207.
+(Font)              scaled to size 11.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 14.0pt on input line 207.
+(Font)              scaled to size 14.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 14.0pt on input line 207.
+(Font)              scaled to size 14.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 207.
+(Font)              scaled to size 10.0pt on input line 212.
 LaTeX Font Info:    Font shape `T1/opensans-TLF/b/n' will be
-(Font)              scaled to size 10.0pt on input line 207.
+(Font)              scaled to size 10.0pt on input line 212.
  [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}{/usr/share/texlive/texmf-di
 st/fonts/enc/dvips/opensans/a_jg4h6q.enc} <./template-fig/VUT_symbol_barevne_CM
-YK_CZ.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 207--207
-
- []
-
-[2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}] [3] (./projekt.toc<<ot1.cmap
->><<oml.cmap>><<oms.cmap>><<omx.cmap>>
+YK_CZ.pdf>] [2{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}] [3] (./projekt.t
+oc<<ot1.cmap>><<oml.cmap>><<oms.cmap>><<omx.cmap>>
 LaTeX Font Info:    Trying to load font information for U+msa on input line 3.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -749,7 +744,7 @@ pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has
 been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.219   {\hypersetup{hidelinks}\listoffigures
+l.224   {\hypersetup{hidelinks}\listoffigures
                                              } [2] (./projekt.lof)
 \tf@lof=\write5
 \openout5 = `projekt.lof'.
@@ -771,7 +766,24 @@ Kapitola 1.
 Kapitola 2.
 [5
 
-] [6]
+]
+<obrazky-figures/placeholder.pdf, id=266, 151.87993pt x 85.31876pt>
+File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
+<use obrazky-figures/placeholder.pdf>
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 81
+.
+(pdftex.def)             Requested size: 194.61548pt x 109.32867pt.
+File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
+<use obrazky-figures/placeholder.pdf>
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 87
+.
+(pdftex.def)             Requested size: 194.61548pt x 109.32867pt.
+File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
+<use obrazky-figures/placeholder.pdf>
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 10
+9.
+(pdftex.def)             Requested size: 216.24089pt x 121.4763pt.
+ [6 <./obrazky-figures/placeholder.pdf>]
 Kapitola 3.
 [7
 
@@ -817,24 +829,24 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2021/03/21>
  ***********
 Package rerunfilecheck Info: File `projekt.out' has not changed.
-(rerunfilecheck)             Checksum: C1152157B98B3763B3AA9962288DCE39;7497.
+(rerunfilecheck)             Checksum: 89E73866B0DE87C464E6CBDA6BBE8ABB;7400.
  ) 
 Here is how much of TeX's memory you used:
- 16041 strings out of 474222
- 252593 string characters out of 5748733
+ 16060 strings out of 474222
+ 253105 string characters out of 5748733
  1936975 words of memory out of 5000000
- 37883 multiletter control sequences out of 15000+600000
+ 37899 multiletter control sequences out of 15000+600000
  630370 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,5n,93p,550b,676s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,8n,93p,403b,676s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmri10.pfb>
-Output written on projekt.pdf (17 pages, 411421 bytes).
+Output written on projekt.pdf (17 pages, 422223 bytes).
 PDF statistics:
- 339 PDF objects out of 1000 (max. 8388607)
- 288 compressed objects within 3 object streams
- 54 named destinations out of 1000 (max. 500000)
- 328 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 349 PDF objects out of 1000 (max. 8388607)
+ 297 compressed objects within 3 object streams
+ 57 named destinations out of 1000 (max. 500000)
+ 333 words of extra memory for PDF output out of 10000 (max. 10000000)
 

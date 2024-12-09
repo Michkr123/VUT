@@ -5,7 +5,7 @@
 \contentsline {section}{\numberline {2.1}Definice podpisu a jeho charakteristiky}{5}{section.2.1}%
 \contentsline {section}{\numberline {2.2}Biometrická autentizace}{5}{section.2.2}%
 \contentsline {section}{\numberline {2.3}Parametry podpisu řešené v rámci této práce}{5}{section.2.3}%
-\contentsline {section}{\numberline {2.4}Rozpoznávání falsifikátů}{6}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Rozpoznávání falzifikátů}{6}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Analýza současných řešení}{7}{chapter.3}%
 \contentsline {section}{\numberline {3.1}Současná řešení v~oblasti biometrie}{7}{section.3.1}%
 \contentsline {section}{\numberline {3.2}Příklady systémů pro digitální snímání podpisu}{7}{section.3.2}%
@@ -21,7 +21,7 @@
 \contentsline {section}{\numberline {5.2}Sbírání dat v~reálném čase}{9}{section.5.2}%
 \contentsline {section}{\numberline {5.3}Ukládání dat pro následnou replikaci podpisu}{9}{section.5.3}%
 \contentsline {chapter}{\numberline {6}Replikace podpisu}{10}{chapter.6}%
-\contentsline {section}{\numberline {6.1}Využití robotické ruky nebo 3D tiskárny}{10}{section.6.1}%
+\contentsline {section}{\numberline {6.1}Využití robotické ruky}{10}{section.6.1}%
 \contentsline {section}{\numberline {6.2}Transformace nasnímaných dat na kód pro replikaci}{10}{section.6.2}%
 \contentsline {section}{\numberline {6.3}Testování a výsledky replikace}{10}{section.6.3}%
 \contentsline {chapter}{\numberline {7}Hodnocení výsledků}{11}{chapter.7}%
