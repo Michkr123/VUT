@@ -1,12 +1,42 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import EventImage from './EventImage';
-import { Link } from 'react-router-dom';
+import { useUser } from '../UserContext'; 
+import EditReviewModal from './EditReviewModal';
+import Rating from '@mui/material/Rating';
 
-const EventDetails = () => {
+interface Review {
+  id: number;
+  username: string;
+  comment: string;
+  rating: number;
+  date_posted: string;
+}
+
+interface Event {
+  name: string;
+  description: string;
+  date_of_event: string;
+  organizer: string;
+  reviews: Review[];
+}
+
+const EventDetails: React.FC = () => {
   const { id } = useParams();
-  const [event, setEvent] = useState(null);
-  const [newReview, setNewReview] = useState({ username: '', comment: '', rating: 5 });
+  const { login } = useUser(); // Use context for user login
+  const navigate = useNavigate(); // Navigate after review submission
+
+  const [event, setEvent] = useState<Event>({
+    name: '',
+    description: '',
+    date_of_event: '',
+    organizer: '',
+    reviews: []
+  });
+
+  const [newReview, setNewReview] = useState<Review>({ id: 0, username: '', comment: '', rating: 5, date_posted: '' });
+  const [editReview, setEditReview] = useState<Review | null>(null); // State for the review being edited
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to control the edit modal
 
   const dateOptions = {
     year: 'numeric',
@@ -33,6 +63,99 @@ const EventDetails = () => {
     fetchEventDetails();
   }, [id]);
 
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/profiles/${login}`);
+        const data = await response.json();
+        if (data) {
+          setNewReview((prevReview) => ({
+            ...prevReview,
+            username: data.nickname,
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching profiles:", error);
+      }
+    };
+
+    fetchProfile();
+  }, [login]);
+
+  const handleSubmitReview = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5000/events/${id}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newReview),
+      });
+      if (response.ok) {
+        const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
+        const refreshedData = await refreshResponse.json();
+        setEvent(refreshedData);
+        setNewReview((prevReview) => ({ ...prevReview, comment: '', rating: 5, date_posted: '' })); // Keep the username
+        navigate(`/event/${id}`);
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error);
+    }
+  };
+
+  const handleDeleteReview = async (reviewId: number) => {
+    try {
+      const response = await fetch(`http://localhost:5000/events/${id}/reviews/${reviewId}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        // Refresh the event details to get the updated reviews list
+        const refreshedResponse = await fetch(`http://localhost:5000/events/${id}`);
+        const refreshedData = await refreshedResponse.json();
+        setEvent(refreshedData);
+      } else {
+        console.error('Failed to delete review');
+      }
+    } catch (error) {
+      console.error('Error deleting review:', error);
+    }
+  };
+
+  const handleEditReview = (review: Review) => {
+    setEditReview(review);
+    setIsEditModalOpen(true);
+  };
+
+  const handleUpdateReview = async (updatedReview: Review) => {
+    try {
+      const response = await fetch(`http://localhost:5000/events/${id}/reviews/${updatedReview.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(updatedReview),
+      });
+
+      if (response.ok) {
+        const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
+        const refreshedData = await refreshResponse.json();
+
+        // Update the event state with the updated review
+        setEvent((prevEvent) => ({
+          ...prevEvent,
+          reviews: prevEvent.reviews.map((review) =>
+            review.id === updatedReview.id ? updatedReview : review
+          ),
+        }));
+
+        setIsEditModalOpen(false);
+      }
+    } catch (error) {
+      console.error('Error updating review:', error);
+    }
+  };
+
   if (!event) return <div className="container mx-auto px-4 py-8">Načítání...</div>;
 
   return (
@@ -43,7 +166,6 @@ const EventDetails = () => {
           <p>workshop</p>
           <p>{event.date_of_event || 'Datum konání neznámo'}</p>
         </div>
-
         <div className="h-64 mb-4 rounded overflow-hidden">
           {event.image ? (
             <EventImage
@@ -57,7 +179,6 @@ const EventDetails = () => {
             </div>
           )}
         </div>
-
         <p className="text-gray-800 text-sm mb-2">
           {event.description || "Popis události není k dispozici."}
         </p>
@@ -71,42 +192,80 @@ const EventDetails = () => {
           <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit</button>
           <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit se jako dobrovolník</button>
         </div>
-
-        <div className="text-center mt-4">
-          <Link 
-            to={`/event/${event.id}/addreview`}
-            key={event.id} 
-            className="text-white hover:text-indigo-200"
-          >
-            <button className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              Přidat recenzi
-            </button>
-          </Link>
-        </div>
       </div>
 
-      {/* Reviews */}
+      {/* Reviews add */}
       <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h3 className="text-xl font-bold mb-4">Napsat recenzi</h3>
+        <form onSubmit={handleSubmitReview} className="space-y-4 pl-64 pr-64 pt-10">
+          <div className="bg-gray-200 p-5">
+            <div>
+            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Uživatelské jméno</label>
+              <p className="mt-1 block w-full rounded-md sm:text-sm">{newReview.username}</p>
+            </div>
+
+            <div>
+              <label htmlFor="rating" className="block text-sm font-medium text-gray-700">Hodnocení</label>
+              <Rating
+                name="half-rating"
+                value={newReview.rating}
+                precision={0.5}
+                onChange={(event, newValue) => setNewReview({ ...newReview, rating: newValue })}
+              />
+            </div>
+
+            <div>
+              <label htmlFor="comment" className="block text-sm font-medium text-gray-700">Komentář</label>
+              <textarea
+                id="comment"
+                value={newReview.comment}
+                onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
+                rows={4}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                required
+              />
+            </div>
+
+            <div className="flex justify-between mt-6 gap-10">
+              <Link to={`/event/${id}`} className="text-white hover:text-indigo-200">
+                <button className="bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400">Zpět</button>
+              </Link>
+              <button
+                type="submit"
+                className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+              >
+                Zveřejnit recenzi
+              </button>
+            </div>
+          </div>
+        </form>
+
+        {/* Reviews list */}
         <h3 className="text-xl font-bold mb-4">Recenze ({event.reviews.length})</h3>
         <div className="mb-8">
           {event.reviews.map((review) => (
             <div key={review.id} className="border-b py-4 last:border-b-0">
-              <div className="flex justify-between">
+              <div className="grid grid-cols-[70%,30%] gap-4 items-center">
+                {/* Username and stars with date in the first row */}
                 <p className="font-medium">{review.username}</p>
-                <div className="flex">
-                  <p className="text-xs mr-3 text-center">{new Date(review.date_posted).toLocaleDateString("cs-CZ", dateOptions)}</p>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span key={star} className="text-yellow-400">
-                      {star <= review.rating ? "★" : "☆"}
-                    </span>
-                  ))}
+                <div className="flex justify-end">
+                  <div className="flex text-2xl pr-10">
+                    <Rating name="read-only" value={review.rating} precision={0.5} readOnly />
+                  </div>
+                  <p className="text-xs m-2 text-gray-500">{new Date(review.date_posted).toLocaleDateString("cs-CZ", dateOptions)}</p>
+                </div>
+                {/* Comment and buttons in the second row */}
+                <p className="text-gray-600 break-words">{review.comment}</p>
+                <div className="flex justify-end mt-2 space-x-2">
+                  <button className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" onClick={() => handleDeleteReview(review.id)}>Delete</button>
+                  <button className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600" onClick={() => handleEditReview(review)}>Edit</button>
                 </div>
               </div>
-              <p className="text-gray-600 mt-2">{review.comment}</p>
             </div>
           ))}
         </div>
       </div>
+      <EditReviewModal review={editReview} isOpen={isEditModalOpen} onClose={() => setIsEditModalOpen(false)} onSave={handleUpdateReview} />
     </div>
   );
 };

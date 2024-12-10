@@ -14,5 +14,21 @@
         "comment": "Nic moc.",
         "rating": 2,
         "date_posted": "2024-11-03T18:03:53.968228"
+    },
+    {
+        "id": 3,
+        "event_id": 1,
+        "username": "Mara",
+        "comment": "Mui hv\u011bzdy jupi",
+        "rating": 3,
+        "date_posted": "2024-12-10T10:59:54.338611"
+    },
+    {
+        "id": 4,
+        "event_id": 1,
+        "username": "Mara",
+        "comment": "edit a delete jupi",
+        "rating": 5,
+        "date_posted": "2024-12-10T11:00:05.615626"
     }
 ]

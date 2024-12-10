@@ -57,6 +57,40 @@ def save_reviews(reviews):
         json.dump(reviews, file, indent=4)
 
 
+@app.route('/events/<int:event_id>/reviews/<int:review_id>', methods=['DELETE'])
+def delete_review(event_id, review_id):
+    reviews = load_reviews()
+    review_index = next((index for index, review in enumerate(reviews) if review['id'] == review_id and review['event_id'] == event_id), None)
+
+    if review_index is None:
+        return jsonify({"error": "Review not found"}), 404
+
+    deleted_review = reviews.pop(review_index)
+    save_reviews(reviews)
+    return jsonify(deleted_review), 200
+
+@app.route('/events/<int:event_id>/reviews/<int:review_id>', methods=['PUT'])
+def update_review(event_id, review_id):
+    reviews = load_reviews()
+    review_index = next((index for index, review in enumerate(reviews) if review['id'] == review_id and review['event_id'] == event_id), None)
+
+    if review_index is None:
+        return jsonify({"error": "Review not found"}), 404
+
+    review_data = request.get_json()
+    rating = review_data.get("rating")
+    if not isinstance(rating, (int, float)) or not (1 <= rating <= 5):
+        return jsonify({"error": "Rating must be between 1 and 5"}), 400
+
+    reviews[review_index]['username'] = review_data.get("username", reviews[review_index]['username'])
+    reviews[review_index]['comment'] = review_data.get("comment", reviews[review_index]['comment'])
+    reviews[review_index]['rating'] = rating
+    reviews[review_index]['date_posted'] = review_data.get("date_posted", reviews[review_index]['date_posted'])
+
+    save_reviews(reviews)
+    return jsonify(reviews[review_index])
+
+
 def calculate_average_rating(event_id, reviews):
     event_reviews = [review for review in reviews if review['event_id'] == event_id]
     if not event_reviews:
@@ -194,7 +228,6 @@ def get_event_reviews(event_id):
 
 @app.route('/events/<int:event_id>/reviews', methods=['POST'])
 def add_review(event_id):
-    
     events = load_events()
     event_exists = any(event['id'] == event_id for event in events)
     if not event_exists:
@@ -207,8 +240,11 @@ def add_review(event_id):
     if not isinstance(rating, (int, float)) or not (1 <= rating <= 5):
         return jsonify({"error": "Rating must be between 1 and 5"}), 400
 
+    # Generate a unique ID for the new review
+    new_id = max([review['id'] for review in reviews], default=0) + 1
+
     review = {
-        "id": len(reviews) + 1,
+        "id": new_id,
         "event_id": event_id,
         "username": review_data.get("username"),
         "comment": review_data.get("comment"),

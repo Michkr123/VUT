@@ -225,6 +225,7 @@ const EventsPage = () => {
                       <Rating 
                         name="read-only" 
                         value={event.average_rating} 
+                        precision={0.5}
                         readOnly 
                         size="small"
                       />
