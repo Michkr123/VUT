@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import EventImage from './EventImage';
 import { useUser } from '../UserContext'; 
 import EditReviewModal from './EditReviewModal';
 import Rating from '@mui/material/Rating';
+import LikeDislikeButtons from './LikeDislikeButtons';
 
 interface Review {
   id: number;
@@ -11,6 +12,8 @@ interface Review {
   comment: string;
   rating: number;
   date_posted: string;
+  likeCount: number;
+  dislikeCount: number;
 }
 
 interface Event {
@@ -19,6 +22,7 @@ interface Event {
   date_of_event: string;
   organizer: string;
   reviews: Review[];
+  average_rating: number;
 }
 
 const EventDetails: React.FC = () => {
@@ -26,15 +30,8 @@ const EventDetails: React.FC = () => {
   const { login } = useUser(); // Use context for user login
   const navigate = useNavigate(); // Navigate after review submission
 
-  const [event, setEvent] = useState<Event>({
-    name: '',
-    description: '',
-    date_of_event: '',
-    organizer: '',
-    reviews: []
-  });
-
-  const [newReview, setNewReview] = useState<Review>({ id: 0, username: '', comment: '', rating: 5, date_posted: '' });
+  const [event, setEvent] = useState<Event | null>(null);
+  const [newReview, setNewReview] = useState<Partial<Review>>({ username: '', comment: '', rating: 5 });
   const [editReview, setEditReview] = useState<Review | null>(null); // State for the review being edited
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to control the edit modal
 
@@ -96,7 +93,7 @@ const EventDetails: React.FC = () => {
         const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
         const refreshedData = await refreshResponse.json();
         setEvent(refreshedData);
-        setNewReview((prevReview) => ({ ...prevReview, comment: '', rating: 5, date_posted: '' })); // Keep the username
+        setNewReview((prevReview) => ({ username: prevReview.username, comment: '', rating: 5 })); // Keep the username
         navigate(`/event/${id}`);
       }
     } catch (error) {
@@ -142,17 +139,64 @@ const EventDetails: React.FC = () => {
         const refreshedData = await refreshResponse.json();
 
         // Update the event state with the updated review
-        setEvent((prevEvent) => ({
-          ...prevEvent,
-          reviews: prevEvent.reviews.map((review) =>
-            review.id === updatedReview.id ? updatedReview : review
-          ),
-        }));
+        setEvent((prevEvent) => {
+          if (!prevEvent) return null;
+          return {
+            ...prevEvent,
+            reviews: prevEvent.reviews.map((review) =>
+              review.id === updatedReview.id ? updatedReview : review
+            ),
+          };
+        });
 
         setIsEditModalOpen(false);
       }
     } catch (error) {
       console.error('Error updating review:', error);
+    }
+  };
+
+  const handleLikeReview = async (reviewId: number, action: 'increment' | 'decrement') => {
+    try {
+      const review = event.reviews.find((review) => review.id === reviewId);
+      if (!review) return;
+
+      const newLikeCount = action === 'increment' ? review.likeCount + 1 : review.likeCount - 1;
+      await fetch(`/events/${id}/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ likeCount: newLikeCount }),
+      });
+
+      const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
+      const refreshedData = await refreshResponse.json();
+      setEvent(refreshedData);
+    } catch (error) {
+      console.error('Error liking review:', error);
+    }
+  };
+
+  const handleDislikeReview = async (reviewId: number, action: 'increment' | 'decrement') => {
+    try {
+      const review = event.reviews.find((review) => review.id === reviewId);
+      if (!review) return;
+
+      const newDislikeCount = action === 'increment' ? review.dislikeCount + 1 : review.dislikeCount - 1;
+      await fetch(`/events/${id}/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ dislikeCount: newDislikeCount }),
+      });
+
+      const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
+      const refreshedData = await refreshResponse.json();
+      setEvent(refreshedData);
+    } catch (error) {
+      console.error('Error disliking review:', error);
     }
   };
 
@@ -200,7 +244,7 @@ const EventDetails: React.FC = () => {
         <form onSubmit={handleSubmitReview} className="space-y-4 pl-64 pr-64 pt-10">
           <div className="bg-gray-200 p-5">
             <div>
-            <label htmlFor="username" className="block text-sm font-medium text-gray-700">Uživatelské jméno</label>
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">Uživatelské jméno</label>
               <p className="mt-1 block w-full rounded-md sm:text-sm">{newReview.username}</p>
             </div>
 
@@ -257,6 +301,14 @@ const EventDetails: React.FC = () => {
                 {/* Comment and buttons in the second row */}
                 <p className="text-gray-600 break-words">{review.comment}</p>
                 <div className="flex justify-end mt-2 space-x-2">
+                  <LikeDislikeButtons
+                    eventId={event.id}
+                    reviewId={review.id}
+                    initialLikes={review.likeCount || 0}
+                    initialDislikes={review.dislikeCount || 0}
+                    onLike={(action) => handleLikeReview(review.id, action)}
+                    onDislike={(action) => handleDislikeReview(review.id, action)}
+                  />
                   <button className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" onClick={() => handleDeleteReview(review.id)}>Delete</button>
                   <button className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600" onClick={() => handleEditReview(review)}>Edit</button>
                 </div>

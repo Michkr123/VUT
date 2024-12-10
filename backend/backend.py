@@ -17,7 +17,6 @@ def is_valid_base64_image(base64_string):
     except Exception:
         return False
 
-
 def load_events():
     try:
         with open('events.json', 'r') as file:
@@ -34,7 +33,6 @@ def load_profiles():
         print('profiles.json not found')
         return []
 
-
 def save_events(events):
     with open('events.json', 'w') as file:
         json.dump(events, file, indent=4)
@@ -50,7 +48,6 @@ def load_reviews():
     except FileNotFoundError:
         print('reviews.json not found')
         return []
-
 
 def save_reviews(reviews):
     with open('reviews.json', 'w') as file:
@@ -78,25 +75,23 @@ def update_review(event_id, review_id):
         return jsonify({"error": "Review not found"}), 404
 
     review_data = request.get_json()
-    rating = review_data.get("rating")
-    if not isinstance(rating, (int, float)) or not (1 <= rating <= 5):
-        return jsonify({"error": "Rating must be between 1 and 5"}), 400
-
+    
+    # Update each field if it exists in the request data
     reviews[review_index]['username'] = review_data.get("username", reviews[review_index]['username'])
     reviews[review_index]['comment'] = review_data.get("comment", reviews[review_index]['comment'])
-    reviews[review_index]['rating'] = rating
+    reviews[review_index]['rating'] = review_data.get("rating", reviews[review_index]['rating'])
     reviews[review_index]['date_posted'] = review_data.get("date_posted", reviews[review_index]['date_posted'])
+    reviews[review_index]['likeCount'] = review_data.get("likeCount", reviews[review_index].get("likeCount", 0))
+    reviews[review_index]['dislikeCount'] = review_data.get("dislikeCount", reviews[review_index].get("dislikeCount", 0))
 
     save_reviews(reviews)
-    return jsonify(reviews[review_index])
-
+    return jsonify(reviews[review_index]), 200
 
 def calculate_average_rating(event_id, reviews):
     event_reviews = [review for review in reviews if review['event_id'] == event_id]
     if not event_reviews:
         return None
     return sum(review['rating'] for review in event_reviews) / len(event_reviews)
-
 
 @app.route('/events', methods=['GET'])
 def get_events():
@@ -134,7 +129,6 @@ def get_profile(login):
         return jsonify({"error": "Profile not found"}), 404
     return jsonify(profile)
 
-
 @app.route('/events', methods=['POST'])
 def add_event():
     events = load_events()
@@ -164,7 +158,6 @@ def add_event():
     save_events(events)
     return jsonify(event), 201
 
-
 @app.route('/events/<int:event_id>/image', methods=['GET'])
 def get_event_image(event_id):
     events = load_events()
@@ -174,7 +167,6 @@ def get_event_image(event_id):
     if not event.get('image'):
         return jsonify({"error": "No image found for this event"}), 404
     return jsonify({"image": event['image']})
-
 
 @app.route('/events/<int:event_id>/image', methods=['PUT'])
 def update_event_image(event_id):
@@ -217,14 +209,11 @@ def update_profile(login):
     save_profiles(profiles)
     return jsonify({"message": "Profile updated successfully"})
 
-
-
 @app.route('/events/<int:event_id>/reviews', methods=['GET'])
 def get_event_reviews(event_id):
     reviews = load_reviews()
     event_reviews = [review for review in reviews if review['event_id'] == event_id]
     return jsonify(event_reviews)
-
 
 @app.route('/events/<int:event_id>/reviews', methods=['POST'])
 def add_review(event_id):
@@ -249,12 +238,54 @@ def add_review(event_id):
         "username": review_data.get("username"),
         "comment": review_data.get("comment"),
         "rating": rating,
-        "date_posted": datetime.now().isoformat()
+        "date_posted": datetime.now().isoformat(),
+        "likeCount": 0,
+        "dislikeCount": 0
     }
 
     reviews.append(review)
     save_reviews(reviews)
     return jsonify(review), 201
+
+@app.route('/events/<int:event_id>/reviews/<int:review_id>/like', methods=['POST'])
+def like_review(event_id, review_id):
+    reviews = load_reviews()
+    review_index = next((index for index, review in enumerate(reviews) if review['id'] == review_id and review['event_id'] == event_id), None)
+
+    if review_index is None:
+        return jsonify({"error": "Review not found"}), 404
+
+    review_data = request.get_json()
+    action = review_data.get("action")
+
+    if action == "increment":
+        reviews[review_index]['likeCount'] += 1
+    elif action == "decrement":
+        reviews[review_index]['likeCount'] -= 1
+
+    save_reviews(reviews)
+    return jsonify(reviews[review_index]), 200
+
+
+@app.route('/events/<int:event_id>/reviews/<int:review_id>/dislike', methods=['POST'])
+def dislike_review(event_id, review_id):
+    reviews = load_reviews()
+    review_index = next((index for index, review in enumerate(reviews) if review['id'] == review_id and review['event_id'] == event_id), None)
+
+    if review_index is None:
+        return jsonify({"error": "Review not found"}), 404
+
+    review_data = request.get_json()
+    action = review_data.get("action")
+
+    if action == "increment":
+        reviews[review_index]['dislikeCount'] += 1
+    elif action == "decrement":
+        reviews[review_index]['dislikeCount'] -= 1
+
+    save_reviews(reviews)
+    return jsonify(reviews[review_index]), 200
+
 
 
 @app.route('/events/<int:event_id>', methods=['GET'])
@@ -281,7 +312,6 @@ def get_event_with_reviews(event_id):
     }
     
     return jsonify(response)
-
 
 if __name__ == '__main__':
     app.run(debug=True)
