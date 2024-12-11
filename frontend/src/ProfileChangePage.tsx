@@ -10,17 +10,21 @@ interface Profile {
     phone: string;
     nickname: string;
     image: string;
+    worker: boolean;
+    admin: boolean;
+    visitorActions: number[];
+    workerActions: number[];
 }
 
 const ProfileChangePage = () => {
     const { login, setLogin } = useUser();
 
-    // "Snackbar" je vyskakovací notifikace která se zobrazí na spodku stránky při změně profilu (viz MUI knihovna)
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
 
     const snackbarOpen = () => {
       setIsSnackbarOpen(true);
     }
+
     const snackbarClose = (event: React.SyntheticEvent | Event, reason?: SnackbarCloseReason) => {
       if (reason === 'clickaway') {
         return;
@@ -28,7 +32,6 @@ const ProfileChangePage = () => {
       setIsSnackbarOpen(false);
     }
 
-    // Funkce která vrátí správný string vyskakovací notifikaci podle toho na kterého uživatele jsme se přepnuli
     const getSnackbarString = (user: string) => {
       if (user === 'user') return "Profil nastaven na uživatele!";
       if (user === 'worker') return "Profil nastaven na pracovníka!";
@@ -40,7 +43,6 @@ const ProfileChangePage = () => {
     const [adminProfile, setAdminProfile] = useState<Profile | null>(null);
 
     useEffect(() => {
-        // Postupně načteme data uživatele, pracovníka a admina. Uložíme je do příslušných proměnných.
         const fetchProfiles = async () => {
           try {
             const response = await fetch(`http://localhost:5000/profiles/user`);
@@ -76,15 +78,13 @@ const ProfileChangePage = () => {
 
             {userProfile ?
               <div onClick={() => {setLogin("user"); snackbarOpen();}} className='flex flex-col items-center justify-center cursor-pointer active:opacity-60'>
-
                 <Avatar sx={{ width: 200, height: 200, bgcolor: deepPurple[500]}} alt={userProfile?.nickname} src={userProfile?.image}>
                   {userProfile?.nickname}
                 </Avatar>
                 <p className='py-5'>Uživatel ({userProfile?.nickname})</p>
-
               </div>
               :
-              <div className='flex flex-col items-center justify-center'> {/* "Skeleton" je prázdný placeholder který zobrazuje že je načítání v průběhu (viz MUI knihovna) */}
+              <div className='flex flex-col items-center justify-center'>
                 <Skeleton variant='circular' width={200} height={200} />
                 <Skeleton className='py-5' variant='rounded' width={82} height={32} />
               </div>
@@ -92,12 +92,10 @@ const ProfileChangePage = () => {
 
             {workerProfile ?
               <div onClick={() => {setLogin("worker"); snackbarOpen();}} className='flex flex-col items-center justify-center cursor-pointer active:opacity-60'>
-
                 <Avatar sx={{ width: 200, height: 200, bgcolor: deepPurple[500]}} alt={workerProfile?.nickname} src={workerProfile?.image}>
                   {workerProfile?.nickname}
                 </Avatar>
                 <p className='py-5'>Pracovník ({workerProfile?.nickname})</p>
-
               </div>
               :
               <div className='flex flex-col items-center justify-center'>
@@ -108,12 +106,10 @@ const ProfileChangePage = () => {
 
             {adminProfile ?
               <div onClick={() => {setLogin("admin"); snackbarOpen(); }} className='flex flex-col items-center justify-center cursor-pointer active:opacity-60'>
-
                 <Avatar sx={{ width: 200, height: 200, bgcolor: deepPurple[500]}} alt={adminProfile?.nickname} src={adminProfile?.image}>
                   {adminProfile?.nickname}
                 </Avatar> 
                 <p className='py-5'>Administrátor ({adminProfile?.nickname})</p>
-
               </div>
               :
               <div className='flex flex-col items-center justify-center'>
@@ -122,7 +118,6 @@ const ProfileChangePage = () => {
               </div>
             }
 
-            {/* Vyskakovací notifikace a její paramtery */}
             <Snackbar
               open={isSnackbarOpen}
               anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -133,7 +128,6 @@ const ProfileChangePage = () => {
 
           </div>
 
-          {/* Tlačítko zpět na profil */}
           <div className='p-10'>
             <Link to="/profile" className="text-white hover:text-indigo-200">
               <button className="bg-gray-300 text-black py-2 px-4 rounded-lg hover:bg-gray-400">

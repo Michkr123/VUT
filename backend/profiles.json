@@ -6,8 +6,9 @@
         "nickname": "kryspin",
         "image": "",
         "worker": false,
-        "admin": true
-
+        "admin": true,
+        "visitorActions": [],
+        "workerActions": []
     },
     {
         "login": "worker",
@@ -16,7 +17,9 @@
         "nickname": "peta",
         "image": "",
         "worker": true,
-        "admin": false
+        "admin": false,
+        "visitorActions": [],
+        "workerActions": []
     },
     {
         "login": "user",
@@ -25,6 +28,12 @@
         "nickname": "Mara",
         "image": "",
         "worker": false,
-        "admin": false
+        "admin": false,
+        "visitorActions": [
+            1
+        ],
+        "workerActions": [
+            1
+        ]
     }
 ]

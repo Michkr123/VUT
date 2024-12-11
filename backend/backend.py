@@ -197,6 +197,8 @@ def update_profile(login):
     email = data.get('email')
     phone = data.get('phone')
     nickname = data.get('nickname')
+    visitor_actions = data.get('visitorActions')
+    worker_actions = data.get('workerActions')
 
     # Update the fields only if provided
     if email is not None:
@@ -205,9 +207,13 @@ def update_profile(login):
         profiles[profile_index]['phone'] = phone
     if nickname is not None:
         profiles[profile_index]['nickname'] = nickname
+    if visitor_actions is not None:
+        profiles[profile_index]['visitorActions'] = visitor_actions
+    if worker_actions is not None:
+        profiles[profile_index]['workerActions'] = worker_actions
 
     save_profiles(profiles)
-    return jsonify({"message": "Profile updated successfully"})
+    return jsonify(profiles[profile_index]), 200
 
 @app.route('/events/<int:event_id>/reviews', methods=['GET'])
 def get_event_reviews(event_id):

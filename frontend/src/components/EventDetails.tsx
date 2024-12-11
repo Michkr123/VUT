@@ -25,15 +25,28 @@ interface Event {
   average_rating: number;
 }
 
+interface Profile {
+  login: string;
+  email: string;
+  phone: string;
+  nickname: string;
+  image: string;
+  worker: boolean;
+  admin: boolean;
+  visitorActions: number[];
+  workerActions: number[];
+}
+
 const EventDetails: React.FC = () => {
   const { id } = useParams();
-  const { login } = useUser(); // Use context for user login
-  const navigate = useNavigate(); // Navigate after review submission
+  const { login } = useUser();
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState<Event | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [newReview, setNewReview] = useState<Partial<Review>>({ username: '', comment: '', rating: 5 });
-  const [editReview, setEditReview] = useState<Review | null>(null); // State for the review being edited
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false); // State to control the edit modal
+  const [editReview, setEditReview] = useState<Review | null>(null);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const dateOptions = {
     year: 'numeric',
@@ -57,27 +70,67 @@ const EventDetails: React.FC = () => {
       }
     };
 
-    fetchEventDetails();
-  }, [id]);
-
-  useEffect(() => {
     const fetchProfile = async () => {
       try {
         const response = await fetch(`http://localhost:5000/profiles/${login}`);
         const data = await response.json();
-        if (data) {
-          setNewReview((prevReview) => ({
-            ...prevReview,
-            username: data.nickname,
-          }));
-        }
+        setProfile(data);
+        setNewReview((prevReview) => ({ ...prevReview, username: data.nickname }));
       } catch (error) {
         console.error("Error fetching profiles:", error);
       }
     };
 
+    fetchEventDetails();
     fetchProfile();
-  }, [login]);
+  }, [id, login]);
+
+  const handleRegisterVisitor = async (eventId: number) => {
+    if (profile) {
+      const updatedProfile = { ...profile, visitorActions: [...profile.visitorActions, eventId] };
+      await updateProfile(updatedProfile);
+    }
+  };
+
+  const handleUnregisterVisitor = async (eventId: number) => {
+    if (profile) {
+      const updatedProfile = { ...profile, visitorActions: profile.visitorActions.filter(id => id !== eventId) };
+      await updateProfile(updatedProfile);
+    }
+  };
+
+  const handleRegisterWorker = async (eventId: number) => {
+    if (profile) {
+      const updatedProfile = { ...profile, workerActions: [...profile.workerActions, eventId] };
+      await updateProfile(updatedProfile);
+    }
+  };
+
+  const handleUnregisterWorker = async (eventId: number) => {
+    if (profile) {
+      const updatedProfile = { ...profile, workerActions: profile.workerActions.filter(id => id !== eventId) };
+      await updateProfile(updatedProfile);
+    }
+  };
+
+  const updateProfile = async (updatedProfile: Profile) => {
+    try {
+      const response = await fetch(`http://localhost:5000/profiles/${login}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedProfile),
+      });
+
+      if (response.ok) {
+        setProfile(updatedProfile);
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to update profile:", errorData);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
 
   const handleSubmitReview = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -117,7 +170,7 @@ const EventDetails: React.FC = () => {
     } catch (error) {
       console.error('Error deleting review:', error);
     }
-  };
+  };  
 
   const handleEditReview = (review: Review) => {
     setEditReview(review);
@@ -128,9 +181,7 @@ const EventDetails: React.FC = () => {
     try {
       const response = await fetch(`http://localhost:5000/events/${id}/reviews/${updatedReview.id}`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updatedReview),
       });
 
@@ -138,7 +189,6 @@ const EventDetails: React.FC = () => {
         const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
         const refreshedData = await refreshResponse.json();
 
-        // Update the event state with the updated review
         setEvent((prevEvent) => {
           if (!prevEvent) return null;
           return {
@@ -185,12 +235,22 @@ const EventDetails: React.FC = () => {
 
         <div className="my-4 bg-gray-100 p-4 rounded shadow-inner">
           <h3 className="text-lg font-bold">Organizátor:</h3>
-          <p className="text-gray-600">{event.organizer || "Organizátor neznámý"}</p>
+          <p className="text-gray-600">{event.organizer || "Organizátor neznámy"}</p>
         </div>
 
         <div className="flex justify-center my-4">
-          <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit</button>
-          <button className="bg-green-500 text-white px-6 py-2 rounded-md mx-2 hover:bg-green-600">Přihlásit se jako dobrovolník</button>
+          <button
+            className={`bg-${profile?.visitorActions.includes(Number(id)) ? 'red-500' : 'green-500'} text-white px-6 py-2 rounded-md mx-2 hover:bg-${profile?.visitorActions.includes(Number(id)) ? 'red-600' : 'green-600'}`}
+            onClick={() => profile?.visitorActions.includes(Number(id)) ? handleUnregisterVisitor(Number(id)) : handleRegisterVisitor(Number(id))}
+          >
+            {profile?.visitorActions.includes(Number(id)) ? 'Odhlásit' : 'Přihlásit'}
+          </button>
+          <button
+            className={`bg-${profile?.workerActions.includes(Number(id)) ? 'red-500' : 'green-500'} text-white px-6 py-2 rounded-md mx-2 hover:bg-${profile?.workerActions.includes(Number(id)) ? 'red-600' : 'green-600'}`}
+            onClick={() => profile?.workerActions.includes(Number(id)) ? handleUnregisterWorker(Number(id)) : handleRegisterWorker(Number(id))}
+          >
+            {profile?.workerActions.includes(Number(id)) ? 'Odhlásit se jako dobrovolník' : 'Přihlásit se jako dobrovolník'}
+          </button>
         </div>
       </div>
 
