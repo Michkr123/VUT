@@ -3,10 +3,17 @@
         "id": 1,
         "event_id": 1,
         "username": "Mara",
-        "comment": "asdsdada",
-        "rating": 5,
+        "comment": "",
+        "rating": 3,
         "date_posted": "2024-12-10T19:09:30.588600",
-        "likeCount": 5,
-        "dislikeCount": 3
+        "likeCount": [
+            "Mara",
+            "pepa",
+            "worker"
+        ],
+        "dislikeCount": [
+            "marek",
+            "user"
+        ]
     }
 ]

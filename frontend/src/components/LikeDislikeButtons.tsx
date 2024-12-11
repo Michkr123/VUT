@@ -4,23 +4,22 @@ import { Button } from '@mui/material';
 interface LikeDislikeButtonsProps {
   eventId: number;
   reviewId: number;
-  initialLikes: number;
-  initialDislikes: number;
-  onLike: (action: 'increment' | 'decrement') => void;
-  onDislike: (action: 'increment' | 'decrement') => void;
+  initialLikes: string[];
+  initialDislikes: string[];
+  userLogin: string;
 }
 
-const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, reviewId, initialLikes, initialDislikes, onLike, onDislike }) => {
-  const [likeCount, setLikeCount] = useState(initialLikes);
-  const [dislikeCount, setDislikeCount] = useState(initialDislikes);
-  const [liked, setLiked] = useState(false);
-  const [disliked, setDisliked] = useState(false);
+const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, reviewId, initialLikes, initialDislikes, userLogin}) => {
+  const [likeCount, setLikeCount] = useState(initialLikes.length);
+  const [dislikeCount, setDislikeCount] = useState(initialDislikes.length);
+  const [liked, setLiked] = useState(initialLikes.includes(userLogin));
+  const [disliked, setDisliked] = useState(initialDislikes.includes(userLogin));
 
   const handleLike = async () => {
     const action = liked ? 'decrement' : 'increment';
     setLiked(!liked);
     setLikeCount(likeCount + (liked ? -1 : 1));
-    
+
     if (disliked) {
       setDisliked(false);
       setDislikeCount(dislikeCount - 1);
@@ -29,7 +28,7 @@ const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, review
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'decrement' }),
+        body: JSON.stringify({ login: userLogin }),  // Ensure this sends the correct login
       });
     }
 
@@ -38,17 +37,15 @@ const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, review
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ action }),
+      body: JSON.stringify({ login: userLogin }),  // Ensure this sends the correct login
     });
-
-    onLike(action);
   };
 
   const handleDislike = async () => {
     const action = disliked ? 'decrement' : 'increment';
     setDisliked(!disliked);
     setDislikeCount(dislikeCount + (disliked ? -1 : 1));
-    
+
     if (liked) {
       setLiked(false);
       setLikeCount(likeCount - 1);
@@ -57,7 +54,7 @@ const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, review
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ action: 'decrement' }),
+        body: JSON.stringify({ login: userLogin }),  // Ensure this sends the correct login
       });
     }
 
@@ -66,10 +63,8 @@ const LikeDislikeButtons: React.FC<LikeDislikeButtonsProps> = ({ eventId, review
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ action }),
+      body: JSON.stringify({ login: userLogin }),  // Ensure this sends the correct login
     });
-
-    onDislike(action);
   };
 
   return (

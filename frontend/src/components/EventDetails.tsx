@@ -156,50 +156,6 @@ const EventDetails: React.FC = () => {
     }
   };
 
-  const handleLikeReview = async (reviewId: number, action: 'increment' | 'decrement') => {
-    try {
-      const review = event.reviews.find((review) => review.id === reviewId);
-      if (!review) return;
-
-      const newLikeCount = action === 'increment' ? review.likeCount + 1 : review.likeCount - 1;
-      await fetch(`/events/${id}/reviews/${reviewId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ likeCount: newLikeCount }),
-      });
-
-      const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
-      const refreshedData = await refreshResponse.json();
-      setEvent(refreshedData);
-    } catch (error) {
-      console.error('Error liking review:', error);
-    }
-  };
-
-  const handleDislikeReview = async (reviewId: number, action: 'increment' | 'decrement') => {
-    try {
-      const review = event.reviews.find((review) => review.id === reviewId);
-      if (!review) return;
-
-      const newDislikeCount = action === 'increment' ? review.dislikeCount + 1 : review.dislikeCount - 1;
-      await fetch(`/events/${id}/reviews/${reviewId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ dislikeCount: newDislikeCount }),
-      });
-
-      const refreshResponse = await fetch(`http://localhost:5000/events/${id}`);
-      const refreshedData = await refreshResponse.json();
-      setEvent(refreshedData);
-    } catch (error) {
-      console.error('Error disliking review:', error);
-    }
-  };
-
   if (!event) return <div className="container mx-auto px-4 py-8">Načítání...</div>;
 
   return (
@@ -304,10 +260,9 @@ const EventDetails: React.FC = () => {
                   <LikeDislikeButtons
                     eventId={event.id}
                     reviewId={review.id}
-                    initialLikes={review.likeCount || 0}
-                    initialDislikes={review.dislikeCount || 0}
-                    onLike={(action) => handleLikeReview(review.id, action)}
-                    onDislike={(action) => handleDislikeReview(review.id, action)}
+                    initialLikes={Array.isArray(review.likeCount) ? review.likeCount : []}
+                    initialDislikes={Array.isArray(review.dislikeCount) ? review.dislikeCount : []}
+                    userLogin={login}   
                   />
                   <button className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600" onClick={() => handleDeleteReview(review.id)}>Delete</button>
                   <button className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600" onClick={() => handleEditReview(review)}>Edit</button>

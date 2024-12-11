@@ -81,8 +81,8 @@ def update_review(event_id, review_id):
     reviews[review_index]['comment'] = review_data.get("comment", reviews[review_index]['comment'])
     reviews[review_index]['rating'] = review_data.get("rating", reviews[review_index]['rating'])
     reviews[review_index]['date_posted'] = review_data.get("date_posted", reviews[review_index]['date_posted'])
-    reviews[review_index]['likeCount'] = review_data.get("likeCount", reviews[review_index].get("likeCount", 0))
-    reviews[review_index]['dislikeCount'] = review_data.get("dislikeCount", reviews[review_index].get("dislikeCount", 0))
+    reviews[review_index]['likeCount'] = review_data.get("likeCount", reviews[review_index].get("likeCount", []))
+    reviews[review_index]['dislikeCount'] = review_data.get("dislikeCount", reviews[review_index].get("dislikeCount", []))
 
     save_reviews(reviews)
     return jsonify(reviews[review_index]), 200
@@ -239,8 +239,8 @@ def add_review(event_id):
         "comment": review_data.get("comment"),
         "rating": rating,
         "date_posted": datetime.now().isoformat(),
-        "likeCount": 0,
-        "dislikeCount": 0
+        "likeCount": [],
+        "dislikeCount": []
     }
 
     reviews.append(review)
@@ -256,16 +256,20 @@ def like_review(event_id, review_id):
         return jsonify({"error": "Review not found"}), 404
 
     review_data = request.get_json()
-    action = review_data.get("action")
+    login = review_data.get("login")
 
-    if action == "increment":
-        reviews[review_index]['likeCount'] += 1
-    elif action == "decrement":
-        reviews[review_index]['likeCount'] -= 1
+    if not login:
+        return jsonify({"error": "Missing login"}), 400
+
+    if login not in reviews[review_index]['likeCount']:
+        reviews[review_index]['likeCount'].append(login)
+        if login in reviews[review_index]['dislikeCount']:
+            reviews[review_index]['dislikeCount'].remove(login)
+    else:
+        reviews[review_index]['likeCount'].remove(login)
 
     save_reviews(reviews)
     return jsonify(reviews[review_index]), 200
-
 
 @app.route('/events/<int:event_id>/reviews/<int:review_id>/dislike', methods=['POST'])
 def dislike_review(event_id, review_id):
@@ -276,17 +280,20 @@ def dislike_review(event_id, review_id):
         return jsonify({"error": "Review not found"}), 404
 
     review_data = request.get_json()
-    action = review_data.get("action")
+    login = review_data.get("login")
 
-    if action == "increment":
-        reviews[review_index]['dislikeCount'] += 1
-    elif action == "decrement":
-        reviews[review_index]['dislikeCount'] -= 1
+    if not login:
+        return jsonify({"error": "Missing login"}), 400
+
+    if login not in reviews[review_index]['dislikeCount']:
+        reviews[review_index]['dislikeCount'].append(login)
+        if login in reviews[review_index]['likeCount']:
+            reviews[review_index]['likeCount'].remove(login)
+    else:
+        reviews[review_index]['dislikeCount'].remove(login)
 
     save_reviews(reviews)
     return jsonify(reviews[review_index]), 200
-
-
 
 @app.route('/events/<int:event_id>', methods=['GET'])
 def get_event_with_reviews(event_id):
