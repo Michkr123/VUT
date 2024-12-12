@@ -12,11 +12,6 @@ const Header = () => {
           <Link to="/" className="text-white hover:text-indigo-200">Události</Link>
 
           {/* Podle role uživatele zviditelňujeme/schováváme tlačitka */}
-          {login === "admin" &&
-            <Link to="/admin" className="text-white hover:text-indigo-200">Admin</Link>
-          }
-
-          {/* Podle role uživatele zviditelňujeme/schováváme tlačitka */}
           {login === "worker" &&
             <Link to="/worker" className="text-white hover:text-indigo-200">Pracovník</Link>
           }
