@@ -326,5 +326,17 @@ def get_event_with_reviews(event_id):
     
     return jsonify(response)
 
+@app.route('/events/<int:event_id>', methods=['PUT'])
+def update_event(event_id):
+    events = load_events()
+    event_index = next((index for index, event in enumerate(events) if event['id'] == event_id), None)
+    if event_index is None:
+        return jsonify({"error": "Event not found"}), 404
+
+    event_data = request.get_json()
+    events[event_index].update(event_data)
+    save_events(events)
+    return jsonify(events[event_index]), 200
+
 if __name__ == '__main__':
     app.run(debug=True)

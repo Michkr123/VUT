@@ -5,12 +5,46 @@
         "date_of_creation": "2024-12-12T14:58:22.326203",
         "available_tickets": null,
         "date_of_event": "2024-12-14",
-        "event_category": "entertainment",
+        "event_category": "education",
         "address": "fffffffffffffffff",
         "image": "",
         "organizer": "fffffffffffffff",
         "region": "liberecky",
         "city": "fffffffffffff",
-        "description": "fffffffffffff"
+        "description": "fffffffffffff",
+        "average_rating": 3.5,
+        "review_count": 2,
+        "reviews": [
+            {
+                "comment": "adsd",
+                "date_posted": "2024-12-10T19:09:30.588600",
+                "dislikeCount": [
+                    "marek"
+                ],
+                "event_id": 1,
+                "id": 1,
+                "likeCount": [
+                    "Mara",
+                    "pepa",
+                    "worker",
+                    "admin",
+                    "user"
+                ],
+                "rating": 3,
+                "username": "Mara"
+            },
+            {
+                "comment": "asd",
+                "date_posted": "2024-12-11T12:42:50.294233",
+                "dislikeCount": [
+                    "user"
+                ],
+                "event_id": 1,
+                "id": 2,
+                "likeCount": [],
+                "rating": 4,
+                "username": "Mara"
+            }
+        ]
     }
 ]
