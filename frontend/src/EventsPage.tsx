@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Rating } from "@mui/material";
+import { Rating, Button } from "@mui/material";
 import EventImage from "./components/EventImage";
+import { useUser } from './UserContext'; // Assuming you have a UserContext to get the login status
+import NewEventForm from './components/NewEventForm'; // Import the new event form
 
 interface Event {
   id: number;
@@ -65,27 +67,29 @@ const EventsPage = () => {
   const [category, setCategory] = useState<EventCategory | "">("");
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { login } = useUser(); // Assuming useUser provides login status
+  const [isModalOpen, setIsModalOpen] = useState(false); // State for modal
+
+  const fetchEvents = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      const response = await fetch("http://localhost:5000/events");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      setEvents(data);
+      setFilteredEvents(data);
+    } catch (error) {
+      console.error("Error fetching events:", error);
+      setError("Nepodařilo se načíst události. Zkuste to prosím později.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
-        const response = await fetch("http://localhost:5000/events");
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setEvents(data);
-        setFilteredEvents(data);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-        setError("Nepodařilo se načíst události. Zkuste to prosím později.");
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchEvents();
   }, []);
 
@@ -163,6 +167,18 @@ const EventsPage = () => {
         ))}
       </div>
 
+      {/* Admin Button */}
+      {login === 'admin' && (
+        <div className="mb-8">
+          <Button variant="contained" onClick={() => setIsModalOpen(true)}>
+            Vytvořit novou akci
+          </Button>
+        </div>
+      )}
+
+      {/* New Event Modal */}
+      <NewEventForm open={isModalOpen} onClose={() => setIsModalOpen(false)} onEventCreated={fetchEvents} />
+
       {/* Grid událostí */}
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
@@ -201,11 +217,6 @@ const EventsPage = () => {
                 <div className="flex flex-col gap-2">
                   <div className="flex justify-between items-start">
                     <div className="flex flex-col gap-1">
-                      {/* <p className="text-gray-600">
-                        {event.available_tickets 
-                          ? `Dostupné vstupenky: ${event.available_tickets}`
-                          : "Počet vstupenek neznámý"}
-                      </p> */}
                       <p className="text-gray-600">
                         {event.region ? "Region: " + capitalize(event.region) : "Region akce neznámý"}
                       </p>
