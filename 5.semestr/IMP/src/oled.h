@@ -1,3 +1,9 @@
+/*
+IMS - Aplikace ovládaná dvojicí rotačních enkodérů 
+Autor: Michálek Kryštof (xmicha94)
+! Není součást mého řešení, převážně generováno AI !
+*/
+
 #ifndef OLED_H
 #define OLED_H
 

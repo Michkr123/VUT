@@ -1,3 +1,9 @@
+/*
+IMS - Aplikace ovládaná dvojicí rotačních enkodérů 
+Autor: Michálek Kryštof (xmicha94)
+! Není součást mého řešení, převážně generováno AI !
+*/
+
 #include "oled.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
