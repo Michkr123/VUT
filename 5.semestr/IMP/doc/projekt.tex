@@ -45,9 +45,9 @@
 Cílem tohoto projektu je za použití dvojice rotačních enkodérů s~tlačítky (KX/Y-040) a mikrořadičem ESP32 sestrojit jednoduchou aplikaci. 
 Jako aplikaci jsem si zvolil hru Pong, která se společně například s~hrami Space Invaders či Pac-Man řadí mezi naprosté klasiky. 
 
-Enkódery jsou využity k~ovládání odrazových plošin jednotlivých hráčů. 
+Enkodéry jsou využity k~ovládání odrazových plošin jednotlivých hráčů. 
 Pomocí tlačítek lze hru znovu spustit. 
-V~tomto projektu jsem využil převážně technologie přerušení, real-time operačního systém FreeRTOS a přístup ke sdílenemu zdroji pomocí semaforu.
+V~tomto projektu jsem využil převážně technologie přerušení, real-time operačního systém FreeRTOS a přístup ke sdílenému zdroji pomocí semaforu.
 
 \begin{figure}[H]
     \centering
@@ -57,7 +57,7 @@ V~tomto projektu jsem využil převážně technologie přerušení, real-time o
 
 \section{Popis problému a motivace}
 V~rámci tohoto projektu jsem se setkal s~několika obtížemi.
-Například příliš časté přerušení vyvolaného enkodéry, zákmity či problémový přístup ke sdílenémů zdroji. 
+Například s~příliš častými přerušeními vyvolaných enkodéry, zákmity či problémovým přístupem ke sdílenému zdroji. 
 Překonáním těchto obtíží se stala hra poměrně plynulá a celkově hratelná.
 
 \subsection{Technologické možnosti rotačních enkodérů} 
@@ -107,7 +107,7 @@ Stisk tlačítka musí být správně zaznamenán a restartovat hru.
 
 \subsection{Architektura řešení}
 Pro správné zaznamenávání a přenášení dat do hry je použito přerušení pro enkodéry a tlačítka.
-Každá hardwarová komponenta má vlastní proces, aby byl správně zaznamenáván a zpracováván v~reálném čase.
+Každá hardwarová komponenta má vlastní proces, aby byla správně zaznamenáván a zpracováván v~reálném čase.
 Míč je také realizován svým vlastním procesem, který zajišťuje plynulou aktualizaci jeho polohy.
 Enkodéry mají fronty pro předávání událostí, které nastanou při přerušení.
 
@@ -300,27 +300,26 @@ Aktualizace míče na displeji:
     }
 \end{verbatim}
 
-
 \section{Testování, výsledky a autoevaluace}
-Testování proběhlo poměrně primitivně. Pustupným upravováním jednotlivých delayů a opětovným testováním bylo potřeba zajistit plynulost a celkový kladný dojem ze hry.
+Testování proběhlo poměrně primitivně. Postupným upravováním jednotlivých zpoždění a opětovným testováním bylo potřeba zajistit plynulost a celkový kladný dojem ze hry.
 
 \subsection{Výsledky}
-Přestože jsem využil všechny mnou známé prostředky k~řešení problému s~jedním sdíleným zdrojem se mi nepodařilo najít stoprocentně plynulé a bezproblémové řešení.
+Přestože jsem využil všechny mnou známé prostředky k~řešení problému s~jedním sdíleným zdrojem, nepodařilo se mi najít stoprocentně plynulé a bezproblémové řešení.
 Myslím si ale, že jsem se k~tomu velmi přiblížil a hra celkové působí dobrým dojmem.
 
-\subsection{autoevaluace} \noindent
+\subsection{Autoevaluace} \noindent
 Pozitiva řešení:
 \begin{itemize}
     \item{Dle mého vlastního názoru je řešení komplexní a je řešeno nadmíru původního zadání.}
     \item{Byly splněny povinné i nepovinné body zadání.}
-    \item{Byly použity další komponenty nedefinované zadáním, konkrétě OLED dispej.}
-    \item{Také byly použity technologie nedefinované zadáním a to vuyžití více procesů díky FreeRTOS, využití front a semaforu.}
+    \item{Byly použity další komponenty nedefinované zadáním, konkrétně OLED dispej.}
+    \item{Také byly použity technologie nedefinované zadáním a to využití více procesů díky FreeRTOS, front a semaforu.}
 \end{itemize}
 \noindent
 Nedostatky:
 \begin{itemize}
-    \item{Kompromis požadavků na sdílený zdroj (hráči a míčem) při rychlém pohybu hráčů způsobil, že míč je nepatrně zpomalen.}
-    \item{Dokumentace není tak detailní a komplexní, jak bych si přál.}
+    \item{Kompromis požadavků na sdílený zdroj (hráči a míčem) zapříčinil, že při rychlém pohybu hráčů je míč nepatrně zpomalen.}
+    \item{Dokumentace není tak detailní a komplexní, jak bych si představoval.}
 \end{itemize}
 \noindent
 Hodnocení v~rámci projektu:
