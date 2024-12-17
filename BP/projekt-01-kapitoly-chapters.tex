@@ -29,6 +29,15 @@ Bude tedy o něco složitější jej zfalšovat.
 %Upravená data je poté potřeba převést do instrukcí pro mechanickou paži, která je použita k replikaci podpisu. 
 %Výsledný podpis bude porovnáván s vlastnoručním podpisem. Cílem je co nejvíce se přiblížit vlastnoručnímu podpisu.
 
+%\section{Představení tématu}
+%\section{Cíle práce}
+
+%\section{Struktura práce}
+
+\chapter{Teoretické základy}
+Pro plné pochopení problematiky je potřeba představit základy z~několika odvětví. 
+V~této části budou shrnuty všechny potřebné informace. 
+
 \section{Pojmy}
 \label{sec:pojmy}
 \begin{itemize}
@@ -37,18 +46,9 @@ Bude tedy o něco složitější jej zfalšovat.
   \item{\textbf{Statické parametry písma} - jde o~parametry, které nezahrnují informace o~procesu psaní podpisu. Patří mezi ně například tvar a vzhled písma, umístění podpisu na stránce nebo také tloušťka čar.}
   \item{\textbf{Dynamické parametry písma} - tyto parametry se vytahují k~samotnému průběhu psaní podpisu. Například rychlost psaní, akcelerace, tlak nebo průběh tahů.}
 \end{itemize}
-%\section{Představení tématu}
-%\section{Cíle práce}
-
-%\section{Struktura práce}
-
-\chapter{Teoretické základy}
-Pro plné pochopení problematiky bylo potřeba nastudovat podklady z~několika odvětví. 
-V~této části budou shrnuty všechny potřebné informace. 
-Pro snazší orientaci jsou níže rozděleny do bloků.
 
 \section{Definice podpisu a jeho charakteristiky}
-Definice podpisu je poněkud problematická. 
+Definice podpisu je z pohledu zákona poněkud problematická. 
 Podpis jako takový není v~zákoně nijak přímo definován. 
 Obecně je ale bráno za podpis vlastnoruční uvedení jména a příjmení, nebo jiného jedinečného a nezaměnitelného označení. %https://www.fulsoft.cz/33/komentar-zakona-89-2012-sb-obcansky-zakonik-561-uniqueidmRRWSbk196FNf8-jVUh4EtuvCojfP1Dmx8t50X_QR_yU_dtwjPItMA/
 
@@ -64,13 +64,15 @@ Existuje spousta biometrických metod pro autentizaci, kupříkladu otisk prstu,
 Každá tato metoda má své výhody a nevýhody, zejména se hodnotí přesnost, cena, komfort používání, stálost a velikost vzorku.
 Tato práce se zaměřuje na autentizaci podpisem.
 
-\section{Parametry podpisu řešené v rámci této práce}
+\section{Výběr hardwarových komponent}
+
+\section{Parametry podpisu}
 V rámci této práce budou snímány následující parametry:
 \begin{itemize}
   \item{\textbf{Celkový vzhled podpisu}}
-  \item{\textbf{Pohyb pera} při psaní pomocí akcelerometru zabudovaném v MPU-6050 ze kterého bude vypočítán celkový průběh podpisu, především pak \textbf{pozice pera} a \textbf{rychlost psaní čar}.}
-  \item{\textbf{Sklon pera} pomocí gyroskopu, který je také součástí MPU-6050.}
-  \item{\textbf{Tlak} pomocí čtveřice tlakových senzorů Interlink Electronics FSR® 400.}
+  \item{\textbf{Pohyb pera} ze kterého bude vypočítán celkový průběh podpisu, především pak \textbf{pozice pera} a \textbf{rychlost psaní čar}.} %při psaní pomocí akcelerometru zabudovaném v MPU-6050 
+  \item{\textbf{Sklon pera}} %pomocí gyroskopu, který je také součástí MPU-6050.}
+  \item{\textbf{Tlak}} %pomocí čtveřice tlakových senzorů Interlink Electronics FSR® 400.}
 \end{itemize}
 Kombinací těchto nasnímaných parametrů by bylo možné dostatečně věrohodně napodobit původní vlastnoruční podpis. 
 
@@ -111,41 +113,78 @@ Pokud by byla špatně nastavena, bylo by příliš mnoho neúspěšných autent
 \label{fig:my-pdf}
 \end{figure}
 
+\subsection{rozpoznání statických falzifikátů}
+Verifikace v off-line systému se skládá ze tří etap – předzpracování, extrakce biometrických
+charakteristik a vyhodnocení. Během předzpracování jsou provedeny některé algoritmy, jako
+jsou vyhlazování, zjednodušení, či normalizace. Extrakce probíhá různými způsoby, jedním
+z nich je zjištění geometrických a topologických rysů – uzavřené smyčky, speciální body
+nebo místa křížení (Obr. 15). Výsledné vyhodnocení je založeno na vyhodnocování vektorů
+charakteristik, může být provedeno porovnáním významových bodů, klasifikátorem sousedů
+nebo neuronovou sítí. (1, kap. 13.7) %https://theses.cz/id/odwy80/BP_Vchov.pdf (1) https://aleph.lib.vutbr.cz/F/QR556J3JR4JCE18FMRXDUGQ8FXVA2VL3NX3CYI9PYU2PRQCPTX-02400?func=item-global&doc_library=BUT01&doc_number=000088231&year=&volume=&sub_library=BXFIT
+
+\subsection{rozpoznání dynamických falzifikátů}
+V případě on-line verifikace jsou pomocí HW získány kromě statických i dynamické
+charakteristiky – rychlost psaní, tlak pera, pořadí psaní jednotlivých částí apod. Již v průběhu
+psaní podpisu jsou získávány informace o průměrné a maximální rychlosti psaní, měření
+vlastností zakřivení tahů, poměr dlouhých a krátkých tahů, různé délky segmentů podpisu aj..
+V každém časovém okamžiku vzniku podpisu jsou popisovány časovou funkcí další
+dynamické charakteristiky – souřadnicové pozice hrotu psacího nástroje, rychlost (v),
+zrychlení (a) a tlak hrotu na podložku (p) (Obr. 16). Následně jsou získané charakteristiky
+porovnávány se šablonou uloženou v databázi, získá se tak míra ztotožnění. (1, kap. 13.8) %https://theses.cz/id/odwy80/BP_Vchov.pdf (1) https://aleph.lib.vutbr.cz/F/QR556J3JR4JCE18FMRXDUGQ8FXVA2VL3NX3CYI9PYU2PRQCPTX-02400?func=item-global&doc_library=BUT01&doc_number=000088231&year=&volume=&sub_library=BXFIT
+
+
+\subsection{Normy identifikace pomocí podpisu}
+Identifikace pomocí podpisu podléhá normám ISO/IEC 19794-7:2007 Signature/sign time
+series data, ISO/IEC 19794-11:2013 Signature/sign processed dynamic data a ANSI/INCITS
+395-2005 Signature/Sign Data.
+ISO/IEC 19794-7:2007 popisuje dva formáty výměny dat pro podpis a písmo. První je obecný
+formát, druhý je kompaktní, který lze využít pro smart karty. (48) % https://theses.cz/id/odwy80/BP_Vchov.pdf (48) https://www.iso.org/standard/38751.html
+ISO/IEC 19794-11:2013 pro účely biometrického porovnání specifikuje obecný formát
+výměny dat pro zpracované podpisové/znakové údaje o chování získané z časové řady
+zachycené pomocí zařízení. (49) % https://theses.cz/id/odwy80/BP_Vchov.pdf (49) https://www.iso.org/standard/51824.html
+ANSI/INCITS 395-2005 specifikuje formát výměny dat pro digitalizované písmo nebo podpis
+pro účely biometrického zápisu, verifikace nebo identifikace. Tento formát je obecný a může
+být využit v široké škále aplikací využívajících elektronický podpis. (50) % https://theses.cz/id/odwy80/BP_Vchov.pdf (50) https://webstore.ansi.org/standards/incits/ansiincits3952005
+
 \chapter{Analýza současných řešení}
+
+
 \section{Současná řešení v~oblasti biometrie}
-\section{Příklady systémů pro digitální snímání podpisu}
+\section{Systém, zařízení a kde se využívají, a jak jsou důvěryhodné}
 \section{Hodnocení výhod a nevýhod existujících řešení}
 
 \chapter{Návrh snímacího pera}
 \section{Výběr senzorů a technologií}
-\subsection{EPS32}
-\subsection{MPU-6050 (akcelerometr a gyroskop)}
-\subsection{Tlakový senzor Interlink Electronics FSR® 400}
+\*subsection{EPS32}
+\*subsection{MPU-6050 (akcelerometr a gyroskop)}
+\*subsection{Tlakový senzor Interlink Electronics FSR® 400}
 \section{Schéma a popis návrhu}
+\section{Možnosti replikace podpisu}
 
-\chapter{Implementace prototypu}
-\section{Vývoj hardwaru}
-\section{Sbírání dat v~reálném čase}
-\section{Ukládání dat pro následnou replikaci podpisu}
+%\chapter{Implementace prototypu}
+%\section{Vývoj hardwaru}
+%\section{Sbírání dat v~reálném čase}
+%\section{Ukládání dat pro následnou replikaci podpisu}
 
-\chapter{Replikace podpisu}
-\section{Využití robotické ruky}
-\section{Transformace nasnímaných dat na kód pro replikaci}
-\section{Testování a výsledky replikace}
+%\chapter{Replikace podpisu}
+%\section{Využití robotické ruky}
+%\section{Transformace nasnímaných dat na kód pro replikaci}
+%\section{Testování a výsledky replikace}
 
-\chapter{Hodnocení výsledků}
-\section{Analýza dosažených výsledků}
-\section{Porovnání s~očekáváními}
-\section{Diskuze o~spolehlivosti a přesnosti replikace}
+%\chapter{Hodnocení výsledků}
+%\section{Analýza dosažených výsledků}
+%\section{Porovnání s~očekáváními}
+%\section{Diskuze o~spolehlivosti a přesnosti replikace}
 
-\chapter{Možná vylepšení a rozšíření}
-\section{Návrhy na zlepšení prototypu}
-\section{Možnosti dalšího výzkumu a vývoje}
+%\chapter{Závěr}
+%\section{Shrnutí hlavních poznatků}
+%\section{Zhodnocení významu práce}
+%\section{Budoucí perspektivy}
 
-\chapter{Závěr}
-\section{Shrnutí hlavních poznatků}
-\section{Zhodnocení významu práce}
-\section{Budoucí perspektivy}
+%\section{Možná vylepšení a rozšíření}
+%\*subsection{Návrhy na zlepšení prototypu}
+%\*subsection{Možnosti dalšího výzkumu a vývoje}
+
 
 %===============================================================================
 
