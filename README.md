@@ -7,7 +7,7 @@ Jsem budoucí student třetího ročníku na Fakultě Informačních Technologi�
 ### 🎓 Vzdělání
 
 - **Bakalářské studium**: Informační technologie, VUT v Brně (2022 - současnost)
-- **Střední škola**: Střední Škola Průmyslová, Technologická a Automobilní Jihlava, [Informační technologie] (2018 - 2022)
+- **Střední škola**: Informační technologie, Střední Škola Průmyslová, Technologická a Automobilní Jihlava (2018 - 2022)
 
 ### 💼 Zkušenosti
 
