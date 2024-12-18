@@ -19,7 +19,8 @@ Podaří-li se důvěryhodně podpis napodobit, bude možnost obejít bezpečnos
 To představuje velké bezpečnostní riziko a nutnost upravení dosavadních bezpečnostních metod pro autentizaci. 
 Bavíme se zde spíše o~digitálním podpisu. 
 Na rozdíl od podpisu na papíře digitální podpis obsahuje i dynamické charakteristiky.
-Bude tedy o něco složitější jej zfalšovat.
+Bude tedy o~něco složitější jej zfalšovat.
+
 
 %TOLE JE SPIS ABSTRAKT
 %Bude třeba sestavit snímací zařízení pro získaní potřebných parametrů podpisu.
@@ -41,6 +42,7 @@ V~této části budou shrnuty všechny potřebné informace.
 \section{Pojmy}
 \label{sec:pojmy}
 \begin{itemize}
+  \item{\textbf{Biometrie} - automatizované rozpoznávání lidských jedinců na základě jejich charakteristických anatomických a behaviorálních rysů.} % přepsat - citace biometrie (str. 13)
   \item{\textbf{Biologické autentizační metody} - zkoumají biologické charakteristiky člověka, s~jimiž se narodí. Tyto charakteristiky má každý člověk unikátní a jsou neměnitelné. Patří mezi ně například otisky prstů, skeny sítnice či duhovky.}  
   \item{\textbf{Behaviorální autentizační metody} - porovnávají behaviorální charakteristiky související s~chováním člověka. Lze například porovnávat, jakým způsobem jedinec mluví nebo jak pohybuje očima.}
   \item{\textbf{Statické parametry písma} - jde o~parametry, které nezahrnují informace o~procesu psaní podpisu. Patří mezi ně například tvar a vzhled písma, umístění podpisu na stránce nebo také tloušťka čar.}
@@ -48,26 +50,40 @@ V~této části budou shrnuty všechny potřebné informace.
 \end{itemize}
 
 \section{Definice podpisu a jeho charakteristiky}
-Definice podpisu je z pohledu zákona poněkud problematická. 
+Definice podpisu je z~pohledu zákona poněkud problematická. 
 Podpis jako takový není v~zákoně nijak přímo definován. 
-Obecně je ale bráno za podpis vlastnoruční uvedení jména a příjmení, nebo jiného jedinečného a nezaměnitelného označení. %https://www.fulsoft.cz/33/komentar-zakona-89-2012-sb-obcansky-zakonik-561-uniqueidmRRWSbk196FNf8-jVUh4EtuvCojfP1Dmx8t50X_QR_yU_dtwjPItMA/
+Obecně je ale bráno za podpis vlastnoruční uvedení jména a příjmení, nebo jiného jedinečného a nezaměnitelného označení. % citace? https://www.fulsoft.cz/33/komentar-zakona-89-2012-sb-obcansky-zakonik-561-uniqueidmRRWSbk196FNf8-jVUh4EtuvCojfP1Dmx8t50X_QR_yU_dtwjPItMA/
 
-Charakteristiky podpisu je nepřeberné množství informací, podle kterých lze jednotlivé podpisy od sebe odlišit. 
-Charakteristiky se dělí na statické a dynamické~\ref{sec:pojmy}. 
-Jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v době podpisu.
-Mezi charakteristiky patří například celkový vzhled podpisu, tloušťka čar, rychlost psaní, tlak, průběh a pořadí tahů a mnoho dalších, které ale pro nás v rámci této práce nebudou důležité. %TODO vymyslel jsem si lol
+.Písmo patří z části ke statickým, z části k dynamickým biometrickým vlastnostem.                                                                                  % |
+.Záleží, zda se snímá i průběh psaní nebo pouze se uchovává výsledek psaní.                                                                                        % |
+.Je pochopitelné, že dynamické vlastnosti obsahují více informace a lze díky nim lépe rozpoznat neprávoplatného uživatele, pokoušejícího se falzifikovat podipis.  % V
+.Nicméně k záznamu dynamických vlastností je třeba tablet a speciální aktivní pero, které ukládá patřičné parametry během psaní.                                   % Citace Biometrie (str 233)
+
+.Charakteristiky podpisu jsou nepřeberné množství informací, podle kterých lze jednotlivé podpisy od sebe odlišit.
+.Charakteristiky se dělí na statické a dynamické~\ref{sec:pojmy}. 
+.Jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v~době podpisu.
+.Mezi charakteristiky patří například celkový vzhled podpisu, tloušťka čar, rychlost psaní, tlak, průběh a pořadí tahů a mnoho dalších, které ale pro nás v~rámci této práce nebudou důležité. %TODO vymyslel jsem si lol
 
 \section{Biometrická autentizace}
 Biometrická autentizace probíhá na základě biologických a behaviorálních charakteristik člověka\ref{sec:pojmy}. 
-Obě tyto skupiny znaků jsou pro každého člověka unikátní a nezaměnitelné. To je důvodem, proč je lze využít k autentizaci.
+Obě tyto skupiny znaků jsou pro každého člověka unikátní a nezaměnitelné. To je důvodem, proč je lze využít k~autentizaci.
 Existuje spousta biometrických metod pro autentizaci, kupříkladu otisk prstu, rozpoznání obličeje, sken duhovky či sítnice, nebo dokonce pomocí používání myši. 
 Každá tato metoda má své výhody a nevýhody, zejména se hodnotí přesnost, cena, komfort používání, stálost a velikost vzorku.
 Tato práce se zaměřuje na autentizaci podpisem.
 
-\section{Výběr hardwarových komponent}
+Existuje spoustu různých cest, kterými lze biometrické systémy napadnout.                                   % |
+V~rámci této práce se zaměříme na seznzor, jenž je první komponentu biometrického systému (obrázek níže).   % V
+Tomuto senzoru budeme předkládat falešné biometriky, tedy v~našem případě falešného podpisu.                % parafráze Biometrie (str 78)
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{obrazky-figures/placeholder.pdf}
+\caption{Biometrický systém}
+\label{fig:my-pdf}
+\end{figure}
 
 \section{Parametry podpisu}
-V rámci této práce budou snímány následující parametry:
+V~rámci této práce budou snímány následující parametry:
 \begin{itemize}
   \item{\textbf{Celkový vzhled podpisu}}
   \item{\textbf{Pohyb pera} ze kterého bude vypočítán celkový průběh podpisu, především pak \textbf{pozice pera} a \textbf{rychlost psaní čar}.} %při psaní pomocí akcelerometru zabudovaném v MPU-6050 
@@ -87,24 +103,22 @@ Kombinací těchto nasnímaných parametrů by bylo možné dostatečně věroho
 \begin{minipage}{0.45\textwidth}
     \centering
     \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-    \caption{Graf dynamických parametrů podpisu v čase.}
+    \caption{Graf dynamických parametrů podpisu v~čase.}
     \label{fig:second-image}
 \end{minipage}
 \end{figure}
 
-
 \section{Rozpoznávání falzifikátů}
-Rozpoznávání falzifikátů je u digitálního podpisu automatizované.
-Probíhá na základě porovnávání uloženého vzorku v databázi s podpisem, kterým se daný člověk pokouší autentizovat. %použito správně slovo autentizce?
-Referenční podpis je zprůměrován z několika vzorků, aby došlo k potlačení náhodných jevů. % zav_prace 17183 2.3
+Rozpoznávání falzifikátů je u~digitálního podpisu automatizované.
+Probíhá na základě porovnávání uloženého vzorku v~databázi s~podpisem, kterým se daný člověk pokouší autentizovat. %použito správně slovo autentizce?
+Referenční podpis je zprůměrován z~několika vzorků, aby došlo k~potlačení náhodných jevů. %  citace? zav_prace 17183 2.3
 Tyto vzorky jsou poskytnuté danou osobou při registraci do systému.
 
-Porovnávací algoritmus extrahuje důležité parametry podpisu, které poté porovnává s referenčním vzorem. 
+Porovnávací algoritmus extrahuje důležité parametry podpisu, které poté porovnává s~referenčním vzorem. 
 Výsledkem takového porovnávání je určité procento shody parametrů.
 Následně je vypočteno celkové procento shody podpisů a na jeho základě je autentizace úspěšná či nikoli.
 Je velmi důležité, aby algoritmus měl určenou správnou procentuální hodnotu shody.
 Pokud by byla špatně nastavena, bylo by příliš mnoho neúspěšných autentizací, které by měly být úspěšné, nebo naopak mnoho úspěšných autentizací, které měly být neúspěšné.
-
 
 \begin{figure}[h]
 \centering
@@ -113,24 +127,24 @@ Pokud by byla špatně nastavena, bylo by příliš mnoho neúspěšných autent
 \label{fig:my-pdf}
 \end{figure}
 
-\subsection{rozpoznání statických falzifikátů}
-Verifikace v off-line systému se skládá ze tří etap – předzpracování, extrakce biometrických
+\subsection{rozpoznání statických falzifikátů} % preparafrazovat podle Biometrie a identita člověka str 440
+Verifikace v~off-line systému se skládá ze tří etap – předzpracování, extrakce biometrických
 charakteristik a vyhodnocení. Během předzpracování jsou provedeny některé algoritmy, jako
 jsou vyhlazování, zjednodušení, či normalizace. Extrakce probíhá různými způsoby, jedním
-z nich je zjištění geometrických a topologických rysů – uzavřené smyčky, speciální body
+z~nich je zjištění geometrických a topologických rysů – uzavřené smyčky, speciální body
 nebo místa křížení (Obr. 15). Výsledné vyhodnocení je založeno na vyhodnocování vektorů
 charakteristik, může být provedeno porovnáním významových bodů, klasifikátorem sousedů
 nebo neuronovou sítí. (1, kap. 13.7) %https://theses.cz/id/odwy80/BP_Vchov.pdf (1) https://aleph.lib.vutbr.cz/F/QR556J3JR4JCE18FMRXDUGQ8FXVA2VL3NX3CYI9PYU2PRQCPTX-02400?func=item-global&doc_library=BUT01&doc_number=000088231&year=&volume=&sub_library=BXFIT
 
-\subsection{rozpoznání dynamických falzifikátů}
-V případě on-line verifikace jsou pomocí HW získány kromě statických i dynamické
-charakteristiky – rychlost psaní, tlak pera, pořadí psaní jednotlivých částí apod. Již v průběhu
-psaní podpisu jsou získávány informace o průměrné a maximální rychlosti psaní, měření
+\subsection{rozpoznání dynamických falzifikátů} % preparafrazovat podle Biometrie a identita člověka str 444
+V~případě on-line verifikace jsou pomocí HW získány kromě statických i dynamické
+charakteristiky – rychlost psaní, tlak pera, pořadí psaní jednotlivých částí apod. Již v~průběhu
+psaní podpisu jsou získávány informace o~průměrné a maximální rychlosti psaní, měření
 vlastností zakřivení tahů, poměr dlouhých a krátkých tahů, různé délky segmentů podpisu aj..
-V každém časovém okamžiku vzniku podpisu jsou popisovány časovou funkcí další
+V~každém časovém okamžiku vzniku podpisu jsou popisovány časovou funkcí další
 dynamické charakteristiky – souřadnicové pozice hrotu psacího nástroje, rychlost (v),
 zrychlení (a) a tlak hrotu na podložku (p) (Obr. 16). Následně jsou získané charakteristiky
-porovnávány se šablonou uloženou v databázi, získá se tak míra ztotožnění. (1, kap. 13.8) %https://theses.cz/id/odwy80/BP_Vchov.pdf (1) https://aleph.lib.vutbr.cz/F/QR556J3JR4JCE18FMRXDUGQ8FXVA2VL3NX3CYI9PYU2PRQCPTX-02400?func=item-global&doc_library=BUT01&doc_number=000088231&year=&volume=&sub_library=BXFIT
+porovnávány se šablonou uloženou v~databázi, získá se tak míra ztotožnění. (1, kap. 13.8) %https://theses.cz/id/odwy80/BP_Vchov.pdf (1) https://aleph.lib.vutbr.cz/F/QR556J3JR4JCE18FMRXDUGQ8FXVA2VL3NX3CYI9PYU2PRQCPTX-02400?func=item-global&doc_library=BUT01&doc_number=000088231&year=&volume=&sub_library=BXFIT
 
 
 \subsection{Normy identifikace pomocí podpisu}
@@ -140,17 +154,20 @@ series data, ISO/IEC 19794-11:2013 Signature/sign processed dynamic data a ANSI/
 ISO/IEC 19794-7:2007 popisuje dva formáty výměny dat pro podpis a písmo. První je obecný
 formát, druhý je kompaktní, který lze využít pro smart karty. (48) % https://theses.cz/id/odwy80/BP_Vchov.pdf (48) https://www.iso.org/standard/38751.html
 ISO/IEC 19794-11:2013 pro účely biometrického porovnání specifikuje obecný formát
-výměny dat pro zpracované podpisové/znakové údaje o chování získané z časové řady
+výměny dat pro zpracované podpisové/znakové údaje o~chování získané z~časové řady
 zachycené pomocí zařízení. (49) % https://theses.cz/id/odwy80/BP_Vchov.pdf (49) https://www.iso.org/standard/51824.html
 ANSI/INCITS 395-2005 specifikuje formát výměny dat pro digitalizované písmo nebo podpis
 pro účely biometrického zápisu, verifikace nebo identifikace. Tento formát je obecný a může
-být využit v široké škále aplikací využívajících elektronický podpis. (50) % https://theses.cz/id/odwy80/BP_Vchov.pdf (50) https://webstore.ansi.org/standards/incits/ansiincits3952005
+být využit v~široké škále aplikací využívajících elektronický podpis. (50) % https://theses.cz/id/odwy80/BP_Vchov.pdf (50) https://webstore.ansi.org/standards/incits/ansiincits3952005
 
 \chapter{Analýza současných řešení}
-
+Obecný kec
 
 \section{Současná řešení v~oblasti biometrie}
+Podrobný kec
+
 \section{Systém, zařízení a kde se využívají, a jak jsou důvěryhodné}
+
 \section{Hodnocení výhod a nevýhod existujících řešení}
 
 \chapter{Návrh snímacího pera}
