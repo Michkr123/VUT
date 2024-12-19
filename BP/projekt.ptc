@@ -1,0 +1,22 @@
+\babel@toc {czech}{}\relax 
+\contentsline {chapter}{\numberline {1}Úvod}{3}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Teoretické základy}{4}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Pojmy}{4}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Definice podpisu a jeho charakteristiky}{4}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Biometrická autentizace}{5}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Parametry podpisu}{5}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Rozpoznávání falzifikátů}{6}{section.2.5}%
+\contentsline {subsection}{\numberline {2.5.1}Off-line systémy pro verifikaci}{6}{subsection.2.5.1}%
+\contentsline {subsection}{\numberline {2.5.2}On-line systémy pro verifikaci}{7}{subsection.2.5.2}%
+\contentsline {subsection}{\numberline {2.5.3}Normy identifikace pomocí podpisu}{7}{subsection.2.5.3}%
+\contentsline {chapter}{\numberline {3}Analýza současných řešení}{8}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Současná řešení v~oblasti biometrie}{8}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Systém, zařízení a kde se využívají, a jak jsou důvěryhodné}{8}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Hodnocení výhod a nevýhod existujících řešení}{8}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Návrh snímacího pera}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Výběr senzorů a technologií}{9}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Schéma a popis návrhu}{9}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Možnosti replikace podpisu}{9}{section.4.3}%
+\contentsline {chapter}{Literatura}{10}{chapter*.3}%
+\ttl@starttoc {chapters@1}
+\contentsfinish 
