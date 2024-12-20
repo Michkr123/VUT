@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  19 DEC 2024 16:40
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023/Debian) (preloaded format=pdflatex 2024.12.1)  20 DEC 2024 17:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -780,61 +780,62 @@ File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 <obrazky-figures/placeholder.pdf, id=178, 151.87993pt x 85.31876pt>
 File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
 <use obrazky-figures/placeholder.pdf>
-Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 95
-.
-(pdftex.def)             Requested size: 216.24089pt x 121.4763pt.
- [5 <./obrazky-figures/placeholder.pdf>]
-File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
-<use obrazky-figures/placeholder.pdf>
-Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 12
-8.
-(pdftex.def)             Requested size: 216.24089pt x 121.4763pt.
-File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
-<use obrazky-figures/placeholder.pdf>
-Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 15
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 10
 1.
-(pdftex.def)             Requested size: 129.74585pt x 72.88579pt.
+(pdftex.def)             Requested size: 216.24089pt x 121.4763pt.
 
-Underfull \hbox (badness 1102) in paragraph at lines 152--152
-[]\T1/lmr/m/n/10.95 Obrázek 2.3: P°edzpra-co-
- []
 
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[5]
+File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
+<use obrazky-figures/placeholder.pdf>
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 13
+4.
+(pdftex.def)             Requested size: 216.24089pt x 121.4763pt.
+ [6 <./obrazky-figures/placeholder.pdf>]
 File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
 <use obrazky-figures/placeholder.pdf>
 Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 15
 7.
 (pdftex.def)             Requested size: 129.74585pt x 72.88579pt.
+
+Underfull \hbox (badness 1102) in paragraph at lines 158--158
+[]\T1/lmr/m/n/10.95 Obrázek 2.3: P°edzpra-co-
+ []
+
 File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
 <use obrazky-figures/placeholder.pdf>
 Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 16
 3.
 (pdftex.def)             Requested size: 129.74585pt x 72.88579pt.
+File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
+<use obrazky-figures/placeholder.pdf>
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 16
+9.
+(pdftex.def)             Requested size: 129.74585pt x 72.88579pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 164--164
+Underfull \hbox (badness 10000) in paragraph at lines 170--170
 []\T1/lmr/m/n/10.95 Obrázek 2.5:
  []
 
-
-LaTeX Warning: `h' float specifier changed to `ht'.
-
-[6]
 File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
 <use obrazky-figures/placeholder.pdf>
 Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 18
-2.
+7.
 (pdftex.def)             Requested size: 194.61548pt x 109.32867pt.
 File: obrazky-figures/placeholder.pdf Graphic file (type pdf)
 <use obrazky-figures/placeholder.pdf>
-Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 18
-8.
+Package pdftex.def Info: obrazky-figures/placeholder.pdf  used on input line 19
+3.
 (pdftex.def)             Requested size: 194.61548pt x 109.32867pt.
- [7]
+[7] [8]
 Kapitola 3.
-[8
+[9
 
-]
+] [10]
 Kapitola 4.
-) (./projekt.bbl [9
+) (./projekt.bbl [11
 
 ]
 
@@ -846,7 +847,7 @@ LaTeX Warning: Empty `thebibliography' environment on input line 5.
 \tf@ptc=\write6
 \openout6 = `projekt.ptc'.
 
- [10
+ [12
 
 ] (./projekt.aux)
  ***********
@@ -858,24 +859,24 @@ L3 programming layer <2021/03/21>
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `projekt.out' has not changed.
-(rerunfilecheck)             Checksum: F2C244F8900BE74EB0F8454039F3113C;3757.
+(rerunfilecheck)             Checksum: 14F05B35D00792A1E8FDE099540744AC;3823.
  ) 
 Here is how much of TeX's memory you used:
- 16022 strings out of 474222
- 252680 string characters out of 5748733
+ 16029 strings out of 474222
+ 252749 string characters out of 5748733
  1933975 words of memory out of 5000000
- 37880 multiletter control sequences out of 15000+600000
- 629994 words of font info for 88 fonts, out of 8000000 for 9000
+ 37881 multiletter control sequences out of 15000+600000
+ 630370 words of font info for 89 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 80i,8n,93p,447b,572s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 80i,8n,93p,447b,570s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/ascender/opensans/OpenSans-Bold.pf
 b></usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
 pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmri10.pfb>
-Output written on projekt.pdf (13 pages, 415789 bytes).
+Output written on projekt.pdf (15 pages, 422520 bytes).
 PDF statistics:
- 243 PDF objects out of 1000 (max. 8388607)
- 197 compressed objects within 2 object streams
- 39 named destinations out of 1000 (max. 500000)
+ 259 PDF objects out of 1000 (max. 8388607)
+ 209 compressed objects within 3 object streams
+ 44 named destinations out of 1000 (max. 500000)
  189 words of extra memory for PDF output out of 10000 (max. 10000000)
 

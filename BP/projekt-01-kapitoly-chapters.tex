@@ -19,7 +19,7 @@ Podaří-li se důvěryhodně podpis napodobit, bude možnost obejít bezpečnos
 To představuje velké bezpečnostní riziko a nutnost upravení dosavadních bezpečnostních metod pro autentizaci. 
 Bavíme se zde spíše o~digitálním podpisu. 
 Na rozdíl od podpisu na papíře digitální podpis obsahuje i dynamické charakteristiky.
-Bude tedy o~něco složitější jej zfalšovat.
+Bude tedy složitější jej zfalšovat.
 
 
 %TOLE JE SPIS ABSTRAKT
@@ -66,15 +66,8 @@ Definice podpisu je z~pohledu zákona poněkud problematická.
 Podpis jako takový není v~zákoně nijak přímo definován. 
 Obecně je ale bráno za podpis vlastnoruční uvedení jména a příjmení, nebo jiného jedinečného a nezaměnitelného označení. % citace? https://www.fulsoft.cz/33/komentar-zakona-89-2012-sb-obcansky-zakonik-561-uniqueidmRRWSbk196FNf8-jVUh4EtuvCojfP1Dmx8t50X_QR_yU_dtwjPItMA/
 
-%.Písmo patří z části ke statickým, z části k dynamickým biometrickým vlastnostem.                                                                                  % |
-%.Záleží, zda se snímá i průběh psaní nebo pouze se uchovává výsledek psaní.                                                                                        % |
-%.Je pochopitelné, že dynamické vlastnosti obsahují více informace a lze díky nim lépe rozpoznat neprávoplatného uživatele, pokoušejícího se falzifikovat podipis.  % V
-%.Nicméně k záznamu dynamických vlastností je třeba tablet a speciální aktivní pero, které ukládá patřičné parametry během psaní.                                   % Citace Biometrie (str 233)
-
-%.Charakteristiky podpisu jsou nepřeberné množství informací, podle kterých lze jednotlivé podpisy od sebe odlišit.
-%.Charakteristiky se dělí na statické a dynamické~\ref{sec:pojmy}. 
-%.Jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v~době podpisu.
-%.Mezi charakteristiky patří například celkový vzhled podpisu, tloušťka čar, rychlost psaní, tlak, průběh a pořadí tahů a mnoho dalších, které ale pro nás v~rámci této práce nebudou důležité. %TODO vymyslel jsem si lol
+Dynamické vlastnosti poskytují více informací a umožňují lépe identifikovat neoprávněného uživatele, pokoušejícího se podpis falzifikovat.    % V
+K zaznamenání těchto dynamických vlastností je avšak zapotřebí tablet a speciální aktivní pero, které při psaní ukládá relevantní parametry.  % parafráze Citace Biometrie (str 233)
 
 Podpis patří z části ke statickým a z části k dynamickým biometrickým vlastnostem.
 Pokud se uchovává pouze výsledek psaní podpisu, lze z něj extrahovat pouze statické parametry.
@@ -182,7 +175,7 @@ může být provedeno porovnáním významových bodů, klasifikátorem sousedů
 \subsection{On-line systémy pro verifikaci} % preparafrazovat podle Biometrie a identita člověka str 444
 On-line systémy narozdíl od off-line neporovnávají pouze výsledek podpisu, ale i data o jeho průběhu.         % |
 Důležité zde jsou parametry jako změny rychlosti, tlaku a celkovém průběhu psaní podpisu.                     % |
-K nasnímání těchto parametrů je potřeba digitalizační tablet či speciální pero, které takové snímání umožní.  % |
+K nasnímání těchto parametrů je potřeba tablet a speciální pero, které takové snímání umožní.                 % |
 Narozdíl od statických parametrů, které lze snáze odpozorovat a napodobit,                                    % |
 nebo pomocí technologií jinak replikovat, je dynamické parametry nemožné zfalšovat člověkem.                  % V
 Falzifikát lze vytvořit pomocí stroje, je k tomu ale potřeba nasnímat pohyb ruky podepisujícího.              % parafráze Biometric verification (str. 170)
@@ -232,18 +225,54 @@ Biometrické normy bylo potřeba zavést kvůli vzestupu biometrické autentizac
 
 
 \section{Současná řešení v~oblasti biometrie}
-Podrobný kec
 
 \section{Systém, zařízení a kde se využívají, a jak jsou důvěryhodné}
 
 \section{Hodnocení výhod a nevýhod existujících řešení}
 
-\chapter{Návrh snímacího pera}
 \section{Výběr senzorů a technologií}
-\*subsection{EPS32}
-\*subsection{MPU-6050 (akcelerometr a gyroskop)}
-\*subsection{Tlakový senzor Interlink Electronics FSR® 400}
+Výběr senzorů pro nasnímání dynamických parametrů nebyl lehký vzhledem k rozměru pera a omezenému rozpočtu. % |
+Dalším parametrem, který hrál roli při rozhodování, byla přesnost jednotlivých komponent.                   % V
+Bylo důležité brát v potaz i to, zda všechny komponenty jsou kompatibilní s použitým mikrořadičem.          % vlatní kec
+
+\subsection*{ESP32}
+Mikrořaďič ESP32 je jedním z nejrozšířenějších mikrořadičů používaných ve světě.                            % |
+V tomto projektu je osazen na vývojové desce ESP32 DevKitC od firmy Espressif.                              % V
+Ta je jednou z nejpopulárnějších vývojových desek založených na mikrořadiči ESP32.                          % The Official ESP32 book (str. 35)
+Vývojová deska ESP32 DevKitC zde slouží jako mozek celého snímání.                                          % |
+Jsou k ní připojené všechny ostatní komponenty, které odesílají nasnímaná data.                             % V
+ESP32 poté tyto data zpracovává a odesílá je do počítače, ke kterému je připojen USB kabelem.               % vlastní kec
+
+\subsection*{MPU-6050 (akcelerometr a gyroskop)}
+MPU-60X0 je první integrované zařízení na světě pro sledování pohybu v šesti osách.                 % |
+Kombinuje tříosý gyroskop, tříosý akcelerometr a digitální procesor pohybu.                         % V
+Je široce využívaný v mnoha odvětvích, kde je potřeba schopnosti přesně sledovat pohyby uživatele.  % https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf
+
+Zde slouží ke stejnému účelu, a to snímaní a odesílání dat pohybu pera při podpisu.                 % |
+Jak bylo zmíněno v kapitole XY, tyto data jsou potřebná pro extrakci dynamických parametrů podpisu. % V
+Zaznamenávaná data jsou odesílána v reálném čase mikrořadiči ESP32.                                 % vlastní kec
+
+\subsection*{Tlakový senzor Interlink Electronics FSR® 400}
+Model FSR 400 je jednozónový tlakový senzor, tedy má pouze jednu aktivní měřící plochu.                       % |
+Rezistory FSR jsou dvouvodičová zařízení a používají robustní polymerové tlustovrstvé snímače.                % |
+Ty s rostoucím tlakem na snímač snižují odpor, lze tedy pomocí protékajícího proudu vypočítat sílu stlačení.  % |
+Minimální aktivační síla je 0,1 N a maximální citlivost je do 20 N.                                           % V
+Řada Interlink Electronics FSR 400 je součástí rodiny jednozónových rezistorů určených pro měření síly.       % https://www.interlinkelectronics.com/fsr-400
+
+
+\chapter{Návrh snímacího pera}
+Pro nasnímání podpisu bylo potřeba sestrojit speciální pero.                                        % |
+Toto pero v průběhu podepisování zaznamenává polohu pera ve trojrozměrném prostoru,                 % |
+jeho náklon a tlak, který je perem vyvíjen na papír.                                                % |
+V rámci této práce není důležité, aby tyto snímače a celkový systém byl skrytý před uživatelem.     % |
+Šlo tedy pouze o vymodelování pera, do kterého bude možné jednotlivé komponenty uložit.             % |
+Komponenty bylo nutné připevnit pevně, aby bylo možné snímat přesné a korektní informace o podpisu. % |
+Pokud by jednotlivé komponenty nebyly správně upevněny,                                             % V
+mělo by to negativní vliv na nasbírané informace a tedy na celou replikaci podpisu.                 % vlastní kec
+ 
 \section{Schéma a popis návrhu}
+
+
 \section{Možnosti replikace podpisu}
 
 %\chapter{Implementace prototypu}
