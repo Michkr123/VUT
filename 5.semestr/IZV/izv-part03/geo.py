@@ -1,91 +1,65 @@
 #!/usr/bin/python3.10
 # coding=utf-8
-# %%%
 import pandas as pd
-import geopandas
+import geopandas as gpd
 import matplotlib.pyplot as plt
-import contextily
-import sklearn.cluster
+import contextily as ctx
+from shapely.geometry import Point
+from sklearn.cluster import DBSCAN
 import numpy as np
 
-def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame) -> geopandas.GeoDataFrame:
+# Funkce pro vytvoření GeoDataFrame
+def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame, region: str) -> gpd.GeoDataFrame:
     """
-    Vytvoří GeoDataFrame ze vstupních DataFrame a odstraní neplatné pozice.
-    - Prohozené souřadnice d < e opraví.
-    - Vynechá nulové souřadnice (d, e).
-    - Zkontroluje, že body jsou v České republice.
-    
-    Args:
-        df_accidents (pd.DataFrame): DataFrame obsahující informace o nehodách.
-        df_locations (pd.DataFrame): DataFrame obsahující informace o lokalitách.
-
-    Returns:
-        geopandas.GeoDataFrame: GeoDataFrame s platnými pozicemi nehod.
+    Vytvoří GeoDataFrame ze vstupních DataFrame, nastaví CRS a odstraní neplatné pozice.
     """
-    import geopandas as gpd
-    from shapely.geometry import Point
-
-    # Sloučení DataFrame podle společného klíče (např. id nehody)
+    # Spojení dat podle klíče "p1"
     df = df_accidents.merge(df_locations, on="p1")
 
-    # Vynecháme řádky, kde jsou souřadnice d nebo e nulové
+    # Filtr podle vybraného kraje
+    df = df[df['region'] == region]
+
+    # Odstranění nulových a neplatných souřadnic
     df = df[(df['d'] != 0) & (df['e'] != 0)]
+    df = df[np.isfinite(df['d']) & np.isfinite(df['e'])]
 
     # Oprava prohozených souřadnic (d < e)
     swapped = df['d'] < df['e']
     df.loc[swapped, ['d', 'e']] = df.loc[swapped, ['e', 'd']].values
 
-    # Vytvoříme GeoDataFrame
+    # Vytvoření GeoDataFrame s EPSG:5514
     gdf = gpd.GeoDataFrame(
         df,
         geometry=[Point(xy) for xy in zip(df['d'], df['e'])],
-        crs="EPSG:4326"  # WGS84
+        crs="EPSG:5514"  # S-JTSK
     )
-
-    # Transformace souřadnic na S-JTSK (EPSG:5514)
-    gdf = gdf.to_crs(epsg=5514)
-
-    # Volitelně: Zkontrolujte, že body jsou v České republice
-    # (např. bounding box pro Českou republiku v S-JTSK)
-    bbox_cz = {
-        "minx": -950000, "maxx": -400000,
-        "miny": -1250000, "maxy": -900000
-    }
-    gdf = gdf[(gdf.geometry.x >= bbox_cz["minx"]) & (gdf.geometry.x <= bbox_cz["maxx"]) &
-              (gdf.geometry.y >= bbox_cz["miny"]) & (gdf.geometry.y <= bbox_cz["maxy"])]
 
     return gdf
 
-def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
+# Funkce pro vizualizaci geografických dat
+def plot_geo(gdf: gpd.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
     """
-    Vykreslete graf obsahující dvě podgrafy s pozicemi nehod ve vybraném kraji,
-    které byly zaviněny pod vlivem alkoholu (p11 >= 4).
-
-    Args:
-        gdf (geopandas.GeoDataFrame): GeoDataFrame obsahující informace o nehodách.
-        fig_location (str, optional): Cesta k uložení grafu. Default je None.
-        show_figure (bool, optional): Zda zobrazit graf. Default je False.
+    Vykreslí mapu s nehodami podle alkoholu (p11 >= 4) ve dvou vybraných měsících.
     """
-    import matplotlib.pyplot as plt
-    import contextily as ctx
+    print("Starting to plot geographic data...")
 
-    # Filtrujeme nehody pod vlivem alkoholu (p11 >= 4)
+    # Filtrování nehod pod vlivem alkoholu
     gdf_alcohol = gdf[gdf['p11'] >= 4]
 
-    # Vybereme dvě náhodné měsíce pro analýzu
-    months = [1, 7]  # Leden a Červenec
+    # Vybrané měsíce
+    months = [1, 7]  # Leden a červenec
     titles = ["Nehody v lednu", "Nehody v červenci"]
 
-    # Vytvoříme subgrafy
+    # Vytvoření subgrafů
     fig, axes = plt.subplots(1, 2, figsize=(15, 8), constrained_layout=True)
 
     for i, month in enumerate(months):
         ax = axes[i]
 
-        # Filtrujeme nehody pro konkrétní měsíc
+        # Filtrování podle měsíce
         gdf_month = gdf_alcohol[gdf_alcohol['date'].dt.month == month]
 
-        # Kontrola, zda gdf_month není prázdný
+        # Pokud nejsou data
         if gdf_month.empty:
             ax.set_title(f"Žádné nehody v měsíci {month}")
             ax.set_axis_off()
@@ -95,12 +69,13 @@ def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure:
         gdf_month.plot(ax=ax, markersize=5, color="red", alpha=0.6)
 
         # Přidání podkladové mapy
-        ctx.add_basemap(ax, crs=gdf_month.crs.to_string(), source=ctx.providers.Stamen.TonerLite)
+        try:
+            ctx.add_basemap(ax, crs=gdf_month.crs.to_string(), source=ctx.providers.CartoDB.Positron, zoom=10)
+        except Exception as e:
+            print(f"Error loading basemap: {e}")
 
-        # Nastavení os a nadpisu
+        # Nastavení titulků a os
         ax.set_title(titles[i])
-        ax.set_xlim(gdf_month.geometry.x.min() - 1000, gdf_month.geometry.x.max() + 1000)
-        ax.set_ylim(gdf_month.geometry.y.min() - 1000, gdf_month.geometry.y.max() + 1000)
         ax.set_axis_off()
 
     # Uložení nebo zobrazení grafu
@@ -110,61 +85,51 @@ def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure:
         plt.show()
     plt.close()
 
-def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
+    print("Finished plotting geographic data.")
+
+# Funkce pro vizualizaci četnosti nehod (clustery)
+def plot_cluster(gdf: gpd.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
     """
-    Vykreslete nehody zaviněné zvěří (p10=4) ve vybraném kraji s vyznačenými oblastmi 
-    podbarvenými podle četnosti nehod v dané oblasti.
-
-    Args:
-        gdf (geopandas.GeoDataFrame): GeoDataFrame obsahující informace o nehodách.
-        fig_location (str, optional): Cesta k uložení grafu. Default je None.
-        show_figure (bool, optional): Zda zobrazit graf. Default je False.
+    Vykreslí clustery nehod zaviněných zvěří (p10 = 4).
     """
-    import matplotlib.pyplot as plt
-    import contextily as ctx
-    from sklearn.cluster import DBSCAN
-    from shapely.geometry import MultiPoint
-    from geopandas import GeoDataFrame
+    print("Starting to plot clusters...")
 
-    # Filtrujeme nehody zaviněné zvěří (p10 = 4)
-    gdf_animals = gdf[gdf['p10'] == 4]
+    # Filtrování nehod zaviněných zvěří
+    gdf_animals = gdf[gdf['p10'] == 4].copy()
 
-    # Extrakce souřadnic pro shlukování
-    coords = np.array(list(zip(gdf_animals.geometry.x, gdf_animals.geometry.y)))
+    # Extrakce souřadnic
+    coords = np.array([(geom.x, geom.y) for geom in gdf_animals.geometry])
 
-    # Použití DBSCAN pro shlukování (vhodné pro geografická data)
+    # Kontrola neplatných hodnot
+    coords = coords[np.isfinite(coords).all(axis=1)]
+
+    # Pokud nejsou data
+    if len(coords) == 0:
+        print("Žádné nehody zaviněné zvěří.")
+        return
+
+    print("Applying DBSCAN...")
+    # Aplikace DBSCAN
     db = DBSCAN(eps=500, min_samples=10).fit(coords)
-    gdf_animals['cluster'] = db.labels_
+    labels = db.labels_
 
-    # Vytvoření GeoDataFrame pro shluky
-    clusters = gdf_animals[gdf_animals['cluster'] != -1]
-    grouped = clusters.groupby('cluster')
-    polygons = []
+    # Přidání clusterů do GeoDataFrame
+    gdf_animals.loc[:, 'cluster'] = labels
 
-    for cluster_id, group in grouped:
-        points = MultiPoint(list(group.geometry))
-        polygons.append(points.convex_hull)
+    # Vykreslení clusterů
+    fig, ax = plt.subplots(figsize=(10, 8))
 
-    cluster_gdf = GeoDataFrame({'geometry': polygons, 'cluster': grouped.groups.keys()}, crs=gdf.crs)
+    for cluster_id in np.unique(labels):
+        cluster_points = gdf_animals[gdf_animals['cluster'] == cluster_id]
+        if cluster_id != -1:
+            hull = cluster_points.geometry.union_all().convex_hull
+            gpd.GeoSeries(hull).plot(ax=ax, alpha=0.4, color="blue")
+        cluster_points.plot(ax=ax, markersize=5, label=f"Cluster {cluster_id}" if cluster_id != -1 else "Šum", alpha=0.6)
 
-    # Vykreslení grafu
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
-
-    # Vykreslení polygonů shluků
-    cluster_gdf.plot(ax=ax, color='red', alpha=0.4, edgecolor='black', legend=True)
-
-    # Vykreslení bodů nehod
-    gdf_animals.plot(ax=ax, markersize=5, color='blue', alpha=0.6, label='Nehody')
-
-    # Přidání podkladové mapy
-    ctx.add_basemap(ax, crs=gdf.crs.to_string(), source=ctx.providers.Stamen.TonerLite)
-
-    # Nastavení os a zobrazení legendy
-    ax.set_title("Nehody zaviněné zvěří")
-    ax.set_xlim(gdf_animals.geometry.x.min() - 1000, gdf_animistry.x.max() + 1000)
-    ax.set_ylim(gdf_animals.geometry.y.min() - 1000, gdf_animals.geometry.y.max() + 1000)
+    # Nastavení grafu
+    ax.set_title("Clustery nehod zaviněných zvěří")
     ax.set_axis_off()
-    ax.legend()
+    plt.legend()
 
     # Uložení nebo zobrazení grafu
     if fig_location:
@@ -173,16 +138,34 @@ def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_fig
         plt.show()
     plt.close()
 
+    print("Finished plotting clusters.")
+
+# Hlavní část programu
 if __name__ == "__main__":
-    # zde muzete delat libovolne modifikace
+    print("Starting script...")
+    
+    # Načtení dat
+    print("Loading data...")
     df_accidents = pd.read_pickle("accidents.pkl.gz")
     df_locations = pd.read_pickle("locations.pkl.gz")
-    gdf = make_geo(df_accidents, df_locations)
+    print("Data loaded.")
+    
+    # Výběr kraje
+    selected_region = 'STC'  # Vybraný kraj (například Středočeský kraj)
 
+    # Vytvoření GeoDataFrame
+    print("Creating GeoDataFrame...")
+    gdf = make_geo(df_accidents, df_locations, selected_region)
+    print("GeoDataFrame created.")
+    
+    # Vizualizace geografických dat
+    print("Plotting geographic data...")
     plot_geo(gdf, "geo1.png", True)
+    print("Geographic data plotted.")
+    
+    # Vizualizace clusterů
+    print("Plotting clusters...")
     plot_cluster(gdf, "geo2.png", True)
-
-    # testovani splneni zadani
-    import os
-    #assert os.path.exists("geo1.png")
-    #assert os.path.exists("geo2.png")
+    print("Clusters plotted.")
+    
+    print("Script completed.")
