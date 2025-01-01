@@ -222,21 +222,51 @@ Biometrické normy bylo potřeba zavést kvůli vzestupu biometrické autentizac
 %být využit v~široké škále aplikací využívajících elektronický podpis. (50) % https://theses.cz/id/odwy80/BP_Vchov.pdf (50) https://webstore.ansi.org/standards/incits/ansiincits3952005
 
 \chapter{Analýza současných řešení}
-
+Technologie automatického ověřování podpisu se v současnosti řadí mezi klíčové oblasti výzkumu.                                                         % |
+Především díky své důležitosti ve vědeckém a komerčním kontextu.                                                                                        % |
+S rychlým rozvojem internetu a rostoucími požadavky na bezpečnost v digitální společnosti se tato technologie stává stále relevantnější.                % |
+Poskytuje efektivní a důvěryhodnou metodu ověřování identity, která je v současnosti široce akceptována jak z právního, tak ze společenského hlediska.  % V
+To ji činí zásadním nástrojem pro současné technologické aplikace.                                                                                      % Impedovo
 
 \section{Současná řešení v~oblasti biometrie}
+Nedávné mezinárodní soutěže využívající standardní databáze a testovací protokoly přinesly zajímavé výsledky.   % |
+Ukázalo se, že systémy pro ověřování podpisů dosahují vysoké přesnosti.                                         % V
+Tato úroveň přesnosti je srovnatelná s jinými pokročilými biometrickými technologiemi.                          % C. Vielhauer, “A behavioural biometrics,” Public Service Rev.: Eur.Union, vol. 20, no. 9, pp. 113–115, 2005.
 
+Na rozdíl od fyziologické biometrie je vlastnoruční podpis aktivní metodou.                                                   % |
+Ta vyžaduje, aby uživatel provedl konkrétní akci podpisu.                                                                     % V
+Automatické ověřování podpisu je tedy obzvláště užitečné v aplikacích, kde je nutná autentizace jak uživatele, tak transakce. % Plamondon and S. N. Srihari, “On-line and offline handwriting recog-nition: A comprehensive survey,” IEEE Trans. Pattern Anal. Mach.Intell., vol. 22, no. 1, pp. 63–84, Jan. 2000
 
 \section{Systém, zařízení a kde se využívají, a jak jsou důvěryhodné}
+Systémy pro verifikaci podpisu se obvykle skládají z hardwarových a softwarových komponent. 
+Ty spolupracují při ověřování autenticity podpisu. 
+Zařízení pro sběr podpisu mohou zahrnovat dotykové obrazovky, grafické tablety nebo speciální senzory, zaznamenávající různé parametry podpisu.
+Takovými parametry jako je tlak, rychlost a trajektorie pohybu ruky. 
+Tyto systémy jsou široce využívány v bankovnictví, právních službách, elektronických platbách a dalších oblastech, ve kterých je nutné ověřit identitu uživatele a zajistit integritu transakce. % \cite{novak2022}, \cite{kriz2019}.
 
+Důvěryhodnost těchto systémů závisí na několika faktorech, včetně kvality zařízení pro sběr dat, algoritmů pro analýzu podpisu a úrovně šifrování použité při přenosu dat. 
+Vysoká úroveň přesnosti a spolehlivosti je kladně ovlivněna používáním pokročilých metod strojového učení a biometrických analýz, které zajišťují, že systém dokáže rozlišit mezi autentickým podpisem a padělaným. 
+Přesto i u těchto systémů existují určité výzvy, jako je možnost podvodů prostřednictvím simulace podpisu nebo použití záznamů starých podpisů. 
+Z tohoto důvodu je důležité kombinovat různé metody autentizace pro dosažení co nejvyšší úrovně bezpečnosti. % \cite{vodicka2021}, \cite{hanzelka2020}.
 
 \section{Hodnocení výhod a nevýhod existujících řešení}
+Existující řešení pro verifikaci podpisu nabízejí několik výhod a nevýhod v závislosti na použité technologii a aplikacích. 
+Mezi hlavní výhody patří vysoká úroveň bezpečnosti, kterou poskytují biometrické metody. 
+Analýza dynamiky podpisu, jako je měření rychlosti, tlaku a trajektorie pohybu ruky, zvyšuje spolehlivost ověření podpisu a umožňuje detekci padělaných podpisů, což je klíčové pro oblasti, jako je bankovnictví a právní služby. % \cite{Jain2004}, \cite{Kumar2016} 
+Systémy pro verifikaci podpisu mohou být rovněž snadno implementovány v digitálních prostředích, což usnadňuje autentizaci uživatelů při online transakcích a zajišťuje integritu dokumentů.
 
+Na druhé straně existují i nevýhody, které je třeba zvážit při implementaci těchto systémů. 
+Jedním z hlavních problémů je vysoká cena potřebného hardwaru a softwaru, což může být pro některé organizace překážkou. 
+Další výzvou je náchylnost biometrických systémů k podvodům, jako je použití padělaných podpisů nebo záznamů starých podpisů, což může ohrozit bezpečnost. % \cite{Kose2017} 
+Kromě toho přesnost systémů pro verifikaci podpisu může být ovlivněna faktory, jako jsou změny v rukopisných schopnostech uživatele, což může vést k falešným odmítnutím nebo akceptacím podpisu. %\cite{Rathgeb2016}. 
+Tyto faktory ukazují, že biometrické systémy nejsou bez rizika a měly by být kombinovány s dalšími metodami autentizace pro zajištění maximální bezpečnosti.
+
+Závěrem lze říci, že existující řešení pro verifikaci podpisu nabízejí vysokou úroveň bezpečnosti a efektivity, ale také čelí výzvám, které vyžadují pečlivé zvážení při jejich implementaci a použití.
 
 \section{Výběr senzorů a technologií}
 Výběr senzorů pro nasnímání dynamických parametrů nebyl lehký vzhledem k rozměru pera a omezenému rozpočtu. % |
 Dalším parametrem, který hrál roli při rozhodování, byla přesnost jednotlivých komponent.                   % V
-Bylo důležité brát v potaz i to, zda všechny komponenty jsou kompatibilní s použitým mikrořadičem.          % vlatní kec
+Bylo důležité brát v potaz i to, zda jsou všechny komponenty kompatibilní s použitým mikrořadičem.          % vlatní kec
 
 \subsection*{ESP32}
 Mikrořaďič ESP32 je jedním z nejrozšířenějších mikrořadičů používaných ve světě.                            % |
