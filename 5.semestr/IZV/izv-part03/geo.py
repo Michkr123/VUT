@@ -1,17 +1,24 @@
 #!/usr/bin/python3.10
 # coding=utf-8
 import pandas as pd
-import geopandas as gpd
+import geopandas
 import matplotlib.pyplot as plt
-import contextily as ctx
+import contextily
 from shapely.geometry import Point
 from sklearn.cluster import KMeans
 import numpy as np
 
-# Funkce pro vytvoření GeoDataFrame
-def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame, region: str) -> gpd.GeoDataFrame:
+def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame, region: str) -> geopandas.GeoDataFrame:
     """
-    Vytvoří GeoDataFrame ze vstupních DataFrame, nastaví CRS a odstraní neplatné pozice.
+    Vytvoří GeoDataFrame z poskytnutých dat o nehodách a lokalitách.
+
+    Argumenty:
+        df_accidents (pd.DataFrame): DataFrame obsahující data o nehodách.
+        df_locations (pd.DataFrame): DataFrame obsahující data o lokalitách.
+        region (str): Region, podle kterého se filtrují nehody.
+
+    Návratová hodnota:
+        gpd.GeoDataFrame: GeoDataFrame s lokalitami nehod a příslušnými daty.
     """
     df = df_accidents.merge(df_locations, on="p1")
     df = df[df['region'] == region]
@@ -21,22 +28,27 @@ def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame, region: str
     swapped = df['d'] < df['e']
     df.loc[swapped, ['d', 'e']] = df.loc[swapped, ['e', 'd']].values
 
-    gdf = gpd.GeoDataFrame(
+    gdf = geopandas.GeoDataFrame(
         df,
         geometry=[Point(xy) for xy in zip(df['d'], df['e'])],
-        crs="EPSG:5514"  # S-JTSK
+        crs="EPSG:5514"  # Souřadnicový systém S-JTSK
     )
     return gdf
 
-# Funkce pro vizualizaci geografických dat
-def plot_geo(gdf: gpd.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
-    print("Starting to plot geographic data...")
+def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
+    """
+    Vykreslí geografická data ukazující nehody v lednu a červenci.
+
+    Argumenty:
+        gdf (gpd.GeoDataFrame): GeoDataFrame obsahující data o nehodách.
+        fig_location (str, optional): Cesta k souboru pro uložení obrázku.
+        show_figure (bool, optional): Zda zobrazit obrázek.
+    """
     gdf_alcohol = gdf[gdf['p11'] >= 4]
-    months = [1, 7]  # Leden a červenec
+    months = [1, 7]
     titles = ["Nehody v lednu", "Nehody v červenci"]
 
-    # Create a grid layout with equal width for both subplots and make the plot bigger
-    fig, axes = plt.subplots(1, 2, figsize=(36, 28), constrained_layout=False)  # Increased figsize
+    fig, axes = plt.subplots(1, 2, figsize=(11, 8), constrained_layout=True)
 
     for i, month in enumerate(months):
         ax = axes[i]
@@ -49,114 +61,94 @@ def plot_geo(gdf: gpd.GeoDataFrame, fig_location: str = None, show_figure: bool 
 
         gdf_month.plot(ax=ax, markersize=5, color="red", alpha=0.6)
         try:
-            ctx.add_basemap(ax, crs=gdf_month.crs.to_string(), source=ctx.providers.CartoDB.Positron, zoom=10)
-        except Exception as e:
-            print(f"Error loading basemap: {e}")
+            contextily.add_basemap(ax, crs=gdf_month.crs.to_string(), source=contextily.providers.CartoDB.Positron, zoom=10)
+        except Exception:
+            pass
 
         ax.set_title(titles[i])
         ax.set_axis_off()
-
-    # Manually adjust the spacing between subplots
-    plt.subplots_adjust(wspace=0.1)  # Adjust width space between subplots
 
     if fig_location:
         plt.savefig(fig_location, dpi=300)
     if show_figure:
         plt.show()
     plt.close()
-    print("Finished plotting geographic data.")
 
-def plot_cluster(gdf: gpd.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
-    print("Starting to plot clusters...")
+def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure: bool = False):
+    """
+    Vykreslí shlukovaná data o nehodách pomocí KMeans shlukování.
+
+    Argumenty:
+        gdf (gpd.GeoDataFrame): GeoDataFrame obsahující data o nehodách.
+        fig_location (str, optional): Cesta k souboru pro uložení obrázku.
+        show_figure (bool, optional): Zda zobrazit obrázek.
+    """
     gdf_animals = gdf[gdf['p10'] == 4].copy()
-    print(f"Number of animal-caused accidents: {len(gdf_animals)}")
 
     coords = np.array([(geom.x, geom.y) for geom in gdf_animals.geometry if geom])
     if len(coords) == 0:
-        print("No valid data for clustering.")
         return
 
-    # Set the number of clusters to 7
     n_clusters = 8
     if len(coords) < n_clusters:
-        print(f"Not enough data for {n_clusters} clusters. Using {len(coords)} clusters instead.")
         n_clusters = len(coords)
 
-    print(f"Applying K-means with {n_clusters} clusters...")
-    kmeans = KMeans(n_clusters=n_clusters)
+    kmeans = KMeans(n_clusters=n_clusters, random_state=69)
     labels = kmeans.fit_predict(coords)
     gdf_animals['cluster'] = labels
 
-    # Reproject to EPSG:3857 for basemap compatibility
     gdf_animals = gdf_animals.to_crs(epsg=3857)
 
-    # Calculate accident counts per cluster
     cluster_accident_counts = gdf_animals.groupby('cluster').size()
     gdf_animals['accident_count'] = gdf_animals['cluster'].map(cluster_accident_counts)
 
-    fig, ax = plt.subplots(figsize=(10, 8))
+    fig, ax = plt.subplots(figsize=(11, 8))
 
-    # Plot individual accidents as small red dots
-    gdf_animals.plot(ax=ax, color='red', markersize=5, alpha=0.6, label="Accidents")
+    gdf_animals.plot(ax=ax, color='red', markersize=5, alpha=0.6, label="Nehody")
 
-    # Plot clusters with colors based on accident counts
     for cluster_id in range(n_clusters):
         cluster_points = gdf_animals[gdf_animals['cluster'] == cluster_id]
         if cluster_points.empty:
-            print(f"Cluster {cluster_id} is empty.")
             continue
 
-        hull = cluster_points.geometry.unary_union.convex_hull
+        hull = cluster_points.geometry.union_all().convex_hull
         if hull.is_empty:
-            print(f"Cluster {cluster_id} has no valid hull.")
             continue
 
-        # Use accident count to determine color
         accident_count = cluster_accident_counts[cluster_id]
-        color = plt.cm.YlGnBu(accident_count / cluster_accident_counts.max())  # Normalize accident count
-        gpd.GeoSeries(hull).plot(ax=ax, alpha=0.4, color=color, edgecolor='black')
+        color = plt.cm.viridis(accident_count / cluster_accident_counts.max())
+        geopandas.GeoSeries(hull).plot(ax=ax, alpha=0.4, color=color, edgecolor='black')
 
-    # Add basemap
     try:
-        ctx.add_basemap(ax, crs=gdf_animals.crs.to_string(), source=ctx.providers.CartoDB.Positron, zoom=10)
-    except Exception as e:
-        print(f"Error loading basemap: {e}")
+        contextily.add_basemap(ax, crs=gdf_animals.crs.to_string(), source=contextily.providers.CartoDB.Positron, zoom=10)
+    except Exception:
+        pass
 
-    # Add legend for accident count
-    sm = plt.cm.ScalarMappable(cmap='YlGnBu', norm=plt.Normalize(vmin=cluster_accident_counts.min(), vmax=cluster_accident_counts.max()))
-    sm._A = []  # Required for ScalarMappable
+    sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=cluster_accident_counts.min(), vmax=cluster_accident_counts.max()))
+    sm._A = []
     cbar = fig.colorbar(sm, ax=ax, orientation='horizontal', fraction=0.03, pad=0.04)
     cbar.set_label("Počet nehod v úseku")
 
     ax.set_title("Nehody v JHM kraji zaviněné lesní zvěří")
     ax.set_axis_off()
 
+    plt.tight_layout()
+
     if fig_location:
         plt.savefig(fig_location, dpi=300)
     if show_figure:
         plt.show()
     plt.close()
-    print("Finished plotting clusters.")
 
-# Hlavní část programu
 if __name__ == "__main__":
-    print("Starting script...")
-    print("Loading data...")
+    """
+    Hlavní vstupní bod pro skript. Načte data, vytvoří GeoDataFrame a vygeneruje grafy.
+    """
     df_accidents = pd.read_pickle("accidents.pkl.gz")
     df_locations = pd.read_pickle("locations.pkl.gz")
-    print("Data loaded.")
 
-    selected_region = 'JHM'  # Vybraný kraj (například Středočeský kraj)
-    print("Creating GeoDataFrame...")
+    selected_region = 'JHM'
     gdf = make_geo(df_accidents, df_locations, selected_region)
-    print("GeoDataFrame created.")
 
-    print("Plotting geographic data...")
     plot_geo(gdf, "geo1.png", True)
-    print("Geographic data plotted.")
-
-    print("Plotting clusters...")
     plot_cluster(gdf, "geo2.png", True)
-    print("Clusters plotted.")
-
-    print("Script completed.")
