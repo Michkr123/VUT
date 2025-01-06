@@ -22,16 +22,19 @@ def make_geo(df_accidents: pd.DataFrame, df_locations: pd.DataFrame, region: str
     """
     df = df_accidents.merge(df_locations, on="p1")
     df = df[df['region'] == region]
+    # Odstranění neplatných nebo nulových souřadnic
     df = df[(df['d'] != 0) & (df['e'] != 0)]
     df = df[np.isfinite(df['d']) & np.isfinite(df['e'])]
 
+    # Prohození nevhodných souřadnic
     swapped = df['d'] < df['e']
     df.loc[swapped, ['d', 'e']] = df.loc[swapped, ['e', 'd']].values
 
+    # Vytvoření GeoDataFrame
     gdf = geopandas.GeoDataFrame(
         df,
         geometry=[Point(xy) for xy in zip(df['d'], df['e'])],
-        crs="EPSG:5514"  # Souřadnicový systém S-JTSK
+        crs="EPSG:5514"
     )
     return gdf
 
@@ -44,6 +47,7 @@ def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure:
         fig_location (str, optional): Cesta k souboru pro uložení obrázku.
         show_figure (bool, optional): Zda zobrazit obrázek.
     """
+    # Filtrování nehod s vlivem alkoholu
     gdf_alcohol = gdf[gdf['p11'] >= 4]
     months = [1, 7]
     titles = ["Nehody v lednu", "Nehody v červenci"]
@@ -54,11 +58,13 @@ def plot_geo(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_figure:
         ax = axes[i]
         gdf_month = gdf_alcohol[gdf_alcohol['date'].dt.month == month]
 
+        # V daném měsíci není žádná nehoda
         if gdf_month.empty:
             ax.set_title(f"Žádné nehody v měsíci {month}")
             ax.set_axis_off()
             continue
 
+        # Vykreslení nehod a mapy
         gdf_month.plot(ax=ax, markersize=5, color="red", alpha=0.6)
         try:
             contextily.add_basemap(ax, crs=gdf_month.crs.to_string(), source=contextily.providers.CartoDB.Positron, zoom=10)
@@ -83,22 +89,27 @@ def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_fig
         fig_location (str, optional): Cesta k souboru pro uložení obrázku.
         show_figure (bool, optional): Zda zobrazit obrázek.
     """
+    # Filtrování nehod způsobených zvěří
     gdf_animals = gdf[gdf['p10'] == 4].copy()
 
+    # Extrakce souřadnic
     coords = np.array([(geom.x, geom.y) for geom in gdf_animals.geometry if geom])
     if len(coords) == 0:
         return
 
+    # Počet clusterů
     n_clusters = 8
     if len(coords) < n_clusters:
         n_clusters = len(coords)
 
+    # Shlukování metodou KMeans
     kmeans = KMeans(n_clusters=n_clusters, random_state=69)
     labels = kmeans.fit_predict(coords)
     gdf_animals['cluster'] = labels
 
     gdf_animals = gdf_animals.to_crs(epsg=3857)
 
+    # Počet nehod v jednotlivých clusterech
     cluster_accident_counts = gdf_animals.groupby('cluster').size()
     gdf_animals['accident_count'] = gdf_animals['cluster'].map(cluster_accident_counts)
 
@@ -115,6 +126,7 @@ def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_fig
         if hull.is_empty:
             continue
 
+        # Barevné odlišení clusterů
         accident_count = cluster_accident_counts[cluster_id]
         color = plt.cm.viridis(accident_count / cluster_accident_counts.max())
         geopandas.GeoSeries(hull).plot(ax=ax, alpha=0.4, color=color, edgecolor='black')
@@ -124,6 +136,7 @@ def plot_cluster(gdf: geopandas.GeoDataFrame, fig_location: str = None, show_fig
     except Exception:
         pass
 
+    # Barevná škála podle počtu nehod
     sm = plt.cm.ScalarMappable(cmap='viridis', norm=plt.Normalize(vmin=cluster_accident_counts.min(), vmax=cluster_accident_counts.max()))
     sm._A = []
     cbar = fig.colorbar(sm, ax=ax, orientation='horizontal', fraction=0.03, pad=0.04)
