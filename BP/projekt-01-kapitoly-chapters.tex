@@ -124,9 +124,9 @@ Tyto vzorky jsou poskytnuté danou osobou při registraci do systému.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{obrazky-figures/placeholder.pdf}
+  \includegraphics[width=0.5\textwidth]{obrazky-figures/proces_autentizace.png}
   \caption{Průběh autentizace}
-  \label{fig:my-pdf}
+  \label{fig:proces_autentizace} % ISO/IEC 19795-1 str 7.
 \end{figure}
 
 Obě tyto skupiny charakteristik jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v~době podpisu.
@@ -301,9 +301,9 @@ Poté lze tyto algoritmy kombinovat:
   \item \textbf{DTW(VQ)} --- DTW dosáhlo nejlepších výsledků mezi ostatními algoritmy, avšak není použitelný pro vzdálené aplikace.
   V ten moment přichází VQ algoritmus. Nejdříve je tedy využit VQ algoritmus a poté je využit DTW algoritmus nad již vektorově kvantizovanými příznakovými vektory. 
 \end{itemize}
+% https://www.sciencedirect.com/science/article/abs/pii/S0031320306002780
 
 \subsection*{Důveryhodnost podpisu}
-
 Nedávné mezinárodní soutěže využívající standardní databáze a testovací protokoly přinesly zajímavé výsledky.   % |
 Ukázalo se, že systémy pro ověřování podpisů dosahují vysoké přesnosti.                                         % V
 Tato úroveň přesnosti je srovnatelná s jinými pokročilými biometrickými technologiemi.                          % C. Vielhauer, “A behavioural biometrics,” Public Service Rev.: Eur.Union, vol. 20, no. 9, pp. 113–115, 2005.
@@ -335,20 +335,6 @@ Mezi další výhody pak nadále můžeme například zařadit:
 Mezi nevýhody pak lze zařadit například zařadit to, že podpis je ovlivněn i psychickým stavem jedince.
 Z toho vyplívá, že například stres či jiné rozrušení může ovlivnit podpis tak, že dojde k jeho odmítnutí.
 Dále může dojít k odmítnutí u osob, které mají nekonzistentní podpis nebo u jedinců, kteřým nějaká nemoc či úraz ovlivnil písmo.
-
-%Existující řešení pro verifikaci podpisu nabízejí několik výhod a nevýhod v závislosti na použité technologii a aplikacích. %!
-%Mezi hlavní výhody patří vysoká úroveň bezpečnosti, kterou poskytují biometrické metody.%!
-%Analýza dynamiky podpisu, jako je měření rychlosti, tlaku a trajektorie pohybu ruky, zvyšuje spolehlivost ověření podpisu a umožňuje detekci padělaných podpisů, což je klíčové pro oblasti, jako je bankovnictví a právní služby. % \cite{Jain2004}, \cite{Kumar2016} %!
-%Systémy pro verifikaci podpisu mohou být rovněž snadno implementovány v digitálních prostředích, což usnadňuje autentizaci uživatelů při online transakcích a zajišťuje integritu dokumentů.%!
-
-%Na druhé straně existují i nevýhody, které je třeba zvážit při implementaci těchto systémů. %!
-%Jedním z hlavních problémů je vysoká cena potřebného hardwaru a softwaru, což může být pro některé organizace překážkou. %!
-%Další výzvou je náchylnost biometrických systémů k podvodům, jako je použití padělaných podpisů nebo záznamů starých podpisů, což může ohrozit bezpečnost. % \cite{Kose2017} %!
-%Kromě toho přesnost systémů pro verifikaci podpisu může být ovlivněna faktory, jako jsou změny v rukopisných schopnostech uživatele, což může vést k falešným odmítnutím nebo akceptacím podpisu. %\cite{Rathgeb2016}. %!
-%Tyto faktory ukazují, že biometrické systémy nejsou bez rizika a měly by být kombinovány s dalšími metodami autentizace pro zajištění maximální bezpečnosti.%!
-
-%Závěrem lze říci, že existující řešení pro verifikaci podpisu nabízejí vysokou úroveň bezpečnosti a efektivity, ale také čelí výzvám, které vyžadují pečlivé zvážení při jejich implementaci a použití.%!
-%TODO
 
 \section{Výběr senzorů a technologií}
 Výběr senzorů pro nasnímání dynamických parametrů byl složitý vzhledem k rozměru pera a omezenému rozpočtu. % |
