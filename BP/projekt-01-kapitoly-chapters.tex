@@ -46,7 +46,6 @@ V~této části budou shrnuty všechny potřebné informace.
   \item \textbf{Statické parametry písma} --- jde o~parametry, které nezahrnují informace o~procesu psaní podpisu. Patří mezi ně například tvar a vzhled písma, umístění podpisu na stránce či tloušťka čar.
   \item \textbf{Dynamické parametry písma} --- tyto parametry se vztahují k~samotnému průběhu psaní podpisu. Například rychlost psaní, akcelerace, tlak nebo průběh tahů.
 \end{itemize}
-\noindent
 Dále je potřeba si ujasnit tyto tři pojmy:
 \begin{itemize}
   \item \textbf{Verifikace} --- potvrzení totožnosti jedince porovnáním poskytnutého vzoru s~referenčním vzorem dané osoby uloženého v~databázi, % |
@@ -99,7 +98,9 @@ Těchto parametrů je mnoho, ale pro zjednodušení se jich používá jen omeze
 
 Dynamické vlastnosti poskytují více informací a umožňují lépe identifikovat neoprávněného uživatele pokoušejícího se podpis falzifikovat.    % V
 K~zaznamenání těchto dynamických vlastností je avšak zapotřebí tablet a speciální pero, které při psaní ukládá relevantní parametry.~\cite{DrahanskýMartin2011}  % parafráze Biometrie (str 233)
+\newline
 
+\noindent
 V~rámci této práce budou snímány následující charakteristiky:
 \begin{itemize}
   \item \textbf{Celkový vzhled podpisu}
@@ -110,9 +111,9 @@ V~rámci této práce budou snímány následující charakteristiky:
 Kombinací těchto nasnímaných parametrů bude možné dostatečně věrohodně napodobit původní vlastnoruční podpis. 
 
 \section{Falzifikát a jeho rozpoznání}
-Falzifikát či padělek je v obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu.    % |
-V rámci biometrických systémů jsou tyto padělky zneužívány k pokusu o autentizaci biometrickými údaji jiné osoby. % V
-U podpisu je falzifikátem míněna replikace statického či dynamického podpisu za stejným účelem.                   % Muj kec
+Falzifikát neboli padělek je v obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu.          % |
+V rámci biometrických systémů jsou tyto padělky zneužívány k pokusu o autentizaci falešnými biometrickými údaji jiné osoby. % V
+U podpisu je falzifikátem míněna replikace statického či dynamického podpisu za stejným účelem.                             % Muj kec
 
 Rozpoznání falzifikátu probíhá u~statického a dynamického podpisu odlišně. 
 Následující text se bude týkat postupu, který sdílejí.
@@ -301,17 +302,24 @@ K~zaznamenávání dynamického podpisu se nejčastěji v~praxi používá singp
 
 Obecně lze k~zaznamenání podpisu také využít tablet s~digitálním perem či mobilní telefon.
 
-\subsection*{Algoritmy}
-%TODO biometrie str. 237
-Pro proces porovnávání předloženého vzoru a referenčního vzoru uloženého v~databázi lze využít několika algoritmů.
+\subsection*{Metody a algoritmy rozpoznávání podpisu}
+Metody používané pro rozpoznávání podpisu lze rozdělit do tří hlavních skupin:
+\begin{itemize}
+  \item \textbf{Holistická metoda} --- využívá vektor rysů a porovnávání provádí na základě vzdálenosti mezi těmito vektory.
+  \item \textbf{Regionální metoda} --- pracuje se sekvencemi vektorů, jako jsou tahy, segmenty nebo okna, a při porovnávání zohledňuje strukturu v rámci sekvence.
+  \item \textbf{Lokální metoda} --- používá časové a prostorové funkce, které aproximují vstupní data, a provádí jejich elastické porovnání.
+\end{itemize}
 
+%TODO obrázky biometrie str. 239
+
+Pro proces porovnávání lze využít několika algoritmů, zde si uvedeme jenom některé.
+Pro on-line rozpoznávání například:
 \begin{itemize}
   \item \textbf{algoritmus založený na VQ (Vectoral Quantiziation)}
   \item \textbf{algoritmus založený na NN (Nearest Neighbor)}
   \item \textbf{DTW (Dynamic Time Warping)}
   \item \textbf{HMM (Hidden Markov Model)}
 \end{itemize}
-\noindent
 Poté lze tyto algoritmy kombinovat:
 \begin{itemize}
   \item \textbf{DTW(VQ)} --- DTW dosáhlo nejlepších výsledků mezi ostatními algoritmy, avšak není použitelný pro vzdálené aplikace, jelikož obsahuje podpis, který je citlivým osobním údajem.

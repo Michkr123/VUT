@@ -99,7 +99,7 @@
 \else % pro tisk budou odkazy, na které se dá klikat, černé / for the print clickable links will be black
 \ifx\pdfoutput\undefined % nejedeme pod pdflatexem / we are not using pdflatex
 \else
-  \usepackage{color}
+  \usepackage{c olor}
   \usepackage[unicode,colorlinks,hyperindex,plainpages=false,pdftex,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
   \definecolor{links}{rgb}{0,0,0}
   \definecolor{anchors}{rgb}{0,0,0}
@@ -140,8 +140,8 @@
   supervisor.title.p={Ing.},   %titul před jménem (nepovinné) / title before the name (optional)
   supervisor.title.a={},    %titul za jménem (nepovinné) / title after the name (optional)
   % Klíčová slova / keywords
-  keywords.cs={Sem budou zapsána jednotlivá klíčová slova v českém (slovenském) jazyce, oddělená čárkami.}, % klíčová slova v českém či slovenském jazyce / keywords in czech or slovak language
-  keywords.en={Sem budou zapsána jednotlivá klíčová slova v anglickém jazyce, oddělená čárkami.}, % klíčová slova v anglickém jazyce / keywords in english
+  keywords.cs={pero, podpis, replikace podpisu, falzifikát, biometrie, biometrická autentizace}, % klíčová slova v českém či slovenském jazyce / keywords in czech or slovak language
+  keywords.en={pen, signature, signature replication, forgery, biometrics, biometric authentication}, % klíčová slova v anglickém jazyce / keywords in english
   %keywords.en={Here, individual keywords separated by commas will be written in English.},
   % Abstrakt / Abstract
   abstract.cs={
