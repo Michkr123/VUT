@@ -79,10 +79,10 @@ Existuje spoustu různých cest, kterými lze biometrické systémy napadnout.  
 V~rámci této práce se zaměříme na senzor, jenž je první komponentou biometrického systému (viz obrázek~\ref{fig:biometricky_system}). % V
 Tomuto senzoru budeme předkládat falešné biometriky, v~našem případě falešný podpis.~\cite{DrahanskýMartin2011}% parafráze Biometrie (str 78)
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\textwidth]{obrazky-figures/biometricky_system.png}
-  \caption{Biometrický systém~\cite{geeksforGeeks2022}}  % https://www.geeksforgeeks.org/biometric-system-architecture/
+  \includegraphics[width=1\textwidth]{obrazky-figures/biometricky_system.jpg}
+  \caption{Biometrický systém~\cite{DrahanskýMartin2011}}
   \label{fig:biometricky_system}
 \end{figure}
 
@@ -111,23 +111,25 @@ V~rámci této práce budou snímány následující charakteristiky:
 Kombinací těchto nasnímaných parametrů bude možné dostatečně věrohodně napodobit původní vlastnoruční podpis. 
 
 \section{Falzifikát a jeho rozpoznání}
-Falzifikát neboli padělek je v obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu.          % |
+\textbf{Falzifikát} neboli padělek je v obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu. % |
 V rámci biometrických systémů jsou tyto padělky zneužívány k pokusu o autentizaci falešnými biometrickými údaji jiné osoby. % V
 U podpisu je falzifikátem míněna replikace statického či dynamického podpisu za stejným účelem.                             % Muj kec
+\newline
 
-Rozpoznání falzifikátu probíhá u~statického a dynamického podpisu odlišně. 
+\noindent
+\textbf{Rozpoznání falzifikátu} probíhá u~statického a dynamického podpisu odlišně. 
 Následující text se bude týkat postupu, který sdílejí.
 
 Falzifikáty jsou vyhodnoceny na základě porovnávání uloženého vzorku v~databázi s~podpisem, kterým se daný člověk pokouší autentizovat.
 Výsledkem takového porovnávání je určité procento shody parametrů.
-Referenční podpis je zprůměrován z~několika vzorků, aby došlo k~potlačení náhodných jevů.~\cite{VUT2009} %  parafraze zav_prace 17183 2.3
+Referenční podpis je zprůměrován z~několika vzorků, aby došlo k~potlačení náhodných jevů.~\cite{VUT2009} % parafraze zav_prace 17183 2.3
 Tyto vzorky jsou poskytnuté danou osobou při registraci do systému.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\textwidth]{obrazky-figures/proces_autentizace.png}
-  \caption{Průběh autentizace~\cite{ISOIEC19795-1_2021}}
-  \label{fig:proces_autentizace} % ISO/IEC 19795-1 str 7.
+  \includegraphics[width=1\textwidth]{obrazky-figures/proces_autentizace.jpg}
+  \caption{Průběh autentizace~\cite{DrahanskýMartin2011}}
+  \label{fig:proces_autentizace}
 \end{figure}
 
 Obě tyto skupiny charakteristik jsou ovlivňovány jak fyzickým, tak i psychologickým stavem člověka v~době podpisu.
@@ -146,46 +148,45 @@ Pokud by bylo procento shody špatně zvoleno, došlo by k~jednomu ze dvou probl
 
 Pokud je procento shody nastaveno právě v~bodě protnutí těchto dvou křivek (viz obrázek~\ref{fig:FAR_FRR}), nazýváme ho rovnoměrná míra chybovosti (EER), 
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{obrazky-figures/FAR_FRR.png}
   \caption{Rovnoměrná míra chybovosti (EER), míra falešných odmítnutí (FRR) a míra falešných akceptací (FAR)~\cite{cursorinsight_frr_fa}} % https://www.cursorinsight.com/post/943/what-you-need-to-know-about-frr-and-far
   \label{fig:FAR_FRR}
 \end{figure}
 
-\newpage
 
 \section{Off-line systémy pro verifikaci}
-Off-line systémy pro verifikaci se rozumí systémy, které ověřují totožnost na základě statického podpisu, tedy psaného na papír.  % |
-Obraz podpisu je naskenován či nasnímán kamerou a tím je získán digitální obraz podpisu.                                          % |
-Tento obraz je následně porovnáván v~databázi s~referenčním podpisem.                                                             % |
+Off-line systémy pro verifikaci se rozumí systémy, které ověřují totožnost na základě statického podpisu, tedy psaného na papír. % |
+Obraz podpisu je naskenován či nasnímán kamerou a tím je získán digitální obraz podpisu.                                         % |
+Tento obraz je následně porovnáván v~databázi s~referenčním podpisem.                                                            % |
 Tato metoda je, při existenci skenovacích a kopírovacích zařízení, nepoužitelná, co se týče automatizovaného zpracování, jelikož je statický podpis více náchylný na falzifikaci.~\cite{RakRoman2008}% Parafráze Biografie a identita člověka (str 440)
 
 Verifikace probíhá ve třech fázích --- předzpracování, extrakce biometrických charakteristik a vyhodnocování (viz obrázky~\ref{fig:predzpracovany_podpis},~\ref{fig:predzpracovany_podpis},~\ref{fig:vyhodnocovani}). % |
-V~předzpracování projde naskenovaný obraz podpisu prahováním, vyhlazováním, normalizací a zjednodušováním.    % |
-Následně jsou extrahovány biometrické charakteristiky podpisu,                                                % |
-například hustota vodorovných a svislých čar nebo vektory ohraničené oblasti.                                 % |
-Vyhodnocování je založeno na extrahovaných charakteristikách a jejich vektorech.                              % V
+V~předzpracování projde naskenovaný obraz podpisu prahováním, vyhlazováním, normalizací a zjednodušováním. % |
+Následně jsou extrahovány biometrické charakteristiky podpisu,                                             % |
+například hustota vodorovných a svislých čar nebo vektory ohraničené oblasti.                              % |
+Vyhodnocování je založeno na extrahovaných charakteristikách a jejich vektorech.                           % V
 Může být provedeno porovnáním významových bodů, klasifikátorem sousedů nebo  pomocí neuronové sítě.\cite{RakRoman2008}% Parafráze Biometrie a identita člověka (strana 441 442 443) - nebo https://theses.cz/id/odwy80/BP_Vchov.pdf
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \begin{minipage}{0.3\textwidth}
+  \begin{minipage}{1\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-    \caption{Předzpracovaný podpis.}
+    \includegraphics[width=\textwidth]{obrazky-figures/predzpracovany.jpg}
+    \caption{Průbeh předzpracování podpisu.~\cite{DrahanskýMartin2011}}
     \label{fig:predzpracovany_podpis}
   \end{minipage}\hfill
-  \begin{minipage}{0.3\textwidth}
+  \begin{minipage}{0.35\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-    \caption{Extrahované parametry.}
-    \label{fig:predzpracovany_podpis}
+    \includegraphics[width=\textwidth]{obrazky-figures/extrahovane.jpg}
+    \caption{Extrahované parametry.~\cite{RakRoman2008}}
+    \label{fig:extrahovany}
   \end{minipage}\hfill
-  \begin{minipage}{0.3\textwidth}
+  \begin{minipage}{0.6\textwidth}
     \centering
-    \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-    \caption{Vyhodnocová- ní}
+    \includegraphics[width=\textwidth]{obrazky-figures/vyhodnocovani.jpg}
+    \caption{Vyhodnocování.~\cite{RakRoman2008}}
     \label{fig:vyhodnocovani}
   \end{minipage}
 \end{figure}
@@ -193,24 +194,24 @@ Může být provedeno porovnáním významových bodů, klasifikátorem sousedů
 
 \section{On-line systémy pro verifikaci} 
 On-line systémy na rozdíl od off-line neporovnávají pouze výsledek podpisu (viz obrázek~\ref{fig:vzhled_dynamickeho_podpisu}), ale i data o~jeho průběhu (viz obrázek~\ref{fig:graf_dynamickych_parametru}). % |
-Důležité zde jsou parametry jako změny rychlosti či tlaku a celkový průběh psaní podpisu.              % |
-K~nasnímání těchto parametrů je potřeba tablet a speciální pero, které takové snímání umožní.          % |
-Na rozdíl od statických parametrů, které lze snáze odpozorovat a napodobit                             % |
-nebo pomocí technologií jinak replikovat, je dynamické parametry nemožné zfalšovat člověkem.           % V
+Důležité zde jsou parametry jako změny rychlosti či tlaku a celkový průběh psaní podpisu.     % |
+K~nasnímání těchto parametrů je potřeba tablet a speciální pero, které takové snímání umožní. % |
+Na rozdíl od statických parametrů, které lze snáze odpozorovat a napodobit                    % |
+nebo pomocí technologií jinak replikovat, je dynamické parametry nemožné zfalšovat člověkem.  % V
 Falzifikát lze vytvořit pomocí stroje, k~čemuž je ale potřeba nasnímat pohyb ruky podepisujícího.~\cite{VaccaJohnR2007}% parafráze Biometric verification (str. 170)
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \begin{minipage}{0.45\textwidth}
       \centering
-      \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-      \caption{Vzhled dynamického podpisu.}
+      \includegraphics[width=\textwidth]{obrazky-figures/vzhled_dynamickeho.jpg}
+      \caption{Vzhled dynamického podpisu.~\cite{RakRoman2008}}
       \label{fig:vzhled_dynamickeho_podpisu}
   \end{minipage}\hfill
   \begin{minipage}{0.45\textwidth}
       \centering
-      \includegraphics[width=\textwidth]{obrazky-figures/placeholder.pdf}
-      \caption{Graf dynamických parametrů podpisu v~čase.}
+      \includegraphics[width=\textwidth]{obrazky-figures/graf_parametru.jpg}
+      \caption{Graf dynamických parametrů podpisu v~čase.~\cite{RakRoman2008}}
       \label{fig:graf_dynamickych_parametru}
   \end{minipage}
 \end{figure}
@@ -220,9 +221,9 @@ Společně se zavedením biometrických systému docházelo k spoustu neshodám.
 Například neshody formátů dat ukládanými jednotlivými výrobci snímacích zařízení či neshody formátu dat mezi různými biometrickými systémy.
 Proto bylo potřeba zavést normy pro různé specifické oblasti biometrie.
 
-Vytvoření norem mělo velký pozitivní dopad na rozšíření biometrických systémů.                                                % |
-Jde například o~normy určující, jakým způsobem mají být biometrická data ukládána či jakým způsobem dochází k~jejich vyměně.  % | 
-Tyto normy přispěly k~větší interoperabilitě jednotlivých komponent biometrických systémů.                                    % V
+Vytvoření norem mělo velký pozitivní dopad na rozšíření biometrických systémů.                                               % |
+Jde například o~normy určující, jakým způsobem mají být biometrická data ukládána či jakým způsobem dochází k~jejich vyměně. % | 
+Tyto normy přispěly k~větší interoperabilitě jednotlivých komponent biometrických systémů.                                   % V
 To znamená, že lze jeden komponent vyměnit za stejný od jiného výrobce a neměl by být problém s~kompatibilitou.~\cite{DrahanskýMartin2011}% parafraze Biometrie str. 61
 \newline 
 
@@ -252,14 +253,14 @@ Mezi nejdůležitější patří:
   Verze 2021 je novější verze té stejné normy z~roku 2007.~\cite{ISOIEC19794-7_2021} % parafraze ISO/IEC 19794-7:2021 str. 1
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{obrazky-figures/normy.png}
-  \caption{Struktura zaznamenávaných dat daná normou ISO/IEC 19794-7:2021.~\cite{DSM2021}} % https://dsm.tate.cz/cs/2021/dsm-3-2021/vlastnorucni-podpis-a-informacni-systemy-necekane-spojeni?utm_source=chatgpt.com
+  \caption{Struktura zaznamenávaných dat daná normou ISO/IEC 19794-7:2021.~\cite{DSM2021}} % https://dsm.tate.cz/cs/2021/dsm-3-2021/vlastnorucni-podpis-a-informacni-systemy-necekane-spojeni
   \label{fig:norms_table}
 \end{figure}
+%TODO Kam se to ukládá  
 
-\newpage
 
 \subsection*{ANSI/INCITS Normy}
 \begin{itemize}
@@ -270,8 +271,8 @@ Mezi nejdůležitější patří:
   Definuje soubor datových prvků potřebných k~zajištění univerzální podpory různých biometrických technologií a stanovuje požadavky pro zajištění vzájemné kompatibility.~\cite{DrahanskýMartin2011} % parafraze biometrie str. 69
 \end{itemize}
 
-Existuje spousta dalších norem týkajících se jak biometrie, jiných biometrických metod či přímo digitálního podpisu.                % |
-Kromě již zmíněných organizací existují další organizace zabývající se normami pro biometrii.                                      % V
+Existuje spousta dalších norem týkajících se jak biometrie, jiných biometrických metod či přímo digitálního podpisu. % |
+Kromě již zmíněných organizací existují další organizace zabývající se normami pro biometrii.                        % V
 Například NIST, působící na poli biometrických databází, TCSEC a Common Criteria, obojí zabývající se biometrií v~rámci bezpečnosti.~\cite{DrahanskýMartin2011}% Biometrie str. 68-69
 
 Normy v~oblasti biometrického podpisu tvoří klíčový základ pro spolehlivé a bezpečné využití těchto technologií v~praxi.
@@ -290,30 +291,98 @@ Ne všechny údaje (viz obrázek~\ref{fig:norms_table}) jsou součástí každé
 Kromě dat získaných přímo z~digitalizačního zařízení, jako je poloha hrotu pera, se také využívají dopočítané údaje, například rychlost nebo zrychlení. 
 V~praxi jsou nejčastěji zaznamenávána data z~kanálů X, Y, T a F, což znamená, že systém při každém vzorkování uchovává informaci o~poloze hrotu pera v~rovině (X, Y), čase záznamu (T) a síle působící na hrot pera (F).~\cite{DSM2021b}
 
-\subsection*{Záznamová zařízení}
-K~zaznamenávání dynamického podpisu se nejčastěji v~praxi používá singpad společně se speciálním perem~\ref{fig:signpad}.
+\section{Záznamová zařízení}
+K~zaznamenávání dynamického podpisu je potřeba takového zařízení, které umožní snímaní statických a dynamických charakteristik podpisu.
+Pro snímání těchto charakteristik lze tedy použít:
 
-\begin{figure}[h]
+\subsection*{Signpady}
+Signpad je specializované zařízení pro zachycení ručního podpisu. 
+Zaznamenává nejen trajektorii pohybu pera, ale i dynamické vlastnosti, jako je tlak a rychlost. 
+Používá se především v bankách a pojišťovnách.
+Známí výrobci signpadů jsou například Wacom či Signotec (viz obrázky~\ref{fig:Wacom}~a~\ref{fig:Signotec}).
+
+\begin{figure}[H]
   \centering
-  \includegraphics[width=0.5\textwidth]{obrazky-figures/signpad.jpg}
-  \caption{signpad.~\cite{SignPadImage}} % https://www.eetgroup.com/cs-cz/st-gert-3-uft100-signotec-signpad-gamma-inkl-ftdi-5in-color-tft-wid-w124375514
-  \label{fig:signpad}
+  \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{obrazky-figures/wacom.png}
+      \caption{Wacom STU-540.~\cite{Wacom_STU_540}}
+      \label{fig:Wacom}
+  \end{minipage}
+  \begin{minipage}{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{obrazky-figures/signotec.png}
+      \caption{Signotec Zeta.~\cite{Signotec_Zeta}}
+      \label{fig:Signotec}
+  \end{minipage}
 \end{figure}
 
-Obecně lze k~zaznamenání podpisu také využít tablet s~digitálním perem či mobilní telefon.
 
-\subsection*{Metody a algoritmy rozpoznávání podpisu}
+\subsection*{Dotykové obrazovky}
+Dotykové obrazovky, například tablety nebo chytré telefony, umožňují zachycení podpisu pomocí stylusu nebo prstu. 
+Jsou snadno dostupné, ale méně přesné než specializovaná zařízení.
+
+\subsection*{Aktivní pera}
+Aktivní pera jsou vybavena senzory přímo v jeho těle, které zaznamenávají jeho pohyb.
+Níže zmíněné však nejsou funkční sama o sobě a potřebují k jejich funkčnosti speciální zápisník. 
+Výrobci jsou například Livescribe či NeoLAB Convergence.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.3\textwidth]{obrazky-figures/Livescribe.png}
+  \caption{Livescribe Echo 2.~\cite{livescribe_echo2}} 
+  \label{fig:Livescribe}
+\end{figure}
+\newpage
+\noindent
+Novinkou na trhu je pak pero od výrobce Nuwa (viz obrázek~\ref{fig:Nuwapen}),ke kterému dodatečný zápsiník není potřeba.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.6\textwidth]{obrazky-figures/Nuwapen.png}
+  \caption{Nuwapen.~\cite{nuwapen}} 
+  \label{fig:Nuwapen}
+\end{figure}
+
+
+\noindent
+Další uvedené se používají spíše k experimentálním účelům:
+
+\subsection*{Kamerové systémy}
+Kamerové systémy snímají pohyb pera nebo stylusu opticky, například pomocí infračervených kamer. 
+
+\subsection*{Ultrazvukové nebo infračervené technologie}
+Tato zařízení sledují pohyb pera nebo stylusu pomocí ultrazvukových nebo infračervených senzorů. 
+
+\section{Metody a algoritmy rozpoznávání podpisu}
 Metody používané pro rozpoznávání podpisu lze rozdělit do tří hlavních skupin:
 \begin{itemize}
   \item \textbf{Holistická metoda} --- využívá vektor rysů a porovnávání provádí na základě vzdálenosti mezi těmito vektory.
   \item \textbf{Regionální metoda} --- pracuje se sekvencemi vektorů, jako jsou tahy, segmenty nebo okna, a při porovnávání zohledňuje strukturu v rámci sekvence.
-  \item \textbf{Lokální metoda} --- používá časové a prostorové funkce, které aproximují vstupní data, a provádí jejich elastické porovnání.
+  \item \textbf{Lokální metoda} --- používá časové a prostorové funkce, které aproximují vstupní data, a provádí jejich elastické porovnání.~\cite{DrahanskýMartin2011}
 \end{itemize}
 
-%TODO obrázky biometrie str. 239
-
+\begin{figure}[H]
+  \centering
+  \begin{minipage}{1\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{obrazky-figures/holisticke.jpg}
+      \caption{Holistické rozpoznávání podpisu.~\cite{DrahanskýMartin2011}}
+      \label{fig:holisticke_rozpoznavani}
+  \end{minipage}\hfill
+  \begin{minipage}{1\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{obrazky-figures/regionalni.jpg}
+      \caption{Regionální rozpoznávání podpisu.~\cite{DrahanskýMartin2011}}
+      \label{fig:geometricka_normalizace}
+  \end{minipage}
+\end{figure}
+\noindent
 Pro proces porovnávání lze využít několika algoritmů, zde si uvedeme jenom některé.
-Pro on-line rozpoznávání například:
+\newline
+
+\noindent
+Pro dynamické rozpoznávání například:
 \begin{itemize}
   \item \textbf{algoritmus založený na VQ (Vectoral Quantiziation)}
   \item \textbf{algoritmus založený na NN (Nearest Neighbor)}
@@ -329,9 +398,9 @@ Poté lze tyto algoritmy kombinovat:
 % https://www.sciencedirect.com/science/article/abs/pii/S0031320306002780
 
 \subsection*{Důvěryhodnost podpisu}
-Nedávné mezinárodní soutěže využívající standardní databáze a testovací protokoly přinesly zajímavé výsledky.   % |
-Ukázalo se, že systémy pro ověřování podpisů dosahují vysoké přesnosti.                                         % V
-Tato úroveň přesnosti je srovnatelná s~jinými pokročilými biometrickými technologiemi.~\cite{Impedovo2008}      % C. Vielhauer, “A behavioural biometrics,” Public Service Rev.: Eur.Union, vol. 20, no. 9, pp. 113–115, 2005.
+Nedávné mezinárodní soutěže využívající standardní databáze a testovací protokoly přinesly zajímavé výsledky. % |
+Ukázalo se, že systémy pro ověřování podpisů dosahují vysoké přesnosti.                                       % V
+Tato úroveň přesnosti je srovnatelná s~jinými pokročilými biometrickými technologiemi.~\cite{Impedovo2008}    % C. Vielhauer, “A behavioural biometrics,” Public Service Rev.: Eur.Union, vol. 20, no. 9, pp. 113–115, 2005.
 
 Experiment se zabýval autenticitou dynamického biometrického podpisu.
 V~experimentu došli k~závěru, že podpis nelze padělat bez znalosti samotného průběhu podpisu.~\cite{6986974} % https://ieeexplore-ieee-org.ezproxy.lib.vutbr.cz/stamp/stamp.jsp?tp=&arnumber=6986974
@@ -345,8 +414,13 @@ předejít volbou správné hranice stupně shody pro akceptaci podpisu.~\cite{8
 
 \section{Hodnocení výhod a nevýhod existujících řešení}
 \subsection*{Výhody}
-Jednou z~hlavních výhod je, že podpis je používán již staletí a je tedy vysoce sociálně akceptovaný, přinejmenším v~poměru s~jinými biometrickými metodami.
-Mezi další výhody pak nadále můžeme například zařadit:
+Biometrie nabízí významnou výhodu v tom, že autentizace nevyžaduje fyzické vlastnictví žádného předmětu ani zapamatování specifických údajů. 
+Specificky u biometrického podpisu je jeho předností možnost vytvořit alternativní podpis bez rizika zneužití původního podpisu. 
+Další výhodou je dlouhá historie používání podpisu, která zajišťuje jeho vysokou sociální akceptaci, zejména ve srovnání s jinými biometrickými metodami. 
+\newline
+
+\noindent
+Mezi další výhody lze zahrnout například:
 
 \begin{itemize}
   \item nízkou míru chybovosti falešných odmítnutí či falešných akceptací,
@@ -377,34 +451,34 @@ Dalším parametrem hrajícím roli při rozhodování byla přesnost jednotliv�
 Bylo důležité brát v~potaz i to, zda jsou všechny komponenty kompatibilní s~použitým mikrořadičem.          % vlatní kec
 
 \subsection*{ESP32}
-Mikrořadič ESP32 je jedním z~nejrozšířenějších mikrořadičů používaných ve světě.                            % |
-V~tomto projektu je osazen na vývojové desce ESP32 DevKitC od firmy Espressif.                              % V
-Ta je jednou z~nejpopulárnějších vývojových desek založených na mikrořadiči ESP32.~\cite{Kolban2017}        % The Official ESP32 book (str. 35)
+Mikrořadič ESP32 je jedním z~nejrozšířenějších mikrořadičů používaných ve světě.                     % |
+V~tomto projektu je osazen na vývojové desce ESP32 DevKitC od firmy Espressif.                       % V
+Ta je jednou z~nejpopulárnějších vývojových desek založených na mikrořadiči ESP32.~\cite{Kolban2017} % The Official ESP32 book (str. 35)
 
-Vývojová deska ESP32 DevKitC zde slouží jako mozek celého snímání.                                          % |
-Jsou k~ní připojené všechny ostatní komponenty, které právě mikrořadiči odesílají nasnímaná data.           % V
-ESP32 poté tyto data zpracovává a odesílá je do počítače, ke kterému je připojen  pomocí USB kabelu.        % vlastní kec
+Vývojová deska ESP32 DevKitC zde slouží jako mozek celého snímání.                                   % |
+Jsou k~ní připojené všechny ostatní komponenty, které právě mikrořadiči odesílají nasnímaná data.    % V
+ESP32 poté tyto data zpracovává a odesílá je do počítače, ke kterému je připojen  pomocí USB kabelu. % vlastní kec
 
 \subsection*{MPU-6050 (akcelerometr a gyroskop)}
 MPU-60X0 je první integrované zařízení na světě pro sledování pohybu v~šesti osách pomocí           % |
 kombinace tříosého gyroskopu, tříosého akcelerometru a digitálního procesoru pohybu.                % V
 Je široce využívaný v~mnoha odvětvích, kde je potřeba schopnosti přesně sledovat pohyby uživatele.~\cite{InvenSense2015}% https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf
 
-Zde slouží ke stejnému účelu, a to snímaní dat pohybu pera při podpisu.                             % |
-Snímaná data jsou odesílána v~reálném čase mikrořadiči ESP32.                                       % vlastní kec
+Zde slouží ke stejnému účelu, a to snímaní dat pohybu pera při podpisu. % |
+Snímaná data jsou odesílána v~reálném čase mikrořadiči ESP32.           % vlastní kec
 
 \subsection*{Tlakový senzor Interlink Electronics FSR® 400}
-Model FSR 400 je jednozónový tlakový senzor, tedy má pouze jednu aktivní měřící plochu.                       % |
-Rezistory FSR jsou dvouvodičová zařízení a používají robustní polymerové tlustovrstvé snímače.                % |
-Ty s~rostoucím tlakem na snímač snižují odpor, lze tedy pomocí protékajícího proudu vypočítat sílu stlačení.  % V
-Minimální aktivační síla je 0,1 N a maximální citlivost je do 20 N.~\cite{InterlinkElectronicsFSR400}         % https://www.interlinkelectronics.com/fsr-400
+Model FSR 400 je jednozónový tlakový senzor, tedy má pouze jednu aktivní měřící plochu.                      % |
+Rezistory FSR jsou dvouvodičová zařízení a používají robustní polymerové tlustovrstvé snímače.               % |
+Ty s~rostoucím tlakem na snímač snižují odpor, lze tedy pomocí protékajícího proudu vypočítat sílu stlačení. % V
+Minimální aktivační síla je 0,1 N a maximální citlivost je do 20 N.~\cite{InterlinkElectronicsFSR400}        % https://www.interlinkelectronics.com/fsr-400
 
 \section{Schéma a popis schématu}
-Návrh snímacího pera~\ref{fig:pero} je navrhnut tak, aby fungoval jako normální pero, 
+Návrh snímacího pera (viz obrázek ~\ref{fig:pero}) je navrhnut tak, aby fungoval jako normální pero, 
 přičemž bylo možné snímat jeho pohyb a další dynamické vlastnosti.
 Toho je dosaženo pomocí připevnění mikrořadiče a ostatních komponent přímo na pero.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{obrazky-figures/placeholder.pdf}
   \caption{Pero} 
@@ -436,9 +510,9 @@ Replikovat podpis, neboli vytvořit falzifikát, lze několika způsoby:
 \end{itemize}
 
 \chapter{Závěr}
-Tímto bylo probrána všechna potřebná teorie pro pochopení tématu.
-Nyní bude potřeba pomocí 3d tisku vytisknout a případně upravit návrh pera.
-Vymyslet zapojení periferií, jejich napájení k~mikrokontroléru a následné uložení do pera.
+Po analýze existujících řešení a metod, bude navrženo ``chytré pero'' se snímači přímo na těle. Nebude tedy nutné mít speciální podložku.
+V nálsedujících krocích bude potřeba pomocí 3d tisku vytisknout a případně upravit návrh pera.
+Navrhnout zapojení periferií, jejich napájení k~mikrokontroléru a následné uložení do pera.
 Poté naprogramovat kód mikrokontroléru tak, aby odesílal snímaná data přes USB kabel do počítače, kde se budou data ukládat.
 Dále nad uloženými daty provést potřebné výpočty a tato upravená data převést na kód pro ovládání robotické ruky.
 Následovným testováním a porovnáváním dosáhnout co nejlepších výsledků při tvorbě falzifikátu.
