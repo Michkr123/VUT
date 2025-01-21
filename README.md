@@ -12,9 +12,9 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
 ### 💼 Zkušenosti
 
 - Zatím nemám žádné zkušenosti v oboru 
-- jsem fast learner a nemám problém se naučit novým dovednostem či jazykům
-- rád bych nabral zkušenosti v oboru a nějaké know-how
-- hledám práci na zkrácený úvazek s ohledem k probíhajícímu studiu
+- Jsem fast learner a nemám problém se naučit novým dovednostem či jazykům
+- Rád bych nabral zkušenosti v oboru a nějaké know-how
+- Hledám práci na zkrácený úvazek s ohledem k probíhajícímu studiu
 
 ### 🛠️ Dovednosti
 
