@@ -2,7 +2,7 @@
 
 ## O mně
 
-Jsem budoucí student třetího ročníku na Fakultě Informačních Technologií VUT v Brně. Mám zálibu v programování (nečekaně), nových technologiích a ve zvedání těžkých koleček v posilovně 😉. V současné době bych chtěl získat praxi v oboru a v nadcházejícím školním roce budu pracovat na své bakalářské práci a připravovat se na státnice.
+Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v Brně. Mám zálibu v programování (nečekaně), nových technologiích a ve zvedání těžkých koleček v posilovně 😉. V současné době bych chtěl získat praxi v oboru, zároveň v tomto roce pracuji na své bakalářské práci a připravuji se na státnice.
 
 ### 🎓 Vzdělání
 
@@ -11,17 +11,17 @@ Jsem budoucí student třetího ročníku na Fakultě Informačních Technologi�
 
 ### 💼 Zkušenosti
 
-- Žádné zkušenosti v oboru zatím nemám
-- jsem fast learner a nemám problém se naučit nové dovednosti či jazyky
-- rád bych nabral zkušenosti v oboru a případně nějaké know-how
-- hledám brigádu na prázdniny s případným zkráceným úvazkem přes školní rok
+- Zatím nemám žádné zkušenosti v oboru 
+- jsem fast learner a nemám problém se naučit novým dovednostem či jazykům
+- rád bych nabral zkušenosti v oboru a nějaké know-how
+- hledám práci na zkrácený úvazek s ohledem k probíhajícímu studiu
 
 ### 🛠️ Dovednosti
 
-- **Programovací jazyky**: C, Python, VHDL, C++, PHP, C#
+- **Programovací jazyky**: C, C++, C#, Python, VHDL, PHP
 - **Technologie a nástroje**: Git, VS Code
 - **Databáze**: MySQL, SQLite
-- **Operační systémy**: Windows, Linux
+- **Operační systémy**: Linux, Windows
 
 ### 📚 Projekty
 
