@@ -20,20 +20,6 @@ Pro autentizaci se používají a zkoumají především dynamické vlastnosti p
 Podaří-li se důvěryhodně vlastnoruční podpis replikovat, bude možné pomocí falzifikátu obejít bezpečnostní zabezpečení. 
 To představuje velké bezpečnostní riziko a nutnost upravení dosavadních bezpečnostních metod pro autentizaci. 
 
-
-%TOLE JE SPIS ABSTRAKT
-%Bude třeba sestavit snímací zařízení pro získaní potřebných parametrů podpisu.
-%Ze statických parametrů budeme snímat tvar i tloušťku čar a celkový vzhled podpisu. 
-%Z dynamických parametrů budeme snímat tlak, sklon a průběh tahů. 
-%Získané data je potřeba vhodným způsobem zpracovat a provést potřebné výpočty. 
-%Upravená data je poté potřeba převést do instrukcí pro mechanickou paži, která je použita k replikaci podpisu. 
-%Výsledný podpis bude porovnáván s vlastnoručním podpisem. Cílem je co nejvíce se přiblížit vlastnoručnímu podpisu.
-
-%\section{Představení tématu}
-%\section{Cíle práce}
-
-%\section{Struktura práce}
-
 \chapter{Teoretické základy}
 Pro plné pochopení problematiky je potřeba představit základy z~několika odvětví. 
 V~této části budou shrnuty všechny potřebné informace. 
@@ -111,9 +97,9 @@ V~rámci této práce budou snímány následující charakteristiky:
 Kombinací těchto nasnímaných parametrů bude možné dostatečně věrohodně napodobit původní vlastnoruční podpis. 
 
 \section{Falzifikát a jeho rozpoznání}
-\textbf{Falzifikát} neboli padělek je v obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu. % |
-V rámci biometrických systémů jsou tyto padělky zneužívány k pokusu o autentizaci falešnými biometrickými údaji jiné osoby. % V
-U podpisu je falzifikátem míněna replikace statického či dynamického podpisu za stejným účelem.                             % Muj kec
+\textbf{Falzifikát} neboli padělek je v~obecném významu chápán jako věc, která je vytvořena za účelem napodobení originálu. % |
+V~rámci biometrických systémů jsou tyto padělky zneužívány k~pokusu o~autentizaci falešnými biometrickými údaji jiné osoby. % V
+U~podpisu je falzifikátem míněna replikace statického či dynamického podpisu za stejným účelem.                             % Muj kec
 \newline
 
 \noindent
@@ -217,7 +203,7 @@ Falzifikát lze vytvořit pomocí stroje, k~čemuž je ale potřeba nasnímat po
 \end{figure}
 
 \section{Normy biometrické identifikace pomocí podpisu}
-Společně se zavedením biometrických systému docházelo k spoustu neshodám.
+Společně se zavedením biometrických systému docházelo k~spoustu neshodám.
 Například neshody formátů dat ukládanými jednotlivými výrobci snímacích zařízení či neshody formátu dat mezi různými biometrickými systémy.
 Proto bylo potřeba zavést normy pro různé specifické oblasti biometrie.
 
@@ -259,8 +245,12 @@ Mezi nejdůležitější patří:
   \caption{Struktura zaznamenávaných dat daná normou ISO/IEC 19794-7:2021.~\cite{DSM2021}} % https://dsm.tate.cz/cs/2021/dsm-3-2021/vlastnorucni-podpis-a-informacni-systemy-necekane-spojeni
   \label{fig:norms_table}
 \end{figure}
-%TODO Kam se to ukládá  
 
+Tato data se ukládají například ve formátu CSV, JSON či XML. 
+Pro souřadnice X,~Y,~Z je jednotkou měření milimetr~(mm), rychlosti VX a VY milimetr za sekundu~(mm/s), 
+zrychlení AX a AY milimetr za sekundu na druhou~(mm/s2), čas T a časový rozdíl DT v~sekundách~(s), síla F v~newtonech~(N), 
+orientační parametry TX,~TY,~A,~E~a~R úhel ve stupních stupních~(°).
+Stav hrotu S nabývá hodnot 0 a 1 a udává, zda-li se hrot pera dotýká papíru.~\cite{ISOIEC19794-7_2021}
 
 \subsection*{ANSI/INCITS Normy}
 \begin{itemize}
@@ -298,7 +288,7 @@ Pro snímání těchto charakteristik lze tedy použít:
 \subsection*{Signpady}
 Signpad je specializované zařízení pro zachycení ručního podpisu. 
 Zaznamenává nejen trajektorii pohybu pera, ale i dynamické vlastnosti, jako je tlak a rychlost. 
-Používá se především v bankách a pojišťovnách.
+Používá se především v~bankách a pojišťovnách.
 Známí výrobci signpadů jsou například Wacom či Signotec (viz obrázky~\ref{fig:Wacom}~a~\ref{fig:Signotec}).
 
 \begin{figure}[H]
@@ -323,8 +313,8 @@ Dotykové obrazovky, například tablety nebo chytré telefony, umožňují zach
 Jsou snadno dostupné, ale méně přesné než specializovaná zařízení.
 
 \subsection*{Aktivní pera}
-Aktivní pera jsou vybavena senzory přímo v jeho těle, které zaznamenávají jeho pohyb.
-Níže zmíněné však nejsou funkční sama o sobě a potřebují k jejich funkčnosti speciální zápisník. 
+Aktivní pera jsou vybavena senzory přímo v~jeho těle, které zaznamenávají jeho pohyb.
+Níže zmíněné však nejsou funkční sama o~sobě a potřebují k~jejich funkčnosti speciální zápisník. 
 Výrobci jsou například Livescribe či NeoLAB Convergence.
 
 \begin{figure}[H]
@@ -346,7 +336,7 @@ Novinkou na trhu je pak pero od výrobce Nuwa (viz obrázek~\ref{fig:Nuwapen}),k
 
 
 \noindent
-Další uvedené se používají spíše k experimentálním účelům:
+Další uvedené se používají spíše k~experimentálním účelům:
 
 \subsection*{Kamerové systémy}
 Kamerové systémy snímají pohyb pera nebo stylusu opticky, například pomocí infračervených kamer. 
@@ -358,7 +348,7 @@ Tato zařízení sledují pohyb pera nebo stylusu pomocí ultrazvukových nebo i
 Metody používané pro rozpoznávání podpisu lze rozdělit do tří hlavních skupin:
 \begin{itemize}
   \item \textbf{Holistická metoda} --- využívá vektor rysů a porovnávání provádí na základě vzdálenosti mezi těmito vektory.
-  \item \textbf{Regionální metoda} --- pracuje se sekvencemi vektorů, jako jsou tahy, segmenty nebo okna, a při porovnávání zohledňuje strukturu v rámci sekvence.
+  \item \textbf{Regionální metoda} --- pracuje se sekvencemi vektorů, jako jsou tahy, segmenty nebo okna, a při porovnávání zohledňuje strukturu v~rámci sekvence.
   \item \textbf{Lokální metoda} --- používá časové a prostorové funkce, které aproximují vstupní data, a provádí jejich elastické porovnání.~\cite{DrahanskýMartin2011}
 \end{itemize}
 
@@ -414,9 +404,9 @@ předejít volbou správné hranice stupně shody pro akceptaci podpisu.~\cite{8
 
 \section{Hodnocení výhod a nevýhod existujících řešení}
 \subsection*{Výhody}
-Biometrie nabízí významnou výhodu v tom, že autentizace nevyžaduje fyzické vlastnictví žádného předmětu ani zapamatování specifických údajů. 
-Specificky u biometrického podpisu je jeho předností možnost vytvořit alternativní podpis bez rizika zneužití původního podpisu. 
-Další výhodou je dlouhá historie používání podpisu, která zajišťuje jeho vysokou sociální akceptaci, zejména ve srovnání s jinými biometrickými metodami. 
+Biometrie nabízí významnou výhodu v~tom, že autentizace nevyžaduje fyzické vlastnictví žádného předmětu ani zapamatování specifických údajů. 
+Specificky u~biometrického podpisu je jeho předností možnost vytvořit alternativní podpis bez rizika zneužití původního podpisu. 
+Další výhodou je dlouhá historie používání podpisu, která zajišťuje jeho vysokou sociální akceptaci, zejména ve srovnání s~jinými biometrickými metodami. 
 \newline
 
 \noindent
@@ -474,21 +464,26 @@ Ty s~rostoucím tlakem na snímač snižují odpor, lze tedy pomocí protékají
 Minimální aktivační síla je 0,1 N a maximální citlivost je do 20 N.~\cite{InterlinkElectronicsFSR400}        % https://www.interlinkelectronics.com/fsr-400
 
 \section{Schéma a popis schématu}
-Návrh snímacího pera (viz obrázek ~\ref{fig:pero}) je navrhnut tak, aby fungoval jako normální pero, 
+Návrh snímacího pera %(viz obrázek ~\ref{fig:pero}) 
+je navrhnut tak, aby fungoval jako normální pero, 
 přičemž bylo možné snímat jeho pohyb a další dynamické vlastnosti.
 Toho je dosaženo pomocí připevnění mikrořadiče a ostatních komponent přímo na pero.
 
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=0.5\textwidth]{obrazky-figures/placeholder.pdf}
-  \caption{Pero} 
-  \label{fig:pero}
-\end{figure}
+%\begin{figure}[H]
+%  \centering
+%  \includegraphics[width=0.5\textwidth]{obrazky-figures/placeholder.pdf}
+%  \caption{Pero} 
+%  \label{fig:pero}
+%\end{figure}
 
-Do pera je možné uložit jak samotný mikrořadič ESP32~(1), akcelerometr a gyroskop na čipu MPU-6050~(2) tak i tlakové snímače FSR-400.
+Do pera je možné uložit jak samotný mikrořadič ESP32%~(1)
+, akcelerometr a gyroskop na čipu MPU-6050 %~(2)
+tak i tlakové snímače FSR-400.
 Tyto tlakové snímače jsou rozmístěny tak, aby se podařilo zachytit co nejvíce informací o~tlaku.
-Jeden je tedy umístěn nad samotnou náplní propisky, nejvíce využit při psaní kolmo~(3).
-Tři další jsou poté rozmístěny u~hrotu propisky pro přesnější snímání v~případě náklonu pera v~průběhu podpisu~(4). 
+Jeden je tedy umístěn nad samotnou náplní pera, nejvíce využit při psaní kolmo%~(3)
+.
+Tři další jsou poté rozmístěny u~hrotu pera pro přesnější snímání v~případě náklonu pera v~průběhu podpisu%~(4)
+. 
 
 
 \section{Možnosti replikace podpisu}
@@ -511,7 +506,7 @@ Replikovat podpis, neboli vytvořit falzifikát, lze několika způsoby:
 
 \chapter{Závěr}
 Po analýze existujících řešení a metod, bude navrženo ``chytré pero'' se snímači přímo na těle. Nebude tedy nutné mít speciální podložku.
-V nálsedujících krocích bude potřeba pomocí 3d tisku vytisknout a případně upravit návrh pera.
+V~nálsedujících krocích bude potřeba pomocí 3d tisku vytisknout a případně upravit návrh pera.
 Navrhnout zapojení periferií, jejich napájení k~mikrokontroléru a následné uložení do pera.
 Poté naprogramovat kód mikrokontroléru tak, aby odesílal snímaná data přes USB kabel do počítače, kde se budou data ukládat.
 Dále nad uloženými daty provést potřebné výpočty a tato upravená data převést na kód pro ovládání robotické ruky.
