@@ -1,6 +1,4 @@
-# ISA project
-
-Michálek Kryštof (xmicha94)
+# PCAP NetFlow v5 exportér
 
 Cílem mojí práce dle zadání bylo implementovat program p2nprobe, který extrahuje informace o síťových
 tocích ze souboru PCAP a odešle tyto informace pomocí protokolu UDP na kolektor ve formátu NetFlow v5
@@ -13,16 +11,6 @@ Nesedí časové údaje, u větších pcap souborů nesedí počet paketů a baj
 ./p2nprobe  localhost:2055 muj_pcap.pcap -a 5 -i 30
 ./p2nprobe localhost:2055 muj_pcap.pcap
 
-## Odevzdané soubory
-- Makefile
-- README.md
-- src
-	- main.cpp
-	- netflow_t.cpp
-	- netflow_t.h
-	- netflow.cpp
-	- netflow.h
-	- pcap_reader.cpp
-	- pcap_reader.h
-	- udp_interface.cpp
-    - udp_interface.h
+Více v [dokumentaci projektu](xmicha94.pdf)
+
+Výsledné hodnocení: 11.5/20
