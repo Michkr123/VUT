@@ -1,0 +1,18 @@
+\babel@toc {czech}{}\relax 
+\contentsline {section}{\numberline {1}Úvod}{3}{section.1}%
+\contentsline {section}{\numberline {2}Popis problému a motivace}{3}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Technologické možnosti rotačních enkodérů}{3}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Motivace k~výběru tématu}{4}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Návrh řešení}{5}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Technologické prostředky}{5}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Funkční požadavky}{5}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Architektura řešení}{5}{subsection.3.3}%
+\contentsline {section}{\numberline {4}Implementace}{5}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Hardwarová konfigurace}{5}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Zpracování vstupů}{6}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Úlohy v~FreeRTOS}{6}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Zobrazení na OLED displeji}{8}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Testování, výsledky a autoevaluace}{9}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Výsledky}{9}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Autoevaluace}{9}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Závěr}{9}{section.6}%
