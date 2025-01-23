@@ -23,15 +23,31 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
 - **Databáze**: MySQL, SQLite
 - **Operační systémy**: Linux, Windows
 
-### 📚 Projekty
+### 📚 Samostané projekty
 
-1. **Procesor s jednoduchou instrukční sadou**
+1. **Aplikace ovládaná dvojicí rotačních enkodérů na ESP32 - hra Pong**
+   - Popis: Hra pong ovládaná dvojicí enkodérů na mikrořadiči ESP32 využívající technologie přerušení, real-time operačního systém FreeRTOS a přístup ke sdílenému zdroji pomocí semaforu.
+   - Jazyk: C
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/ad017928b45aee3af26506032be2d81040621a0c/5.semestr/IMP) 
+
+2. **Procesor s jednoduchou instrukční sadou**
    - Popis: procesor implementovaný v jazyce VHDL, který je schopen vykonávat program napsaný v rozšířené verzi jazyka BrainFuck.
    - Jazyk: VHDL
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/4368f73f0d323704da991ebc2031cae958bf21ec/3.semestr/INP/INP_1)
 
-2. **Parser**
-   - Popis: načte ze standardního vstupu zdrojový kód v IPP-code24, zkontroluje lexikální a syntaktickou správnost kódu a vypíše na standardní
-výstup XML reprezentaci programu.
+3. **Parser**
+   - Popis: načte ze standardního vstupu zdrojový kód v IPP-code24, zkontroluje lexikální a syntaktickou správnost kódu a vypíše na standardní výstup XML reprezentaci programu.
    - Jazyk: Python
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/a6524a7d0ac3b52d0882390771305d7f068de079/4.semestr/IPP/parser%20-%20python)
+
+### 📚 Týmové projekty
+
+1. **Školní Informační systém**
+   - Popis: Zjednodušený školní informační systém, který spravuje žáky, předměty a aktivity. 
+   - Jazyk: C#
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/ad017928b45aee3af26506032be2d81040621a0c/4.semestr/ICS)
+
+2. **2D simulace autonomních robotů**
+   - Popis: Simulace autonomních robotů s možností přidávání robotů, překážek či generování smetí.
+   - Jazyk: C++
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/ad017928b45aee3af26506032be2d81040621a0c/4.semestr/ICP)
