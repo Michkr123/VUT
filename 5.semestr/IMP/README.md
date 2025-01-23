@@ -5,7 +5,7 @@ ESP32 sestrojit jednoduchou aplikaci. Jako aplikaci jsem si zvolil hru Pong, kte
 Space Invaders či Pac-Man řadí mezi naprosté klasiky.
 Enkodéry jsou využity k ovládání odrazových plošin jednotlivých hráčů. Pomocí tlačítek lze hru znovu
 spustit. V tomto projektu jsem využil převážně technologie přerušení, real-time operačního systém FreeRTOS
-a přístup ke sdílenému zdroji pomocí semaforu.\
+a přístup ke sdílenému zdroji pomocí semaforu.
 
 Více v [dokumentaci projektu](doc/projekt.pdf)
 
