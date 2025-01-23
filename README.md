@@ -40,7 +40,7 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
    - Jazyk: Python
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/a6524a7d0ac3b52d0882390771305d7f068de079/4.semestr/IPP/parser%20-%20python)
 
-### 📚 Týmové projekty
+### 🧑‍🤝‍🧑 Týmové projekty
 
 1. **Školní Informační systém**
    - Popis: Zjednodušený školní informační systém, který spravuje žáky, předměty a aktivity. 
