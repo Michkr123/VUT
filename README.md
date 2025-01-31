@@ -23,7 +23,7 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
 - **Databáze**: MySQL, SQLite
 - **Operační systémy**: Linux, Windows
 
-### 📚 Samostatné projekty
+### 🧍‍♂️ Samostatné projekty
 
 1. **Aplikace ovládaná dvojicí rotačních enkodérů na ESP32 - hra Pong**
    - Popis: Hra pong ovládaná dvojicí enkodérů na mikrořadiči ESP32 využívající technologie přerušení, real-time operačního systém FreeRTOS a přístup ke sdílenému zdroji pomocí semaforu.
