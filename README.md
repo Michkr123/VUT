@@ -31,12 +31,12 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/ad017928b45aee3af26506032be2d81040621a0c/5.semestr/IMP) 
 
 2. **Procesor s jednoduchou instrukční sadou**
-   - Popis: procesor implementovaný v jazyce VHDL, který je schopen vykonávat program napsaný v rozšířené verzi jazyka BrainFuck.
+   - Popis: Procesor implementovaný v jazyce VHDL, který je schopen vykonávat program napsaný v rozšířené verzi jazyka BrainFuck.
    - Jazyk: VHDL
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/4368f73f0d323704da991ebc2031cae958bf21ec/3.semestr/INP/INP_1)
 
 3. **Parser**
-   - Popis: načte ze standardního vstupu zdrojový kód v IPP-code24, zkontroluje lexikální a syntaktickou správnost kódu a vypíše na standardní výstup XML reprezentaci programu.
+   - Popis: Parser pro standardní vstup v jazyce IPP-code24, který provádí lexikální a syntaktickou analýzu kódu a generuje XML reprezentaci programu na standardní výstup.
    - Jazyk: Python
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/a6524a7d0ac3b52d0882390771305d7f068de079/4.semestr/IPP/parser%20-%20python)
 
