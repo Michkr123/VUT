@@ -51,3 +51,8 @@ Jsem student třetího ročníku na Fakultě Informačních Technologií VUT v B
    - Popis: Simulace autonomních robotů s možností přidávání robotů, překážek či generování smetí.
    - Jazyk: C++
    - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/ad017928b45aee3af26506032be2d81040621a0c/4.semestr/ICP)
+
+3. **Akce pro lidi - webová a mobilní aplikace**
+   - Popis: Webová a mobilní aplikace umožňující vytváření a správu akcí, filtrování akcí, přihlašování/odhlašování účasti na akcích a zobrazování nadcházejících akcí.
+   - Jazyk: Typescript
+   - [Odkaz na repositář](https://github.com/Michkr123/VUT/tree/0e9ac2ba00b7f520af2d0acee400d71089741d49/5.semestr/ITU)
