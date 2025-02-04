@@ -1,0 +1,17 @@
+[
+    {
+        "id": 1,
+        "event_id": 1,
+        "username": "kryspin",
+        "comment": "Par\u00e1dn\u00ed akce, t\u011b\u0161\u00edm se",
+        "rating": 5,
+        "date_posted": "2024-12-15T23:14:10.279728",
+        "date_edit": null,
+        "likeCount": [
+            "user"
+        ],
+        "dislikeCount": [],
+        "edited": false,
+        "last_edited": null
+    }
+]
