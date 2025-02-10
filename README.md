@@ -1,4 +1,4 @@
-# Vítej v ropozitářii VUT 👋
+# Vítej v ropozitáři VUT 👋
 Zde jsou uloženy projekty vypracované v rámci studia na VUT.
 Pokud tě zajímá více o mně, koukni na [profil](https://github.com/Michkr123).
 
