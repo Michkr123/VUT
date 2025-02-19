@@ -1,48 +1,62 @@
-### IPP projekt
-### autor: Michálek Kryštof
-### login: xmicha94
-
 import sys
-from lark import lark
+from lark import Lark
 
-#################### HELP ####################
-if len(sys.argv) == 2:
-    if sys.argv[1] == "--help":
-        print("Usage: python3 parse.py < input_file")  # TODO
-        sys.exit(0)
-    else:
-        sys.exit(10)
+grammar = r'''
+    start: program
 
-#################### SCANNER ####################
+    program: class_def program
+           | block_stat program
+           |  // empty
 
-def tokenize():
-    """Tokenizes a line, removing comments enclosed in double quotes."""
+    class_def: "class" CNAME ":" CNAME "{" method "}"
     
-    tokens_filtered_all = []
-    inside_comment = False  # Track if we are inside a comment
+    method: selector block_stat method
+          | // empty
 
+    selector: ID
+            | ID ":" selector_tail
+
+    selector_tail: ID ":" selector_tail
+                | // empty
     
-    for line in sys.stdin:
+    block: "[" block_par "|" block_stat "]"
 
-        tokens = line.split()  # Split by spaces
-
-        filtered_tokens = []
-        for token in tokens:
-            if '"' in token:
-                inside_comment = not inside_comment  # Toggle comment mode
-                continue  # Skip the `"`
-
-            if not inside_comment:
-                filtered_tokens.append(token)
-
-        tokens_filtered_all += filtered_tokens
+    block_par: ":" ID block_par
+             | // empty
     
-    return tokens_filtered_all
+    block_stat: ID ":=" expr "."
+              | selector ":=" expr "."
+              | selector ":=" ID "."
+              | // empty
+    
+    expr: expr_base
 
-#################### MAIN ####################
+    expr_base: INT
+             | STRING
+             | ID
+             | CNAME
+             | block
+             | "(" expr ")"
 
-tokens = tokenize()
+    // Token imports
+    %import common.INT
+    %import common.ESCAPED_STRING -> STRING
+    %import common.CNAME  // For class names (CID)
+    %import common.WORD   // For identifiers (ID)
 
-for token in tokens:
-    print(f"Token: {token}")  # Print tokens outside comments
+    // Explicitly define ID as WORD for clarity
+    ID: WORD
 
+    %ignore " "
+    %ignore "\t"
+    %ignore "\n"
+'''
+
+# Create the parser
+parser = Lark(grammar, start='start')
+
+# Parse the input
+parse_tree = parser.parse(sys.stdin)
+
+# Print the parse tree  
+print(parse_tree.pretty())

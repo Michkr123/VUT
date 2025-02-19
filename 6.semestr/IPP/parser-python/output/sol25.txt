@@ -1,0 +1,15 @@
+<block arity="2">
+    <parameter name="one" order="1" />
+    <parameter name="two" order="2"></ parameter >
+    <assign >
+        <var name="r"/>
+        <expr >
+            <send selector ="from:">
+                <expr ><literal class="class" value=" Integer "></expr >
+                <arg order="1">
+                    <expr ><var name="two" /></expr >
+                </arg >
+            </send >
+        </expr >
+    </assign >
+</block >
