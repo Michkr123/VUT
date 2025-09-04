@@ -1,4 +1,4 @@
-# ITU projekt
+# Aplikace pro vyhledávání, správu a hodnocení událostí
 
 # Obsah
 - [Role](#role)
